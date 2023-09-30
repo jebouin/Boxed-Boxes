@@ -1,5 +1,7 @@
 package ;
 
+import entities.Hero;
+import entities.Entity;
 import SceneManager.Scene;
 
 class Game extends Scene {
@@ -12,6 +14,8 @@ class Game extends Scene {
     public static var LAYER_WALLS = _layer++;
     public static var inst : Game;
     public var level : Level;
+    public var hero : Hero;
+    public var camera : Camera;
     var levelId : Int = 1;
 
     public function new() {
@@ -20,6 +24,8 @@ class Game extends Scene {
             throw "Game scene already exists";
         }
         inst = this;
+        camera = new Camera();
+        hero = new Hero();
         level = new Level();
         loadFirstLevel();
     }
@@ -28,10 +34,13 @@ class Game extends Scene {
         super.delete();
         inst = null;
         level.delete();
+        Entity.deleteAll();
     }
 
     override public function update(dt:Float) {
         super.update(dt);
+        Entity.updateAll(dt);
+        camera.update(dt);
     }
 
     public function loadFirstLevel() {
@@ -45,5 +54,11 @@ class Game extends Scene {
         } else {
             loadFirstLevel();
         }
+    }
+
+    public function onLevelLoaded() {
+        hero.spawn();
+        camera.setBounds(level.getCameraBounds());
+        camera.setTarget(hero, true);
     }
 }
