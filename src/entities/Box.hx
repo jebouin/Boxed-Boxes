@@ -12,7 +12,7 @@ class Box extends Entity {
 
     public function new(x:Int, y:Int, width:Int, height:Int) {
         super();
-        grid = new ScaleGrid(Assets.getTile("entities", "box"), 6, 6, 6, 6);
+        grid = new ScaleGrid(Assets.getTile("entities", "boxInside"), 6, 6, 6, 6);
         grid.width = width;
         grid.height = height;
         Game.inst.world.add(grid, Game.LAYER_ENTITIES);
@@ -37,5 +37,10 @@ class Box extends Entity {
     function updateGraphics() {
         grid.x = x;
         grid.y = y;
+    }
+
+    override public function updateBorder() {
+        super.updateBorder();
+        grid.tile = Assets.getTile("entities", "box" + (borderId == -1 ? "Outside" : "Inside"));
     }
 }

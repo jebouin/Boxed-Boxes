@@ -1,3 +1,4 @@
+- Box/solid corner correction
 - Restart level
 - Wall jumps
 - Spikes

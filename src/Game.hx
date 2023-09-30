@@ -19,7 +19,6 @@ class Game extends Scene {
     public var level : Level;
     public var hero : Hero;
     public var camera : Camera;
-    public var border : Border;
     var levelId : Int = 1;
 
     public function new() {
@@ -29,9 +28,9 @@ class Game extends Scene {
         }
         inst = this;
         camera = new Camera();
-        border = new Border();
         level = new Level();
-        loadFirstLevel();
+        //loadFirstLevel();
+        loadLevelById(4);
     }
 
     override public function delete() {
@@ -39,13 +38,13 @@ class Game extends Scene {
         inst = null;
         level.delete();
         Entity.deleteAll();
-        border.delete();
+        Border.deleteAll();
     }
 
     override public function update(dt:Float) {
         super.update(dt);
         Entity.updateAll(dt);
-        border.update(dt);
+        Border.updateAll(dt);
         camera.update(dt);
     }
 
@@ -60,6 +59,11 @@ class Game extends Scene {
         } else {
             loadFirstLevel();
         }
+    }
+
+    public function loadLevelById(id:Int) {
+        levelId = id;
+        level.loadLevelById(levelId);
     }
 
     public function onLevelLoaded() {

@@ -1,5 +1,6 @@
 package entities;
 
+import ldtk.Json.IdentifierStyle;
 import haxe.ds.IntMap;
 import h2d.Tile;
 import h2d.col.IBounds;
@@ -21,6 +22,12 @@ class Entity {
         }
     }
 
+    public static function updateAllBorders() {
+        for(e in all) {
+            e.updateBorder();
+        }
+    }
+
     public static function deleteAll() {
         for(entity in all) {
             entity.delete();
@@ -30,7 +37,6 @@ class Entity {
 
     public var id(default, null) : Int;
     public var hitbox : IBounds;
-    var border : Border;
     public var x : Int = 0;
     public var y : Int = 0;
     public var vx : Float = 0.;
@@ -45,11 +51,11 @@ class Entity {
     var hitRight : Bool = false;
     var hitUp : Bool = false;
     var hitDown : Bool = false;
+    public var borderId(default, null) : Int = -1;
 
     public function new() {
         id = all.length;
         all.push(this);
-        border = Game.inst.border;
     }
 
     public function delete() {
@@ -140,15 +146,18 @@ class Entity {
             x++;
             return false;
         }
-        if(x + hitbox.xMin < border.bounds.xMin) {
-            if(forceCanPushBorder || canPushBorder) {
-                if(!border.stepLeft()) {
+        for(b in Border.all) {
+            var isInside = borderId == b.id;
+            if((isInside && x + hitbox.xMin < b.bounds.xMin) || (!isInside && b.intersectsEntity(this))) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushLeft(new IntMap<Bool>())) {
+                        x++;
+                        return false;
+                    }
+                } else {
                     x++;
                     return false;
                 }
-            } else {
-                x++;
-                return false;
             }
         }
         for(e in all) {
@@ -173,15 +182,18 @@ class Entity {
             x--;
             return false;
         }
-        if(x + hitbox.xMax > border.bounds.xMax) {
-            if(forceCanPushBorder || canPushBorder) {
-                if(!border.stepRight()) {
-                    x--;
+        for(b in Border.all) {
+            var isInside = borderId == b.id;
+            if((isInside && x + hitbox.xMax > b.bounds.xMax) || (!isInside && b.intersectsEntity(this))) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushRight(new IntMap<Bool>())) {
+                        x--;
+                        return false;
+                    }
+                } else {
+                    x++;
                     return false;
                 }
-            } else {
-                x++;
-                return false;
             }
         }
         for(e in all) {
@@ -206,15 +218,18 @@ class Entity {
             y++;
             return false;
         }
-        if(y + hitbox.yMin < border.bounds.yMin) {
-            if(forceCanPushBorder || canPushBorder) {
-                if(!border.stepUp()) {
+        for(b in Border.all) {
+            var isInside = borderId == b.id;
+            if((isInside && y + hitbox.yMin < b.bounds.yMin) || (!isInside && b.intersectsEntity(this))) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushUp(new IntMap<Bool>())) {
+                        y++;
+                        return false;
+                    }
+                } else {
                     y++;
                     return false;
                 }
-            } else {
-                y++;
-                return false;
             }
         }
         for(e in all) {
@@ -239,15 +254,18 @@ class Entity {
             y--;
             return false;
         }
-        if(y + hitbox.yMax > border.bounds.yMax) {
-            if(forceCanPushBorder || canPushBorder) {
-                if(!border.stepDown()) {
+        for(b in Border.all) {
+            var isInside = borderId == b.id;
+            if((isInside && y + hitbox.yMax > b.bounds.yMax) || (!isInside && b.intersectsEntity(this))) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushDown(new IntMap<Bool>())) {
+                        y--;
+                        return false;
+                    }
+                } else {
                     y--;
                     return false;
                 }
-            } else {
-                y--;
-                return false;
             }
         }
         for(e in all) {
@@ -329,5 +347,15 @@ class Entity {
             || x + hitbox.xMax <= other.x + other.hitbox.xMin
             || y + hitbox.yMin >= other.y + other.hitbox.yMax
             || y + hitbox.yMax <= other.y + other.hitbox.yMin);
+    }
+
+    public function updateBorder() {
+        borderId = -1;
+        for(b in Border.all) {
+            if(b.containsEntity(this)) {
+                borderId = b.id;
+                return;
+            }
+        }
     }
 }

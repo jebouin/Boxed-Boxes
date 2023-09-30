@@ -1,5 +1,6 @@
 package ;
 
+import entities.Border;
 import entities.Box;
 import h2d.Tile;
 import entities.Hero;
@@ -55,6 +56,7 @@ class Level {
         }
         Entity.deleteAll();
         Solid.deleteAll();
+        entities.Border.deleteAll();
     }
 
     public function loadLevelById(id:Int) {
@@ -98,11 +100,15 @@ class Level {
                 new Solid(x, y, TS, TS);
             }
         }
+        for(b in level.l_Entities.all_Border) {
+            new Border(IBounds.fromValues(b.cx * TS, b.cy * TS, b.width, b.height));
+        }
         for(b in level.l_Entities.all_Box) {
             new Box(b.cx * TS, b.cy * TS, b.width, b.height);
         }
-        for(b in level.l_Entities.all_Border) {
-            Game.inst.border.bounds = IBounds.fromValues(b.cx * TS, b.cy * TS, b.width, b.height);
+        Entity.updateAllBorders();
+        for(e in Entity.all) {
+            trace(e, e.borderId);
         }
     }
 
