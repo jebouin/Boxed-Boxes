@@ -54,7 +54,6 @@ class Hero extends Entity {
     }
 
     override public function update(dt:Float) {
-        //var onGround = !canStepDown();
         var onGround = hitDown;
         var controller = Main.inst.controller;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);

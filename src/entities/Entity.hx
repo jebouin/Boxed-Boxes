@@ -151,15 +151,18 @@ class Entity {
                 return false;
             }
         }
-        if(canPushEntities) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e)) continue;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e)) continue;
+            if(canPushEntities) {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushLeft(chain)) {
                     x++;
                     return false;
                 }
+            } else {
+                x++;
+                return false;
             }
         }
         return true;
@@ -181,15 +184,18 @@ class Entity {
                 return false;
             }
         }
-        if(canPushEntities) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e)) continue;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e)) continue;
+            if(canPushEntities) {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushRight(chain)) {
                     x--;
                     return false;
                 }
+            } else {
+                x--;
+                return false;
             }
         }
         return true;
@@ -211,15 +217,18 @@ class Entity {
                 return false;
             }
         }
-        if(canPushEntities) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e)) continue;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e)) continue;
+            if(canPushEntities) {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushUp(chain)) {
                     y++;
                     return false;
                 }
+            } else {
+                y++;
+                return false;
             }
         }
         return true;
@@ -241,43 +250,20 @@ class Entity {
                 return false;
             }
         }
-        if(canPushEntities) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e)) continue;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e)) continue;
+            if(canPushEntities) {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushDown(chain)) {
                     y--;
                     return false;
                 }
-            }
-        }
-        return true;
-    }
-    public function canStepDown(forceCanPushBorder:Bool=false) {
-        y++;
-        if(Solid.entityCollides(this)) {
-            y--;
-            return false;
-        }
-        if((forceCanPushBorder || canPushBorder) && y + hitbox.yMax > border.bounds.yMax) {
-            if(!border.canStepDown()) {
+            } else {
                 y--;
                 return false;
             }
         }
-        if(canPushEntities) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e)) continue;
-                var chain = new IntMap<Bool>();
-                chain.set(id, true);
-                if(!e.canPushDown(chain)) {
-                    y--;
-                    return false;
-                }
-            }
-        }
-        y--;
         return true;
     }
     // For now assume pushing crates can also push the border
@@ -336,20 +322,6 @@ class Entity {
         }
         y--;
         return stepDown(true);
-    }
-    public function canPushDown(chain:IntMap<Bool>) {
-        y++;
-        for(e in all) {
-            if(!collisionEnabled || e == this || !collides(e) || chain.exists(e.id)) continue;
-            chain.set(this.id, true);
-            if(!e.canPushDown(chain)) {
-                y--;
-                return false;
-            }
-            chain.remove(this.id);
-        }
-        y--;
-        return canStepDown(true);
     }
     // Assumes both entities have collision enabled
     inline public function collides(other:Entity) {

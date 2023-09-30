@@ -86,19 +86,4 @@ class Border {
         }
         return true;
     }
-    public function canStepDown() {
-        bounds.y += 1;
-        for(e in Entity.all) {
-            if(e.canPushBorder) continue;
-            if(bounds.yMin > e.y + e.hitbox.yMin) {
-                var chain = new IntMap<Bool>();
-                if(!e.canPushDown(chain)) {
-                    bounds.y -= 1;
-                    return false;
-                }
-            }
-        }
-        bounds.y -= 1;
-        return true;
-    }
 }

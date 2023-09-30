@@ -1,4 +1,8 @@
+- Restart level
+- Wall jumps
+- Spikes
 - Boxes outside
+- Merge borders
 - Corner correction
 - Level selection
 - Completed level save and timers
