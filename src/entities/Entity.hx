@@ -33,12 +33,18 @@ class Entity {
     var border : Border;
     public var x : Int = 0;
     public var y : Int = 0;
+    public var vx : Float = 0.;
+    public var vy : Float = 0.;
     var rx : Float;
     var ry : Float;
     var deleted : Bool = false;
     public var collisionEnabled : Bool = false;
     public var canPushBorder : Bool = false;
     public var canPushEntities : Bool = false;
+    var hitLeft : Bool = false;
+    var hitRight : Bool = false;
+    var hitUp : Bool = false;
+    var hitDown : Bool = false;
 
     public function new() {
         id = all.length;
@@ -52,6 +58,8 @@ class Entity {
     }
 
     public function update(dt:Float) {
+        hitLeft = hitRight = hitUp = hitDown = false;
+        move(vx * dt, vy * dt);
     }
 
     public function setPosNoCollision(x:Float, y:Float) {
@@ -85,11 +93,19 @@ class Entity {
         if(amount != 0) {
             rx -= amount;
             while(amount < 0) {
-                if(!stepLeft()) break;
+                if(!stepLeft()) {
+                    vx = 0;
+                    hitLeft = true;
+                    break;
+                }
                 amount++;
             }
             while(amount > 0) {
-                if(!stepRight()) break;
+                if(!stepRight()) {
+                    vx = 0;
+                    hitRight = true;
+                    break;
+                }
                 amount--;
             }
         }
@@ -100,11 +116,19 @@ class Entity {
         if(amount != 0) {
             ry -= amount;
             while(amount < 0) {
-                if(!stepUp()) break;
+                if(!stepUp()) {
+                    vy = 0;
+                    hitUp = true;
+                    break;
+                }
                 amount++;
             }
             while(amount > 0) {
-                if(!stepDown()) break;
+                if(!stepDown()) {
+                    vy = 0;
+                    hitDown = true;
+                    break;
+                }
                 amount--;
             }
         }
@@ -116,8 +140,13 @@ class Entity {
             x++;
             return false;
         }
-        if((forceCanPushBorder || canPushBorder) && x + hitbox.xMin < border.bounds.xMin) {
-            if(!border.stepLeft()) {
+        if(x + hitbox.xMin < border.bounds.xMin) {
+            if(forceCanPushBorder || canPushBorder) {
+                if(!border.stepLeft()) {
+                    x++;
+                    return false;
+                }
+            } else {
                 x++;
                 return false;
             }
@@ -141,9 +170,14 @@ class Entity {
             x--;
             return false;
         }
-        if((forceCanPushBorder || canPushBorder) && x + hitbox.xMax > border.bounds.xMax) {
-            if(!border.stepRight()) {
-                x--;
+        if(x + hitbox.xMax > border.bounds.xMax) {
+            if(forceCanPushBorder || canPushBorder) {
+                if(!border.stepRight()) {
+                    x--;
+                    return false;
+                }
+            } else {
+                x++;
                 return false;
             }
         }
@@ -166,8 +200,13 @@ class Entity {
             y++;
             return false;
         }
-        if((forceCanPushBorder || canPushBorder) && y + hitbox.yMin < border.bounds.yMin) {
-            if(!border.stepUp()) {
+        if(y + hitbox.yMin < border.bounds.yMin) {
+            if(forceCanPushBorder || canPushBorder) {
+                if(!border.stepUp()) {
+                    y++;
+                    return false;
+                }
+            } else {
                 y++;
                 return false;
             }
@@ -191,8 +230,13 @@ class Entity {
             y--;
             return false;
         }
-        if((forceCanPushBorder || canPushBorder) && y + hitbox.yMax > border.bounds.yMax) {
-            if(!border.stepDown()) {
+        if(y + hitbox.yMax > border.bounds.yMax) {
+            if(forceCanPushBorder || canPushBorder) {
+                if(!border.stepDown()) {
+                    y--;
+                    return false;
+                }
+            } else {
                 y--;
                 return false;
             }
@@ -208,6 +252,32 @@ class Entity {
                 }
             }
         }
+        return true;
+    }
+    public function canStepDown(forceCanPushBorder:Bool=false) {
+        y++;
+        if(Solid.entityCollides(this)) {
+            y--;
+            return false;
+        }
+        if((forceCanPushBorder || canPushBorder) && y + hitbox.yMax > border.bounds.yMax) {
+            if(!border.canStepDown()) {
+                y--;
+                return false;
+            }
+        }
+        if(canPushEntities) {
+            for(e in all) {
+                if(!e.collisionEnabled || e == this || !collides(e)) continue;
+                var chain = new IntMap<Bool>();
+                chain.set(id, true);
+                if(!e.canPushDown(chain)) {
+                    y--;
+                    return false;
+                }
+            }
+        }
+        y--;
         return true;
     }
     // For now assume pushing crates can also push the border
@@ -266,6 +336,20 @@ class Entity {
         }
         y--;
         return stepDown(true);
+    }
+    public function canPushDown(chain:IntMap<Bool>) {
+        y++;
+        for(e in all) {
+            if(!collisionEnabled || e == this || !collides(e) || chain.exists(e.id)) continue;
+            chain.set(this.id, true);
+            if(!e.canPushDown(chain)) {
+                y--;
+                return false;
+            }
+            chain.remove(this.id);
+        }
+        y--;
+        return canStepDown(true);
     }
     // Assumes both entities have collision enabled
     inline public function collides(other:Entity) {

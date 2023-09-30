@@ -1,35 +1,41 @@
 package entities;
 
+import h2d.ScaleGrid;
 import h2d.col.IBounds;
 import h3d.shader.SpecularTexture;
 import h2d.Bitmap;
 
 class Box extends Entity {
-    var bitmap : Bitmap;
+    public static inline var FALL_VEL = 180;
+    public static inline var GRAVITY = .996;
+    var grid : ScaleGrid;
 
-    public function new(x:Int, y:Int) {
+    public function new(x:Int, y:Int, width:Int, height:Int) {
         super();
-        bitmap = new Bitmap(Assets.getTile("entities", "box"));
-        Game.inst.world.add(bitmap, Game.LAYER_ENTITIES);
+        grid = new ScaleGrid(Assets.getTile("entities", "box"), 6, 6, 6, 6);
+        grid.width = width;
+        grid.height = height;
+        Game.inst.world.add(grid, Game.LAYER_ENTITIES);
         this.x = x;
         this.y = y;
         updateGraphics();
         collisionEnabled = true;
-        hitbox = IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight);
+        hitbox = IBounds.fromValues(0, 0, width, height);
     }
 
     override public function delete() {
         super.delete();
-        bitmap.remove();
+        grid.remove();
     }
 
     override public function update(dt:Float) {
+        vy = Util.sodStep(vy, FALL_VEL, GRAVITY, dt);
         super.update(dt);
         updateGraphics();
     }
 
     function updateGraphics() {
-        bitmap.x = x;
-        bitmap.y = y;
+        grid.x = x;
+        grid.y = y;
     }
 }

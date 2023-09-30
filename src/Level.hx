@@ -1,5 +1,6 @@
 package ;
 
+import entities.Box;
 import h2d.Tile;
 import entities.Hero;
 import entities.Entity;
@@ -98,7 +99,10 @@ class Level {
             }
         }
         for(b in level.l_Entities.all_Box) {
-            new entities.Box(b.cx * TS, b.cy * TS);
+            new Box(b.cx * TS, b.cy * TS, b.width, b.height);
+        }
+        for(b in level.l_Entities.all_Border) {
+            Game.inst.border.bounds = IBounds.fromValues(b.cx * TS, b.cy * TS, b.width, b.height);
         }
     }
 

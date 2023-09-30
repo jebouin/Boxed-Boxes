@@ -9,15 +9,10 @@ class Border {
     var g : Graphics;
 
     public function new() {
-        bounds = IBounds.fromValues(0, 0, 64, 64);
+        bounds = IBounds.fromValues(0, 0, 64, 32);
         g = new Graphics();
         Game.inst.world.add(g, Game.LAYER_BORDER);
         render();
-    }
-
-    public function initPosition() {
-        bounds.x = Game.inst.hero.x - (bounds.width >> 1);
-        bounds.y = Game.inst.hero.y - (bounds.height >> 1);
     }
 
     public function delete() {
@@ -89,6 +84,21 @@ class Border {
                 }
             }
         }
+        return true;
+    }
+    public function canStepDown() {
+        bounds.y += 1;
+        for(e in Entity.all) {
+            if(e.canPushBorder) continue;
+            if(bounds.yMin > e.y + e.hitbox.yMin) {
+                var chain = new IntMap<Bool>();
+                if(!e.canPushDown(chain)) {
+                    bounds.y -= 1;
+                    return false;
+                }
+            }
+        }
+        bounds.y -= 1;
         return true;
     }
 }

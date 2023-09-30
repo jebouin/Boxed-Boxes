@@ -1,13 +1,4 @@
-- Update base sources
-- Debug
-- Customize renderer
-- Better GIF
-- Compare perf with new project
-- Linux build
-- Native build?
-- Generated warning with timestamp
-- Version scripts with changelog
-- Use butler (upload thumb/screenshots from promo?)
-- Record promo gifs and screenshots
-- Command to build and release everything
-- Mono to stereo tool
+- Boxes outside
+- Corner correction
+- Level selection
+- Completed level save and timers
