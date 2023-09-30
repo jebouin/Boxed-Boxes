@@ -181,6 +181,11 @@ class Main extends hxd.App {
         if(Key.isPressed(Key.ESCAPE)) {
             System.exit();
         }
+        if(Game.inst != null) {
+            if(Key.isPressed(Key.E)) {
+                Game.inst.loadNextLevel();
+            }
+        }
         fpsCounter.update();
         #end
     }

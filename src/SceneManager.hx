@@ -6,8 +6,8 @@ class Scene {
 	public var onFocusGain : Void->Void;
 	public var onFocusLoss : Void->Void;
 	public var onDelete : Void->Void;
-    var world : h2d.Scene;
-	var hud : h2d.Scene;
+    public var world : h2d.Scene;
+	public var hud : h2d.Scene;
 	public var masking(default, null) : Bool = false;
 	public var maskUpdate(default, null) : Bool = true;
 	public var deleted : Bool = false;
