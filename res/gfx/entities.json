@@ -24,7 +24,8 @@
    { "name": "hero", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 64, "y": 0, "w": 11, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "boxInside", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 80, "y": 8, "w": 24, "h": 24 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "border", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 104, "y": 0, "w": 24, "h": 24 }, "pivot": {"x": 0, "y": 0 } }] },
-   { "name": "boxOutside", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 80, "y": 32, "w": 24, "h": 24 }, "pivot": {"x": 0, "y": 0 } }] }
+   { "name": "boxOutside", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 80, "y": 32, "w": 24, "h": 24 }, "pivot": {"x": 0, "y": 0 } }] },
+   { "name": "borderBack", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 128, "y": 0, "w": 24, "h": 24 }, "pivot": {"x": 0, "y": 0 } }] }
   ]
  }
 }

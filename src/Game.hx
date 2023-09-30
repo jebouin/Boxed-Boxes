@@ -10,6 +10,7 @@ class Game extends Scene {
     public static var LAYER_CLEAR = _layer++;
     public static var LAYER_BACK = _layer++;
     public static var LAYER_BACK_WALLS = _layer++;
+    public static var LAYER_BORDER_BACK = _layer++;
     public static var LAYER_HERO = _layer++;
     public static var LAYER_ENTITIES = _layer++;
     public static var LAYER_WALLS = _layer++;
@@ -30,7 +31,7 @@ class Game extends Scene {
         camera = new Camera();
         level = new Level();
         //loadFirstLevel();
-        loadLevelById(4);
+        loadLevelById(2);
     }
 
     override public function delete() {
