@@ -1,10 +1,11 @@
 package entities;
 
+import haxe.ds.IntMap;
 import h2d.Graphics;
 import h2d.col.IBounds;
 
 class Border {
-    var bounds : IBounds;
+    public var bounds : IBounds;
     var g : Graphics;
 
     public function new() {
@@ -14,26 +15,16 @@ class Border {
         render();
     }
 
+    public function initPosition() {
+        bounds.x = Game.inst.hero.x - (bounds.width >> 1);
+        bounds.y = Game.inst.hero.y - (bounds.height >> 1);
+    }
+
     public function delete() {
         g.remove();
     }
 
     public function update(dt:Float) {
-        for(e in Entity.all) {
-            if(!e.canPushBorder) continue;
-            if(e.x + e.hitbox.xMin < bounds.x) {
-                bounds.x = e.x + e.hitbox.xMin;
-            }
-            if(e.x + e.hitbox.xMax > bounds.x + bounds.width) {
-                bounds.x = e.x + e.hitbox.xMax - bounds.width;
-            }
-            if(e.y + e.hitbox.yMin < bounds.y) {
-                bounds.y = e.y + e.hitbox.yMin;
-            }
-            if(e.y + e.hitbox.yMax > bounds.y + bounds.height) {
-                bounds.y = e.y + e.hitbox.yMax - bounds.height;
-            }
-        }
         render();
     }
 
@@ -42,5 +33,62 @@ class Border {
         g.lineStyle(1, 0xFFFFFF);
         g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
         g.endFill();
+    }
+
+    public function stepLeft() {
+        bounds.x -= 1;
+        for(e in Entity.all) {
+            if(e.canPushBorder) continue;
+            if(bounds.xMax < e.x + e.hitbox.xMax) {
+                var chain = new IntMap<Bool>();
+                if(!e.pushLeft(chain)) {
+                    bounds.x += 1;
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public function stepRight() {
+        bounds.x += 1;
+        for(e in Entity.all) {
+            if(e.canPushBorder) continue;
+            if(bounds.xMin > e.x + e.hitbox.xMin) {
+                var chain = new IntMap<Bool>();
+                if(!e.pushRight(chain)) {
+                    bounds.x -= 1;
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public function stepUp() {
+        bounds.y -= 1;
+        for(e in Entity.all) {
+            if(e.canPushBorder) continue;
+            if(bounds.yMax < e.y + e.hitbox.yMax) {
+                var chain = new IntMap<Bool>();
+                if(!e.pushUp(chain)) {
+                    bounds.y += 1;
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public function stepDown() {
+        bounds.y += 1;
+        for(e in Entity.all) {
+            if(e.canPushBorder) continue;
+            if(bounds.yMin > e.y + e.hitbox.yMin) {
+                var chain = new IntMap<Bool>();
+                if(!e.pushDown(chain)) {
+                    bounds.y -= 1;
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

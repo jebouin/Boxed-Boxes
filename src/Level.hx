@@ -97,6 +97,9 @@ class Level {
                 new Solid(x, y, TS, TS);
             }
         }
+        for(b in level.l_Entities.all_Box) {
+            new entities.Box(b.cx * TS, b.cy * TS);
+        }
     }
 
     public function getCameraBounds() {

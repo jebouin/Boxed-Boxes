@@ -13,13 +13,14 @@ class Hero extends Entity {
         super();
         bitmap = new Bitmap(Assets.getTile("entities", "hero"));
         Game.inst.world.add(bitmap, Game.LAYER_HERO);
-        collisionEnabled = canPushBorder = true;
+        collisionEnabled = canPushBorder = canPushEntities = true;
         hitbox = IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight);
     }
 
     public function spawn() {
         x = Game.inst.level.heroSpawnX;
         y = Game.inst.level.heroSpawnY;
+        Game.inst.border.initPosition();
         updateGraphics();
     }
 
