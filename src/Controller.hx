@@ -1,9 +1,12 @@
 package ;
 
+import h2d.Tile;
+import haxe.ds.StringMap;
 import hxd.Pad;
 import hxd.Key;
 
 enum abstract PadButton(Int) {
+    var INVALID;
     var A;
     var B;
     var X;
@@ -34,6 +37,12 @@ enum abstract PadButton(Int) {
 	var RSTICK_LEFT;
 }
 
+enum abstract GamepadType(Int) {
+    var None;
+    var XBox360;
+    var Switch;
+}
+
 enum abstract ControllerType(Int) {
     var Keyboard;
     var Gamepad;
@@ -42,16 +51,51 @@ enum abstract ControllerType(Int) {
 enum abstract Action(Int) {
     var moveX;
     var moveY;
-    var action;
+    var jump;
 }
 
 class Controller {
+    public static var actionNames = ["flipperLeft", "flipperRight", "moveUp", "moveRight", "moveDown", "moveLeft", "retry", "menuEnter", "menuExit", "pause", "mapToggle", "mapMoveX", "mapMoveY"];
+    public static inline function padButtonToString(b:PadButton) {
+        return switch(b) {
+            case A: "A";
+            case B: "B";
+            case X: "X";
+            case Y: "Y";
+            case START: "START";
+            case SELECT: "SELECT";
+            case LT: "LT";
+            case RT: "RT";
+            case LB: "LB";
+            case RB: "RB";
+            case DPAD_UP: "DPAD UP";
+            case DPAD_RIGHT: "DPAD RIGHT";
+            case DPAD_DOWN: "DPAD DOWN";
+            case DPAD_LEFT: "DPAD LEFT";
+            case LSTICK_PUSH: "LSTICK PUSH";
+            case RSTICK_PUSH: "RSTICK PUSH";
+            case LSTICK_UP: "LSTICK UP";
+            case LSTICK_RIGHT: "LSTICK RIGHT";
+            case LSTICK_DOWN: "LSTICK DOWN";
+            case LSTICK_LEFT: "LSTICK LEFT";
+            case RSTICK_UP: "RSTICK UP";
+            case RSTICK_RIGHT: "RSTICK RIGHT";
+            case RSTICK_DOWN: "RSTICK DOWN";
+            case RSTICK_LEFT: "RSTICK LEFT";
+            default: return "UNKNOWN";
+        };
+    }
+
+    public var padType : GamepadType = GamepadType.None;
     public var pad : hxd.Pad;
     public var onConnect : Void->Void;
     public var onDisconnect : Void->Void;
+    public var onBindingsChange : Void->Void;
     var bindings : Map<Action, Array<Binding> >;
-    var padButtonToId : Map<PadButton, Int>;
+    public var padButtonToId : Map<PadButton, Int>;
     var onControllerChange : Void->Void;
+    public var enabled : Bool = true;
+    public var ignoreNextInput : Bool = false;
 
     public function new() {
         bindings = new Map();
@@ -74,11 +118,23 @@ class Controller {
 
 	function onPadConnected(pad:hxd.Pad) {
 		this.pad = pad;
+        updatePadType();
 		pad.onDisconnect = onPadDisconnected;
         if(onConnect != null) {
             onConnect();
         }
 	}
+
+    function updatePadType() {
+        var name = pad.name.toLowerCase();
+        if(name.indexOf("xbox") != -1) {
+            padType = GamepadType.XBox360;
+        } else if(name.indexOf("switch") != -1) {
+            padType = GamepadType.Switch;
+        } else {
+            padType = GamepadType.None;
+        }
+    }
 
     function getNewBindingFromPadButton(action:Action, button:PadButton) : Binding {
         if(button == LSTICK_UP) {
@@ -118,10 +174,17 @@ class Controller {
 		}
 	}
 
-    public function bindPadStick(actionX:Action, actionY:Action, isLeftStick:Bool) {
-        var bindingX = Binding.newFromPadAxis(this, actionX, isLeftStick, true);
+    public function bindPadLStick(actionX:Action, actionY:Action) {
+        var bindingX = Binding.newFromPadAxis(this, actionX, true, true);
         storeBinding(actionX, bindingX);
-        var bindingY = Binding.newFromPadAxis(this, actionY, isLeftStick, false);
+        var bindingY = Binding.newFromPadAxis(this, actionY, true, false);
+        storeBinding(actionY, bindingY);
+	}
+
+    public function bindPadRStick(actionX:Action, actionY:Action) {
+        var bindingX = Binding.newFromPadAxis(this, actionX, false, true);
+        storeBinding(actionX, bindingX);
+        var bindingY = Binding.newFromPadAxis(this, actionY, false, false);
         storeBinding(actionY, bindingY);
 	}
 
@@ -169,6 +232,9 @@ class Controller {
             bindings.set(action, []);
         }
         bindings.get(action).push(binding);
+        if(onBindingsChange != null) {
+            onBindingsChange();
+        }
     }
 
 	public function rumble(strength:Float, seconds:Float) {
@@ -178,6 +244,7 @@ class Controller {
 	}
 
     public function isDown(action:Action) {
+        if(ignoreNextInput) return false;
         if(!bindings.exists(action)) {
             return false;
         }
@@ -190,6 +257,7 @@ class Controller {
 	}
 
     public function isPressed(action:Action) {
+        if(ignoreNextInput) return false;
         if(!bindings.exists(action)) {
             return false;
         }
@@ -202,6 +270,7 @@ class Controller {
     }
 
     public function isReleased(action:Action) {
+        if(ignoreNextInput) return false;
         if(!bindings.exists(action)) {
             return false;
         }
@@ -256,16 +325,89 @@ class Controller {
 		padButtonToId.set(RSTICK_PUSH, pad.config.ranalogClick);
     }
 
+    public function getStickPadButton(isLeft:Bool, deadZone:Float = .7) {
+        var stickX = isLeft ? pad.xAxis : pad.rxAxis;
+        var stickY = isLeft ? pad.yAxis : pad.ryAxis;
+        var dist = Math.sqrt(stickX * stickX + stickY * stickY);
+        var angle = Math.atan2(stickY, stickX);
+        if(dist > deadZone) {
+            var pi2 = Math.PI / 2;
+            var dirAngle = Math.round(angle / pi2) * pi2;
+            if(dirAngle == 0) {
+                return isLeft ? LSTICK_RIGHT : RSTICK_RIGHT;
+            } else if(dirAngle == -pi2) {
+                return isLeft ? LSTICK_UP : RSTICK_UP;
+            } else if(dirAngle == pi2) {
+                return isLeft ? LSTICK_DOWN : RSTICK_DOWN;
+            } else {
+                return isLeft ? LSTICK_LEFT : RSTICK_LEFT;
+            }
+        }
+        return INVALID;
+    }
+
     public inline function getPadButtonId(padButton:Null<PadButton>) {
         return padButton != null && padButtonToId.exists(padButton) ? padButtonToId.get(padButton) : -1; 
     }
 
+    public function update(dt:Float) {
+        
+    }
+
     public function afterUpdate() {
+        if(!enabled) return;
         for(arr in bindings) {
             for(b in arr) {
                 b.afterUpdate(pad);
             }
         }
+        if(ignoreNextInput) {
+            ignoreNextInput = false;
+        }
+    }
+
+    public function resetBindings() {
+        bindings = new Map();
+        if(onBindingsChange != null) {
+            onBindingsChange();
+        }
+    }
+
+    public function getButtonTileName(button:PadButton) : Null<String> {
+        var name = padButtonToString(button);
+        var defaultPrefix = "pad";
+        var idealPrefix = defaultPrefix + (padType == Switch ? "Switch" : "");
+        if(Assets.hasTile("inputIcons", idealPrefix + name)) {
+            return idealPrefix + name;
+        }
+        if(Assets.hasTile("inputIcons", defaultPrefix + name)) {
+            return defaultPrefix + name;
+        }
+        return null;
+    }
+
+    public function getPrimaryKeyForAction(action:Action) : Null<Int> {
+        if(!bindings.exists(action)) {
+            return null;
+        }
+        for(binding in bindings.get(action)) {
+            if(binding.keyboardPos != -1) {
+                return binding.keyboardPos;
+            }
+        }
+        return null;
+    }
+
+    public function getPrimaryButtonForAction(action:Action) : Null<PadButton> {
+        if(!bindings.exists(action)) {
+            return null;
+        }
+        for(binding in bindings.get(action)) {
+            if(binding.padButton != null) {
+                return binding.padButton;
+            }
+        }
+        return null;
     }
 }
 
@@ -274,8 +416,8 @@ class Binding {
     var controller : Controller;
     public var action : Action;
     public var padButton : Null<PadButton>;
-    public var isLeftStick : Bool = false;
-    public var isRightStick : Bool = false;
+    public var isLStick : Bool = false;
+    public var isRStick : Bool = false;
     public var keyboardPos : Int = -1;
     public var keyboardNeg : Int = -1;
     public var padPos : Null<PadButton>;
@@ -301,35 +443,36 @@ class Binding {
         return binding;
     }
 
-    public static inline function newFromPadAxis(controller:Controller, action:Action, isLeftStick:Bool, isX:Bool) {
+    public static inline function newFromPadAxis(controller:Controller, action:Action, isLStick:Bool, isX:Bool) {
         var binding = new Binding(controller, action);
         binding.isX = isX;
-        binding.isLeftStick = isLeftStick;
-        binding.isRightStick = !isLeftStick;
+        binding.isLStick = isLStick;
+        binding.isRStick = !isLStick;
         return binding;
     }
 
-    public static inline function newFromPadDirection(controller:Controller, action:Action, isLeftStick:Bool, isX:Bool, sign:Int) {
+    public static inline function newFromPadDirection(controller:Controller, action:Action, isLStick:Bool, isX:Bool, sign:Int) {
         var binding = new Binding(controller, action);
         binding.isX = isX;
-        binding.isLeftStick = isLeftStick;
-        binding.isRightStick = !isLeftStick;
+        binding.isLStick = isLStick;
+        binding.isRStick = !isLStick;
         binding.sign = sign;
         return binding;
     }
 
 	public inline function getValue(pad:hxd.Pad) {
+        if(!controller.enabled) return 0.;
         if(Key.isDown(keyboardPos) || pad.isDown(controller.getPadButtonId(padPos))) {
             return 1.;
         } else if(Key.isDown(keyboardNeg) || pad.isDown(controller.getPadButtonId(padNeg))) {
             return -1.;
-        } else if(padPos == null && isLeftStick && isX) {
+        } else if(padPos == null && isLStick && isX) {
             return pad.xAxis * sign;
-        } else if(padPos == null && isLeftStick && !isX) {
+        } else if(padPos == null && isLStick && !isX) {
             return pad.yAxis * sign;
-        } else if(padPos == null && isRightStick && isX) {
+        } else if(padPos == null && isRStick && isX) {
             return pad.rxAxis * sign;
-        } else if(padPos == null && isRightStick && !isX) {
+        } else if(padPos == null && isRStick && !isX) {
             return pad.ryAxis * sign;
         } else {
             return 0.;
@@ -341,7 +484,8 @@ class Binding {
     }
 
     public inline function isDown(pad:hxd.Pad) {
-        if(isLeftStick || isRightStick) {
+        if(!controller.enabled) return false;
+        if(isLStick || isRStick) {
             return getValue(pad) > deadZone;
         }
         return pad.isDown(controller.getPadButtonId(padButton)) || Key.isDown(keyboardPos) || Key.isDown(keyboardNeg);

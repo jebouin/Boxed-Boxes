@@ -50,7 +50,7 @@
         {
             "text": "Windows",
             "color": "yellow",
-            "command": "mv -n bin/windows/*.exe \"bin/windows/Jam Base Test\".exe && ffmpeg -y -i res/gfx/icons/icon.png res/gfx/icons/icon.ico && icotool -c -o res/gfx/icons/icon.ico res/gfx/icons/icon.png && cp \"bin/hl/jamBaseTest.hl\" bin/windows/hlboot.dat && cp bin/pak/resDesktop.pak bin/windows/res.pak && cd bin/ && rm -f windows/*.sav && mv windows \"Jam Base Test\" && zip \"Jam Base Test.zip\" -r \"Jam Base Test/\" && mv \"Jam Base Test\" windows",
+            "command": "mv -n bin/windows/*.exe \"bin/windows/LD54\".exe && ffmpeg -y -i res/gfx/icons/icon.png res/gfx/icons/icon.ico && icotool -c -o res/gfx/icons/icon.ico res/gfx/icons/icon.png && cp \"bin/hl/LD54.hl\" bin/windows/hlboot.dat && cp bin/pak/resDesktop.pak bin/windows/res.pak && cd bin/ && rm -f windows/*.sav && mv windows \"LD54\" && zip \"LD54.zip\" -r \"LD54/\" && mv \"LD54\" windows",
             "alignment": "right",
             "skipTerminateQuickPick": false,
             "priority": -14
@@ -93,7 +93,7 @@
         {
 			"text": "Profile",
 			"color": "yellow",
-			"command": "cp bin/pak/resWeb.pak res.pak && hl --profile 10000 \"bin/hl/jamBaseTest.hl\" && mv hlprofile.dump tools/ && hl tools/profiler.hl tools/hlprofile.dump && rm res.pak",
+			"command": "cp bin/pak/resWeb.pak res.pak && hl --profile 10000 \"bin/hl/LD54.hl\" && mv hlprofile.dump tools/ && hl tools/profiler.hl tools/hlprofile.dump && rm res.pak",
 			"alignment": "right",
 			"skipTerminateQuickPick": false,
 			"priority": -20
