@@ -1,19 +1,27 @@
 package ;
 
+import h2d.Tile;
+import entities.Hero;
+import entities.Entity;
+import entities.Solid;
 import h2d.col.IBounds;
 import h2d.TileGroup;
 import assets.LevelProject;
 
 class LevelRender {
     var walls : TileGroup;
+    var backWalls : TileGroup;
 
     public function new(level:LevelProject_Level) {
         walls = level.l_Walls.render();
         Game.inst.world.add(walls, Game.LAYER_WALLS);
+        backWalls = level.l_BackWalls.render();
+        Game.inst.world.add(backWalls, Game.LAYER_BACK_WALLS);
     }
 
     public function delete() {
         walls.remove();
+        backWalls.remove();
     }
 }
 
@@ -40,6 +48,14 @@ class Level {
         }
     }
 
+    public function clear() {
+        if(render != null) {
+            render.delete();
+        }
+        Entity.deleteAll();
+        Solid.deleteAll();
+    }
+
     public function loadLevelById(id:Int) {
         var levelName = "Main_" + id;
         var world = project.all_worlds.Default;
@@ -52,9 +68,7 @@ class Level {
     }
 
     function loadLevel(newLevel:LevelProject_Level) {
-        if(render != null) {
-            render.delete();
-        }
+        clear();
         level = newLevel;
         widthTiles = level.l_Walls.cWid;
         heightTiles = level.l_Walls.cHei;
@@ -63,12 +77,25 @@ class Level {
         render = new LevelRender(level);
         loadEntities();
         Game.inst.onLevelLoaded();
+        trace("Solid count: " + Solid.all.length);
+        trace("Entity count: " + Entity.all.length);
     }
 
     function loadEntities() {
         for(e in level.l_Entities.all_Hero) {
             heroSpawnX = e.cx * TS;
             heroSpawnY = e.cy * TS;
+        }
+        Game.inst.hero = new Hero();
+        for(tile in level.l_Walls.autoTiles) {
+            var x = tile.renderX;
+            var y = tile.renderY;
+            var tags = project.all_tilesets.Tileset.getAllTags(tile.tileId);
+            if(tags.length == 0) continue;
+            var tag = tags[0];
+            if(tag == Full) {
+                new Solid(x, y, TS, TS);
+            }
         }
     }
 

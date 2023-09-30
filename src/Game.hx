@@ -1,5 +1,6 @@
 package ;
 
+import entities.Border;
 import entities.Hero;
 import entities.Entity;
 import SceneManager.Scene;
@@ -8,14 +9,17 @@ class Game extends Scene {
     static var _layer = 0;
     public static var LAYER_CLEAR = _layer++;
     public static var LAYER_BACK = _layer++;
+    public static var LAYER_BACK_WALLS = _layer++;
     public static var LAYER_HERO = _layer++;
     public static var LAYER_ENTITIES = _layer++;
-    public static var LAYER_LIMITS = _layer++;
     public static var LAYER_WALLS = _layer++;
+    public static var LAYER_BORDER = _layer++;
+    public static var LAYER_DEBUG = _layer++;
     public static var inst : Game;
     public var level : Level;
     public var hero : Hero;
     public var camera : Camera;
+    public var border : Border;
     var levelId : Int = 1;
 
     public function new() {
@@ -25,7 +29,7 @@ class Game extends Scene {
         }
         inst = this;
         camera = new Camera();
-        hero = new Hero();
+        border = new Border();
         level = new Level();
         loadFirstLevel();
     }
@@ -35,11 +39,13 @@ class Game extends Scene {
         inst = null;
         level.delete();
         Entity.deleteAll();
+        border.delete();
     }
 
     override public function update(dt:Float) {
         super.update(dt);
         Entity.updateAll(dt);
+        border.update(dt);
         camera.update(dt);
     }
 

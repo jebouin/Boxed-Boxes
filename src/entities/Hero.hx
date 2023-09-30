@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.col.IBounds;
 import h2d.Bitmap;
 import Controller;
 
@@ -12,6 +13,8 @@ class Hero extends Entity {
         super();
         bitmap = new Bitmap(Assets.getTile("entities", "hero"));
         Game.inst.world.add(bitmap, Game.LAYER_HERO);
+        collisionEnabled = canPushBorder = true;
+        hitbox = IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight);
     }
 
     public function spawn() {
@@ -30,7 +33,7 @@ class Hero extends Entity {
         var controllerAngle = controller.getAnalogAngleXY(Action.moveX, Action.moveY);
         var controllerDist = controller.getAnalogDistXY(Action.moveX, Action.moveY);
         var cx = controllerDist * Math.cos(controllerAngle), cy = controllerDist * Math.sin(controllerAngle);
-        moveNoCollision(120 * cx * dt, 120 * cy * dt);
+        move(120 * cx * dt, 120 * cy * dt);
         super.update(dt);
         updateGraphics();
     }
