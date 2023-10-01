@@ -21,6 +21,7 @@ class Box extends Entity {
         updateGraphics();
         collisionEnabled = true;
         setHitbox(hitbox = IBounds.fromValues(0, 0, width, height));
+        updateBorderConstraint();
         grid.tile = Assets.getTile("entities", "box" + (isInside ? "Inside" : "Outside"));
     }
 
@@ -38,5 +39,9 @@ class Box extends Entity {
     function updateGraphics() {
         grid.x = x;
         grid.y = y;
+    }
+
+    override function onBorderConstraintFixed() {
+        die();
     }
 }

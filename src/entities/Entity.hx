@@ -53,6 +53,7 @@ class Entity {
     var hitDown : Bool = false;
     var borderId : Int = -1;
     public var isInside(default, null) : Bool = false;
+    var stepping : Bool = false;
 
     public function new(?hitbox:IBounds=null) {
         id = all.length;
@@ -65,6 +66,10 @@ class Entity {
     public function delete() {
         if(deleted) return;
         deleted = true;
+    }
+
+    public function die() {
+        delete();
     }
 
     public function beforeUpdate() {
@@ -150,9 +155,11 @@ class Entity {
     }
 
     public function stepLeft(forceCanPushBorder:Bool=false) {
+        if(stepping) return false;
+        stepping = true;
         x--;
         if(Solid.entityCollides(this)) {
-            x++;
+            cancelStepLeft();
             return false;
         }
         for(b in Border.all) {
@@ -160,11 +167,11 @@ class Entity {
             if(b.verticalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushLeft(new IntMap<Bool>())) {
-                        x++;
+                        cancelStepLeft();
                         return false;
                     }
                 } else {
-                    x++;
+                    cancelStepLeft();
                     return false;
                 }
             }
@@ -175,20 +182,23 @@ class Entity {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushLeft(chain)) {
-                    x++;
+                    cancelStepLeft();
                     return false;
                 }
             } else {
-                x++;
+                cancelStepLeft();
                 return false;
             }
         }
+        stepping = false;
         return true;
     }
     public function stepRight(forceCanPushBorder:Bool=false) {
+        if(stepping) return false;
+        stepping = true;
         x++;
         if(Solid.entityCollides(this)) {
-            x--;
+            cancelStepRight();
             return false;
         }
         for(b in Border.all) {
@@ -196,11 +206,11 @@ class Entity {
             if(b.verticalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushRight(new IntMap<Bool>())) {
-                        x--;
+                        cancelStepRight();
                         return false;
                     }
                 } else {
-                    x--;
+                    cancelStepRight();
                     return false;
                 }
             }
@@ -211,20 +221,23 @@ class Entity {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushRight(chain)) {
-                    x--;
+                    cancelStepRight();
                     return false;
                 }
             } else {
-                x--;
+                cancelStepRight();
                 return false;
             }
         }
+        stepping = false;
         return true;
     }
     public function stepUp(forceCanPushBorder:Bool=false) {
+        if(stepping) return false;
+        stepping = true;
         y--;
         if(Solid.entityCollides(this)) {
-            y++;
+            cancelStepUp();
             return false;
         }
         for(b in Border.all) {
@@ -232,11 +245,11 @@ class Entity {
             if(b.horizontalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushUp(new IntMap<Bool>())) {
-                        y++;
+                        cancelStepUp();
                         return false;
                     }
                 } else {
-                    y++;
+                    cancelStepUp();
                     return false;
                 }
             }
@@ -247,20 +260,23 @@ class Entity {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushUp(chain)) {
-                    y++;
+                    cancelStepUp();
                     return false;
                 }
             } else {
-                y++;
+                cancelStepUp();
                 return false;
             }
         }
+        stepping = false;
         return true;
     }
     public function stepDown(forceCanPushBorder:Bool=false) {
+        if(stepping) return false;
+        stepping = true;
         y++;
         if(Solid.entityCollides(this)) {
-            y--;
+            cancelStepDown();
             return false;
         }
         for(b in Border.all) {
@@ -268,11 +284,11 @@ class Entity {
             if(b.horizontalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushDown(new IntMap<Bool>())) {
-                        y--;
+                        cancelStepDown();
                         return false;
                     }
                 } else {
-                    y--;
+                    cancelStepDown();
                     return false;
                 }
             }
@@ -283,15 +299,32 @@ class Entity {
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushDown(chain)) {
-                    y--;
+                    cancelStepDown();
                     return false;
                 }
             } else {
-                y--;
+                cancelStepDown();
                 return false;
             }
         }
+        stepping = false;
         return true;
+    }
+    inline function cancelStepLeft() {
+        x++;
+        stepping = false;
+    }
+    inline function cancelStepRight() {
+        x--;
+        stepping = false;
+    }
+    inline function cancelStepUp() {
+        y++;
+        stepping = false;
+    }
+    inline function cancelStepDown() {
+        y--;
+        stepping = false;
     }
     // For now assume pushing crates can also push the border
     public function pushLeft(chain:IntMap<Bool>) {
@@ -400,6 +433,11 @@ class Entity {
         } else if(y + hitbox.yMax > largestInterBorder.bounds.yMax) {
             y = largestInterBorder.bounds.yMax - hitbox.yMax;
         }
+        onBorderConstraintFixed();
+    }
+
+    function onBorderConstraintFixed() {
+
     }
 
     public function setHitbox(box:IBounds) {

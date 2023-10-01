@@ -32,7 +32,7 @@ class Game extends Scene {
         camera = new Camera();
         level = new Level();
         //loadFirstLevel();
-        loadLevelById(2);
+        loadLevelById(6);
     }
 
     override public function delete() {

@@ -2,6 +2,7 @@
 - Restart level
 - Wall jumps
 - Spikes
+- Kill player if borders cut them
 - Boxes outside
 - Merge borders
 - Corner correction
