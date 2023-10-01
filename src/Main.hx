@@ -68,15 +68,18 @@ class Main extends hxd.App {
         #if debug
         controller.bindKeyAsStickXY(Action.moveX, Action.moveY, Key.F, Key.T, Key.S, Key.R);
         controller.bindKey(Action.jump, Key.N);
+        controller.bindKey(Action.retry, Key.D);
         #else
         controller.bindKeyAsStickXY(Action.moveX, Action.moveY, Key.W, Key.D, Key.S, Key.A);
         controller.bindKeyAsStickXY(Action.moveX, Action.moveY, Key.UP, Key.RIGHT, Key.DOWN, Key.LEFT);
         controller.bindKey(Action.jump, [Key.X, Key.SPACE, Key.SHIFT]);
+        controller.bindKey(Action.retry, [Key.R, Key.V]);
         #end
         controller.bindPadLStick(Action.moveX, Action.moveY);
         controller.bindPadRStick(Action.moveX, Action.moveY);
         controller.bindPadButtonsAsStickXY(Action.moveX, Action.moveY, PadButton.DPAD_UP, PadButton.DPAD_RIGHT, PadButton.DPAD_DOWN, PadButton.DPAD_LEFT);
-        controller.bindPad(Action.jump, [PadButton.A, PadButton.B, PadButton.X, PadButton.Y]);
+        controller.bindPad(Action.jump, [PadButton.A, PadButton.X]);
+        controller.bindPad(Action.retry, [PadButton.B, PadButton.Y]);
     }
     function onEvent(event:hxd.Event) {
         if(!started) return;

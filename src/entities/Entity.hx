@@ -1,5 +1,6 @@
 package entities;
 
+import haxe.ds.Vector;
 import ldtk.Json.IdentifierStyle;
 import haxe.ds.IntMap;
 import h2d.Tile;
@@ -8,8 +9,13 @@ import h2d.Bitmap;
 
 class Entity {
     public static var all : Array<Entity> = [];
+    static var cnt : Int = 0;
 
     public static function updateAll(dt:Float) {
+        for(e in all) {
+            e.beforeUpdate();
+        }
+        cnt = 0;
         var i = 0;
         while(i < all.length) {
             var entity = all[i];
@@ -19,12 +25,6 @@ class Entity {
             } else {
                 i++;
             }
-        }
-    }
-
-    public static function updateAllBorders() {
-        for(e in all) {
-            e.updateBorder();
         }
     }
 
@@ -51,7 +51,7 @@ class Entity {
     var hitRight : Bool = false;
     var hitUp : Bool = false;
     var hitDown : Bool = false;
-    public var borderId(default, null) : Int = -1;
+    var borderId : Int = -1;
 
     public function new() {
         id = all.length;
@@ -61,6 +61,10 @@ class Entity {
     public function delete() {
         if(deleted) return;
         deleted = true;
+    }
+
+    public function beforeUpdate() {
+        borderId = getBorderId();
     }
 
     public function update(dt:Float) {
@@ -141,14 +145,15 @@ class Entity {
     }
 
     public function stepLeft(forceCanPushBorder:Bool=false) {
+        trace(this + "stepLeft from border " + borderId);
         x--;
         if(Solid.entityCollides(this)) {
             x++;
             return false;
         }
         for(b in Border.all) {
-            var isInside = borderId == b.id;
-            if((isInside && x + hitbox.xMin < b.bounds.xMin) || (!isInside && b.intersectsEntity(this))) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.verticalWallIntersectsEntity(this)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushLeft(new IntMap<Bool>())) {
                         x++;
@@ -177,21 +182,25 @@ class Entity {
         return true;
     }
     public function stepRight(forceCanPushBorder:Bool=false) {
+        trace(this + " stepRight from border " + borderId);
         x++;
         if(Solid.entityCollides(this)) {
             x--;
             return false;
         }
         for(b in Border.all) {
-            var isInside = borderId == b.id;
-            if((isInside && x + hitbox.xMax > b.bounds.xMax) || (!isInside && b.intersectsEntity(this))) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.verticalWallIntersectsEntity(this)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushRight(new IntMap<Bool>())) {
+                        trace(this + " failed to push border " + b.id);
                         x--;
                         return false;
                     }
+                    trace(this + " successfully pushed border " + b.id);
                 } else {
-                    x++;
+                    trace(this + " hit border " + b.id);
+                    x--;
                     return false;
                 }
             }
@@ -213,14 +222,18 @@ class Entity {
         return true;
     }
     public function stepUp(forceCanPushBorder:Bool=false) {
+        trace(this + " stepUp from border " + borderId);
         y--;
         if(Solid.entityCollides(this)) {
             y++;
             return false;
         }
         for(b in Border.all) {
-            var isInside = borderId == b.id;
-            if((isInside && y + hitbox.yMin < b.bounds.yMin) || (!isInside && b.intersectsEntity(this))) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.horizontalWallIntersectsEntity(this)) {
+                if(Std.isOfType(this, Box)) {
+                    trace("Box " + this + " intersects border " + borderId);
+                }
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushUp(new IntMap<Bool>())) {
                         y++;
@@ -249,21 +262,25 @@ class Entity {
         return true;
     }
     public function stepDown(forceCanPushBorder:Bool=false) {
+        trace(this + " stepDown from border " + borderId);
         y++;
         if(Solid.entityCollides(this)) {
             y--;
             return false;
         }
         for(b in Border.all) {
-            var isInside = borderId == b.id;
-            if((isInside && y + hitbox.yMax > b.bounds.yMax) || (!isInside && b.intersectsEntity(this))) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.horizontalWallIntersectsEntity(this)) {
                 if(forceCanPushBorder || canPushBorder) {
                     if(!b.pushDown(new IntMap<Bool>())) {
+                        trace(this + " failed to push border " + b.id);
                         y--;
                         return false;
                     }
+                    trace(this + " successfully pushed border " + b.id);
                 } else {
                     y--;
+                    trace(this + " failed hit border " + b.id);
                     return false;
                 }
             }
@@ -286,6 +303,7 @@ class Entity {
     }
     // For now assume pushing crates can also push the border
     public function pushLeft(chain:IntMap<Bool>) {
+        trace(this + " pushLeft from chain " + chain);
         x--;
         for(e in all) {
             if(!collisionEnabled || e == this || !collides(e) || chain.exists(e.id)) continue;
@@ -300,6 +318,7 @@ class Entity {
         return stepLeft(true);
     }
     public function pushRight(chain:IntMap<Bool>) {
+        trace(this + " pushRight from chain " + chain);
         x++;
         for(e in all) {
             if(!collisionEnabled || e == this || !collides(e) || chain.exists(e.id)) continue;
@@ -314,6 +333,7 @@ class Entity {
         return stepRight(true);
     }
     public function pushUp(chain:IntMap<Bool>) {
+        trace(this + " pushUp from chain " + chain);
         y--;
         for(e in all) {
             if(!collisionEnabled || e == this || !collides(e) || chain.exists(e.id)) continue;
@@ -328,6 +348,7 @@ class Entity {
         return stepUp(true);
     }
     public function pushDown(chain:IntMap<Bool>) {
+        trace(this + " pushDown from chain " + chain);
         y++;
         for(e in all) {
             if(!collisionEnabled || e == this || !collides(e) || chain.exists(e.id)) continue;
@@ -349,13 +370,16 @@ class Entity {
             || y + hitbox.yMax <= other.y + other.hitbox.yMin);
     }
 
-    public function updateBorder() {
-        borderId = -1;
+    public function getBorderId() {
         for(b in Border.all) {
             if(b.containsEntity(this)) {
-                borderId = b.id;
-                return;
+                return b.id;
             }
         }
+        return -1;
+    }
+
+    public function debug() {
+        trace("Entity " + this + " " + id + " at (" + (x + hitbox.xMin) + ", " + (y + hitbox.yMin) + ") to (" + (x + hitbox.xMax) + ", " + (y + hitbox.yMax) + ")");
     }
 }

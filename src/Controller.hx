@@ -52,6 +52,7 @@ enum abstract Action(Int) {
     var moveX;
     var moveY;
     var jump;
+    var retry;
 }
 
 class Controller {

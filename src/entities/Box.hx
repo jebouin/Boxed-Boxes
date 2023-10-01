@@ -21,6 +21,14 @@ class Box extends Entity {
         updateGraphics();
         collisionEnabled = true;
         hitbox = IBounds.fromValues(0, 0, width, height);
+        var isInside = false;
+        for(b in Border.all) {
+            if(b.containsEntity(this)) {
+                isInside = true;
+                break;
+            }
+        }
+        grid.tile = Assets.getTile("entities", "box" + (isInside ? "Inside" : "Outside"));
     }
 
     override public function delete() {
@@ -37,10 +45,5 @@ class Box extends Entity {
     function updateGraphics() {
         grid.x = x;
         grid.y = y;
-    }
-
-    override public function updateBorder() {
-        super.updateBorder();
-        grid.tile = Assets.getTile("entities", "box" + (borderId == -1 ? "Outside" : "Inside"));
     }
 }

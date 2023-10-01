@@ -85,11 +85,7 @@ class Level {
     }
 
     function loadEntities() {
-        for(e in level.l_Entities.all_Hero) {
-            heroSpawnX = e.cx * TS;
-            heroSpawnY = e.cy * TS;
-        }
-        Game.inst.hero = new Hero();
+        // Load solids
         for(tile in level.l_Walls.autoTiles) {
             var x = tile.renderX;
             var y = tile.renderY;
@@ -100,15 +96,24 @@ class Level {
                 new Solid(x, y, TS, TS);
             }
         }
+        // Load borders
         for(b in level.l_Entities.all_Border) {
             new Border(IBounds.fromValues(b.cx * TS, b.cy * TS, b.width, b.height));
         }
+        for(b in entities.Border.all) {
+            b.updateWalls();
+            b.render();
+            b.renderMask();
+            b.update(0);
+        }
+        // Load entities
+        for(e in level.l_Entities.all_Hero) {
+            heroSpawnX = e.cx * TS;
+            heroSpawnY = e.cy * TS;
+        }
+        Game.inst.hero = new Hero();
         for(b in level.l_Entities.all_Box) {
             new Box(b.cx * TS, b.cy * TS, b.width, b.height);
-        }
-        Entity.updateAllBorders();
-        for(e in Entity.all) {
-            trace(e, e.borderId);
         }
     }
 

@@ -1,5 +1,6 @@
 package ;
 
+import Controller.Action;
 import entities.Border;
 import entities.Hero;
 import entities.Entity;
@@ -46,7 +47,17 @@ class Game extends Scene {
         super.update(dt);
         Entity.updateAll(dt);
         Border.updateAll(dt);
+        for(e in Entity.all) {
+            e.debug();
+        }
+        for(b in Border.all) {
+            b.debug();
+        }
+        trace(" ");
         camera.update(dt);
+        if(Main.inst.controller.isPressed(Action.retry)) {
+            retry();
+        }
     }
 
     public function loadFirstLevel() {
@@ -71,5 +82,9 @@ class Game extends Scene {
         hero.spawn();
         camera.setBounds(level.getCameraBounds());
         camera.setTarget(hero, true);
+    }
+
+    public function retry() {
+        loadLevelById(levelId);
     }
 }

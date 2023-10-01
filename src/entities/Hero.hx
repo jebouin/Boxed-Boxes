@@ -46,7 +46,6 @@ class Hero extends Entity {
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         prevFacing = None;
         updateGraphics();
-        updateBorder();
     }
 
     override public function delete() {
