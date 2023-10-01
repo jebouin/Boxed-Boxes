@@ -23,7 +23,7 @@ class Game extends Scene {
     public var camera : Camera;
     var levelId : Int = 1;
 
-    public function new() {
+    public function new(?levelId:Int=6) {
         super();
         if(inst != null) {
             throw "Game scene already exists";
@@ -32,7 +32,7 @@ class Game extends Scene {
         camera = new Camera();
         level = new Level();
         //loadFirstLevel();
-        loadLevelById(6);
+        loadLevelById(levelId);
     }
 
     override public function delete() {

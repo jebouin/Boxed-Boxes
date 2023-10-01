@@ -53,6 +53,12 @@ enum abstract Action(Int) {
     var moveY;
     var jump;
     var retry;
+    var menuUp;
+    var menuRight;
+    var menuDown;
+    var menuLeft;
+    var menuEnter;
+    var menuQuit;
 }
 
 class Controller {

@@ -23,10 +23,12 @@ class Assets {
     static inline var LOOPS_COL_TRUE = "#0000ffff";
     static inline var LOOPS_COL_FALSE = "#fe5b59ff";
     public static var font : Font;
+    public static var fontLarge : Font;
     static var sheets : StringMap<SpriteSheet>;
 
     public static function init() {
         font = Res.fonts.cc13.toFont();
+        fontLarge = Res.fonts.large.toFont();
         loadAllSpriteSheets();
     }
 
