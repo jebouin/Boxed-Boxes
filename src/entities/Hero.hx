@@ -17,7 +17,7 @@ class Hero extends Entity {
     public static inline var FALL_VEL = 180;
     public static inline var FALL_FAST_VEL = 300;
     public static inline var FALL_WALL_VEL = 90;
-    public static inline var AIR_FRICTION_X = .995;
+    public static inline var AIR_FRICTION_X = .999;
     public static inline var GRAVITY = .996;
     public static inline var GRAVITY_JUMP = .93;
     public static inline var GRAVITY_FAST = .9993;
@@ -47,6 +47,7 @@ class Hero extends Entity {
         Game.inst.world.add(bitmap, Game.LAYER_HERO);
         collisionEnabled = canPushBorder = canPushEntities = true;
         setHitbox(IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight));
+        movementType = Alternate;
     }
 
     public function spawn() {

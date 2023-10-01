@@ -7,6 +7,12 @@ import h2d.Tile;
 import h2d.col.IBounds;
 import h2d.Bitmap;
 
+enum MovementType {
+    Full;
+    // USed for boxes, makes sure they fall down before moving horizontally
+    Alternate;
+}
+
 class Entity {
     public static var all : Array<Entity> = [];
     static var cnt : Int = 0;
@@ -54,6 +60,7 @@ class Entity {
     var borderId : Int = -1;
     public var isInside(default, null) : Bool = false;
     var stepping : Bool = false;
+    var movementType : MovementType = Full;
 
     public function new(?hitbox:IBounds=null) {
         id = all.length;
@@ -104,52 +111,103 @@ class Entity {
             moveNoCollision(dx, dy);
             return;
         }
-        moveX(dx);
-        moveY(dy);
-    }
-    public function moveX(dx:Float) {
         rx += dx;
-        var amount = Math.round(rx);
-        if(amount != 0) {
-            rx -= amount;
-            while(amount < 0) {
-                if(!stepLeft()) {
-                    vx = 0;
-                    hitLeft = true;
-                    break;
-                }
-                amount++;
-            }
-            while(amount > 0) {
-                if(!stepRight()) {
-                    vx = 0;
-                    hitRight = true;
-                    break;
-                }
-                amount--;
-            }
-        }
-    }
-    public function moveY(dy:Float) {
         ry += dy;
-        var amount = Math.round(ry);
-        if(amount != 0) {
-            ry -= amount;
-            while(amount < 0) {
-                if(!stepUp()) {
-                    vy = 0;
-                    hitUp = true;
-                    break;
+        var amountX = Math.round(rx);
+        var amountY = Math.round(ry);
+        rx -= amountX;
+        ry -= amountY;
+        if(movementType == Full) {
+            if(amountX != 0) {
+                while(amountX < 0) {
+                    if(!stepLeft()) {
+                        vx = 0;
+                        hitLeft = true;
+                        break;
+                    }
+                    amountX++;
                 }
-                amount++;
+                while(amountX > 0) {
+                    if(!stepRight()) {
+                        vx = 0;
+                        hitRight = true;
+                        break;
+                    }
+                    amountX--;
+                }
             }
-            while(amount > 0) {
-                if(!stepDown()) {
-                    vy = 0;
-                    hitDown = true;
-                    break;
+            if(amountY != 0) {
+                while(amountY < 0) {
+                    if(!stepUp()) {
+                        vy = 0;
+                        hitUp = true;
+                        break;
+                    }
+                    amountY++;
                 }
-                amount--;
+                while(amountY > 0) {
+                    if(!stepDown()) {
+                        vy = 0;
+                        hitDown = true;
+                        break;
+                    }
+                    amountY--;
+                }
+            }
+        } else if(movementType == Alternate) {
+            var turn : Int = 0;
+            while(amountX != 0 || amountY != 0) {
+                var shouldStepX = turn % 2 == 0 || amountY == 0;
+                if(shouldStepX) {
+                    if(amountX < 0) {
+                        if(!stepLeft()) {
+                            vx = 0;
+                            hitLeft = true;
+                            amountX = 0;
+                        }
+                        if(!hitLeft) {
+                            amountX++;
+                        }
+                        if(amountY >= 0) {
+                            if(stepDown()) {
+                                if(amountY > 0) amountY--;
+                            }
+                        }
+                    }
+                    if(amountX > 0) {
+                        if(!stepRight()) {
+                            vx = 0;
+                            hitRight = true;
+                            amountX = 0;
+                        }
+                        if(!hitRight) {
+                            amountX--;
+                        }
+                        if(amountY >= 0) {
+                            if(stepDown()) {
+                                if(amountY > 0) amountY--;
+                            }
+                        }
+                    }
+                } else {
+                    if(amountY < 0) {
+                        if(!stepUp()) {
+                            vy = 0;
+                            hitUp = true;
+                            break;
+                        }
+                        amountY++;
+                    }
+                    if(amountY > 0) {
+                        if(!stepDown()) {
+                            vy = 0;
+                            hitDown = true;
+                            break;
+                        }
+                        amountY--;
+                    }
+                }
+                turn++;
             }
         }
     }
@@ -339,7 +397,13 @@ class Entity {
             chain.remove(this.id);
         }
         x++;
-        return stepLeft(true);
+        if(!stepLeft(true)) {
+            return false;
+        }
+        if(!canPushEntities) {
+            stepDown();
+        }
+        return true;
     }
     public function pushRight(chain:IntMap<Bool>) {
         x++;
@@ -353,7 +417,13 @@ class Entity {
             chain.remove(this.id);
         }
         x--;
-        return stepRight(true);
+        if(!stepRight(true)) {
+            return false;
+        }
+        if(!canPushEntities) {
+            stepDown();
+        }
+        return true;
     }
     public function pushUp(chain:IntMap<Bool>) {
         y--;

@@ -23,6 +23,7 @@ class Box extends Entity {
         setHitbox(hitbox = IBounds.fromValues(0, 0, width, height));
         updateBorderConstraint();
         grid.tile = Assets.getTile("entities", "box" + (isInside ? "Inside" : "Outside"));
+        movementType = Alternate;
     }
 
     override public function delete() {

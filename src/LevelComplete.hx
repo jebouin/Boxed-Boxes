@@ -115,7 +115,7 @@ class LevelComplete extends Scene {
     }
     function onTitlePressed() {
         delete();
-        new Title();
+        new Title(globalLevelId);
     }
 
     override public function delete() {
@@ -156,6 +156,9 @@ class LevelComplete extends Scene {
         checkHoldAction(Action.menuDown, 1);
         if(controller.isPressed(Action.menuEnter)) {
             lines[curId].press();
+        }
+        if(controller.isPressed(Action.menuQuit)) {
+            onTitlePressed();
         }
         timer += dt;
         var t = timer / .5;

@@ -1,7 +1,11 @@
+- LD 1
+- Go back to title from game
+- Fix start level jump
+- LD 2
+- LD 3
+- SFX
 - Biomes
 	- Parallax
-- Level design
-- SFX
 - Key to go back to title
 
 IF TIME LEFT

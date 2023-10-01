@@ -67,8 +67,8 @@ class Main extends hxd.App {
     }
     function startGame() {
         started = true;
-        new Game(true, 19);
-        //new Title();
+        new Game(true, 1);
+        //new Title(1);
         //new LevelComplete(0, 3, 3);
     }
     function initController() {
@@ -104,6 +104,8 @@ class Main extends hxd.App {
         controller.bindPad(Action.menuRight, [PadButton.DPAD_RIGHT, PadButton.LSTICK_RIGHT, PadButton.RSTICK_RIGHT]);
         controller.bindPad(Action.menuDown, [PadButton.DPAD_DOWN, PadButton.LSTICK_DOWN, PadButton.RSTICK_DOWN]);
         controller.bindPad(Action.menuLeft, [PadButton.DPAD_LEFT, PadButton.LSTICK_LEFT, PadButton.RSTICK_LEFT]);
+        controller.bindPad(Action.menuEnter, [PadButton.A, PadButton.X]);
+        controller.bindPad(Action.menuQuit, [PadButton.B, PadButton.Y]);
     }
     function onEvent(event:hxd.Event) {
         if(!started) return;

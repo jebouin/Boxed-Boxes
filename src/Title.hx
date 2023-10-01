@@ -79,7 +79,7 @@ class Title extends Scene {
     var lastMovementAction : Controller.Action = Action.menuEnter;
     var menu : Flow;
 
-    public function new() {
+    public function new(curLevelId:Int) {
         super();
         if(inst != null) {
             throw "Title scene already exists";
@@ -96,6 +96,9 @@ class Title extends Scene {
         title.text = "SELECT A LEVEL";
         title.textColor = 0xfee761;
         createMenu();
+        curI = Std.int((curLevelId - 1) % (GROUP_HEIGHT * GROUP_WIDTH) / GROUP_WIDTH);
+        curJ = (curLevelId - 1) % GROUP_WIDTH;
+        curGroup = Std.int((curLevelId - 1) / (GROUP_HEIGHT * GROUP_WIDTH));
         updateSelected();
     }
 
