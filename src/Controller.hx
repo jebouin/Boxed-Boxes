@@ -53,6 +53,7 @@ enum abstract Action(Int) {
     var moveY;
     var jump;
     var retry;
+    var pause;
     var menuUp;
     var menuRight;
     var menuDown;

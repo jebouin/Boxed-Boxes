@@ -90,6 +90,10 @@ class Game extends Scene {
             if(Main.inst.controller.isPressed(Action.retry)) {
                 retry();
             }
+            if(Main.inst.controller.isPressed(Action.pause)) {
+                delete();
+                new Title(levelId);
+            }
         } else if(state == TransitionOut) {
             updateTransitionOut(dt);
             if(stateTimer >= TRANSITION_OUT_TIME) {

@@ -220,20 +220,6 @@ class Entity {
             cancelStepLeft();
             return false;
         }
-        for(b in Border.all) {
-            if(borderId != -1 && borderId != b.id) continue;
-            if(b.verticalWallIntersectsEntity(this, isInside)) {
-                if(forceCanPushBorder || canPushBorder) {
-                    if(!b.pushLeft(new IntMap<Bool>())) {
-                        cancelStepLeft();
-                        return false;
-                    }
-                } else {
-                    cancelStepLeft();
-                    return false;
-                }
-            }
-        }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e)) continue;
             if(canPushEntities) {
@@ -248,6 +234,20 @@ class Entity {
                 return false;
             }
         }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.verticalWallIntersectsEntity(this, isInside)) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushLeft(new IntMap<Bool>())) {
+                        cancelStepLeft();
+                        return false;
+                    }
+                } else {
+                    cancelStepLeft();
+                    return false;
+                }
+            }
+        }
         stepping = false;
         return true;
     }
@@ -258,20 +258,6 @@ class Entity {
         if(Solid.entityCollides(this)) {
             cancelStepRight();
             return false;
-        }
-        for(b in Border.all) {
-            if(borderId != -1 && borderId != b.id) continue;
-            if(b.verticalWallIntersectsEntity(this, isInside)) {
-                if(forceCanPushBorder || canPushBorder) {
-                    if(!b.pushRight(new IntMap<Bool>())) {
-                        cancelStepRight();
-                        return false;
-                    }
-                } else {
-                    cancelStepRight();
-                    return false;
-                }
-            }
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e)) continue;
@@ -287,6 +273,20 @@ class Entity {
                 return false;
             }
         }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.verticalWallIntersectsEntity(this, isInside)) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushRight(new IntMap<Bool>())) {
+                        cancelStepRight();
+                        return false;
+                    }
+                } else {
+                    cancelStepRight();
+                    return false;
+                }
+            }
+        }
         stepping = false;
         return true;
     }
@@ -297,20 +297,6 @@ class Entity {
         if(Solid.entityCollides(this)) {
             cancelStepUp();
             return false;
-        }
-        for(b in Border.all) {
-            if(borderId != -1 && borderId != b.id) continue;
-            if(b.horizontalWallIntersectsEntity(this, isInside)) {
-                if(forceCanPushBorder || canPushBorder) {
-                    if(!b.pushUp(new IntMap<Bool>())) {
-                        cancelStepUp();
-                        return false;
-                    }
-                } else {
-                    cancelStepUp();
-                    return false;
-                }
-            }
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e)) continue;
@@ -326,6 +312,20 @@ class Entity {
                 return false;
             }
         }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.horizontalWallIntersectsEntity(this, isInside)) {
+                if(forceCanPushBorder || canPushBorder) {
+                    if(!b.pushUp(new IntMap<Bool>())) {
+                        cancelStepUp();
+                        return false;
+                    }
+                } else {
+                    cancelStepUp();
+                    return false;
+                }
+            }
+        }
         stepping = false;
         return true;
     }
@@ -336,20 +336,6 @@ class Entity {
         if(Solid.entityCollides(this)) {
             cancelStepDown();
             return false;
-        }
-        for(b in Border.all) {
-            if(borderId != -1 && borderId != b.id) continue;
-            if(b.horizontalWallIntersectsEntity(this, isInside)) {
-                if(forceCanPushBorder || canPushBorder) {
-                    if(!b.pushDown(new IntMap<Bool>())) {
-                        cancelStepDown();
-                        return false;
-                    }
-                } else {
-                    cancelStepDown();
-                    return false;
-                }
-            }
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e)) continue;
@@ -363,6 +349,21 @@ class Entity {
             } else {
                 cancelStepDown();
                 return false;
+            }
+        }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(b.horizontalWallIntersectsEntity(this, isInside)) {
+                if(forceCanPushBorder || canPushBorder) {
+                    trace(this, " step down and push border " + b.id);
+                    if(!b.pushDown(new IntMap<Bool>())) {
+                        cancelStepDown();
+                        return false;
+                    }
+                } else {
+                    cancelStepDown();
+                    return false;
+                }
             }
         }
         stepping = false;

@@ -67,7 +67,7 @@ class Main extends hxd.App {
     }
     function startGame() {
         started = true;
-        new Game(true, 1);
+        new Game(true, 13);
         //new Title(1);
         //new LevelComplete(0, 3, 3);
     }
@@ -77,6 +77,7 @@ class Main extends hxd.App {
         controller.bindKeyAsStickXY(Action.moveX, Action.moveY, Key.F, Key.T, Key.S, Key.R);
         controller.bindKey(Action.jump, Key.N);
         controller.bindKey(Action.retry, Key.D);
+        controller.bindKey(Action.pause, Key.P);
         controller.bindKey(Action.menuUp, Key.F);
         controller.bindKey(Action.menuRight, Key.T);
         controller.bindKey(Action.menuDown, Key.S);
@@ -88,6 +89,7 @@ class Main extends hxd.App {
         controller.bindKeyAsStickXY(Action.moveX, Action.moveY, Key.UP, Key.RIGHT, Key.DOWN, Key.LEFT);
         controller.bindKey(Action.jump, [Key.X, Key.SPACE, Key.SHIFT]);
         controller.bindKey(Action.retry, [Key.R, Key.V]);
+        controller.bindKey(Action.pause, [Key.ESCAPE, Key.DELETE, Key.P]);
         controller.bindKey(Action.menuUp, Key.W);
         controller.bindKey(Action.menuRight, Key.D);
         controller.bindKey(Action.menuDown, Key.S);
@@ -100,6 +102,7 @@ class Main extends hxd.App {
         controller.bindPadButtonsAsStickXY(Action.moveX, Action.moveY, PadButton.DPAD_UP, PadButton.DPAD_RIGHT, PadButton.DPAD_DOWN, PadButton.DPAD_LEFT);
         controller.bindPad(Action.jump, [PadButton.A, PadButton.X]);
         controller.bindPad(Action.retry, [PadButton.B, PadButton.Y]);
+        controller.bindPad(Action.pause, [PadButton.START, PadButton.SELECT]);
         controller.bindPad(Action.menuUp, [PadButton.DPAD_UP, PadButton.LSTICK_UP, PadButton.RSTICK_UP]);
         controller.bindPad(Action.menuRight, [PadButton.DPAD_RIGHT, PadButton.LSTICK_RIGHT, PadButton.RSTICK_RIGHT]);
         controller.bindPad(Action.menuDown, [PadButton.DPAD_DOWN, PadButton.LSTICK_DOWN, PadButton.RSTICK_DOWN]);

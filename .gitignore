@@ -22,6 +22,7 @@ res/.tmp
 res/music/export*
 res/music/unused
 res/bitwigProjects/*/auto-backups/
+res/LevelProject/backups/
 saves/*
 src/integration
 src/integration/Secret.hx

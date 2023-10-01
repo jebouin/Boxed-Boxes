@@ -81,7 +81,7 @@ class LevelComplete extends Scene {
         title.text = Title.GROUP_NAMES[groupId];
         title.textColor = Title.GROUP_COLORS[groupId];
         var complete = new Text(Assets.font, container);
-        complete.text = "LEVEL " + levelId + " COMPLETE!";
+        complete.text = "LEVEL " + globalLevelId + " COMPLETE!";
         var props = container.getProperties(complete);
         props.paddingTop = 10;
         var menu = new Flow(container);
@@ -157,7 +157,7 @@ class LevelComplete extends Scene {
         if(controller.isPressed(Action.menuEnter)) {
             lines[curId].press();
         }
-        if(controller.isPressed(Action.menuQuit)) {
+        if(controller.isPressed(Action.menuQuit) || controller.isPressed(Action.pause)) {
             onTitlePressed();
         }
         timer += dt;

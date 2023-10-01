@@ -102,18 +102,18 @@
 				},
 				{
 					"__identifier": "Gem",
-					"__grid": [50,9],
+					"__grid": [50,7],
 					"__pivot": [0.5,0.5],
 					"__tags": [],
 					"__tile": { "tilesetUid": 20, "x": 0, "y": 120, "w": 16, "h": 16 },
 					"__smartColor": "#EAD4AA",
 					"__worldX": 1244,
-					"__worldY": 276,
+					"__worldY": 260,
 					"iid": "2ea35f90-3b70-11ee-927a-f7b63bf6baa5",
 					"width": 16,
 					"height": 16,
 					"defUid": 41,
-					"px": [404,76],
+					"px": [404,60],
 					"fieldInstances": []
 				}
 			]

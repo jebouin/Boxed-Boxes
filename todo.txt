@@ -1,4 +1,4 @@
-- LD 1
+
 - Go back to title from game
 - Fix start level jump
 - LD 2
@@ -9,6 +9,7 @@
 - Key to go back to title
 
 IF TIME LEFT
+- Constraint to level bounds
 - Music
 - Entity/solid corner correction
 - Screen shake
