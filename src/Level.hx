@@ -1,5 +1,6 @@
 package ;
 
+import entities.Gem;
 import entities.Border;
 import entities.Box;
 import h2d.Tile;
@@ -56,6 +57,7 @@ class Level {
         }
         Entity.deleteAll();
         Solid.deleteAll();
+        entities.Gem.deleteAll();
         entities.Border.deleteAll();
     }
 
@@ -114,6 +116,9 @@ class Level {
         Game.inst.hero = new Hero();
         for(b in level.l_Entities.all_Box) {
             new Box(b.cx * TS, b.cy * TS, b.width, b.height);
+        }
+        for(g in level.l_Entities.all_Gem) {
+            new Gem(Game.inst.getLevelGroup(), g.pixelX, g.pixelY);
         }
     }
 

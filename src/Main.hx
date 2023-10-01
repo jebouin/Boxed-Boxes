@@ -64,8 +64,8 @@ class Main extends hxd.App {
     }
     function startGame() {
         started = true;
-        //new Game();
-        new Title();
+        new Game(true, 1);
+        //new Title();
     }
     function initController() {
         controller = new Controller();

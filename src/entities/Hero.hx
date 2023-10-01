@@ -150,6 +150,11 @@ class Hero extends Entity {
             vy = Util.sodStep(vy, 0, .99, dt);
         }
         super.update(dt);
+        for(g in Gem.all) {
+            if(g.collides(this)) {
+                Game.inst.levelComplete();
+            }
+        }
         updateGraphics();
     }
 

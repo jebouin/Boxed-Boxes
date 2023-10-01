@@ -37,7 +37,11 @@
    { "name": "levelCellCompleted1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 32, "y": 72, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "levelCellCompletedSelected1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 48, "y": 72, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "levelCellCompleted2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 64, "y": 72, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
-   { "name": "levelCellCompletedSelected2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 80, "y": 72, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] }
+   { "name": "levelCellCompletedSelected2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 80, "y": 72, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
+   { "name": "gem0", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 120, "w": 224, "h": 16 } }] },
+   { "name": "ramp0", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 144, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] },
+   { "name": "ramp1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 152, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] },
+   { "name": "ramp2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 160, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] }
   ]
  }
 }
