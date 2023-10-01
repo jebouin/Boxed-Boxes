@@ -66,6 +66,7 @@ class Game extends Scene {
         //loadFirstLevel();
         levelId = globalLevelId;
         loadLevelById(levelId);
+        camera.update(0);
     }
 
     override public function delete() {
@@ -102,6 +103,7 @@ class Game extends Scene {
                 var maskX = winGraphics.x + world.x;
                 var maskY = winGraphics.y + world.y;
                 new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId, maskX, maskY);
+                Audio.playSound("levelComplete");
                 delete();
                 return;
             }

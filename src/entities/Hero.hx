@@ -153,6 +153,7 @@ class Hero extends Entity {
         super.update(dt);
         for(g in Gem.all) {
             if(g.collides(this)) {
+                Audio.playSound("gem");
                 Game.inst.levelComplete();
             }
         }
@@ -168,6 +169,7 @@ class Hero extends Entity {
     public override function die(dx:Float, dy:Float) {
         super.die(dx, dy);
         Game.inst.onDeath(dx, dy);
+        Audio.playSound("death");
     }
 
     function jump() {
@@ -175,6 +177,7 @@ class Hero extends Entity {
         groundTimer = JUMP_COYOTE_TIME + 1.;
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         vy = -JUMP_VEL;
+        Audio.playSound("jump", false, .3);
         return true;
     }
     function wallJump(dx:Int) {
@@ -182,6 +185,7 @@ class Hero extends Entity {
         vy = -WALL_JUMP_VEL_Y;
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         wallJumpTimer = 0.;
+        Audio.playSound("wallJump", false, .3);
         return true;
     }
 

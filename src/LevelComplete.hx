@@ -156,9 +156,11 @@ class LevelComplete extends Scene {
         checkHoldAction(Action.menuDown, 1);
         if(controller.isPressed(Action.menuEnter)) {
             lines[curId].press();
+            Audio.playSound("menuSelect");
         }
         if(controller.isPressed(Action.menuQuit) || controller.isPressed(Action.pause)) {
             onTitlePressed();
+            Audio.playSound("menuSelect");
         }
         timer += dt;
         var t = timer / .5;
@@ -173,14 +175,20 @@ class LevelComplete extends Scene {
     }
 
     function moveSelection(dir:Int) {
+        var moved = false;
         if(dir == -1) {
             if(curId > 0) {
                 curId--;
+                moved = true;
             }
         } else if(dir == 1) {
             if(curId < lines.length - 1) {
                 curId++;
+                moved = true;
             }
+        }
+        if(moved) {
+            Audio.playSound("menuMove");
         }
         updateSelected();
     }

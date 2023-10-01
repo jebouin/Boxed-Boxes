@@ -209,6 +209,7 @@ class Title extends Scene {
         checkHoldAction(Action.menuUp, -1, 0);
         checkHoldAction(Action.menuDown, 1, 0);
         if(controller.isPressed(Action.menuEnter)) {
+            Audio.playSound("menuSelect");
             delete();
             new Game(true, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
         }
@@ -252,13 +253,18 @@ class Title extends Scene {
     function tryMoveSelection(di:Int, dj:Int) {
         var prevI = curI, prevJ = curJ, prevGroup = curGroup;
         if(!moveSelection(di, dj)) return;
+        var moved = true;
         while(cells[curGroup][curI][curJ].locked) {
             if(!moveSelection(di, dj)) {
                 curI = prevI;
                 curJ = prevJ;
                 curGroup = prevGroup;
+                moved = false;
                 break;
             }
+        }
+        if(moved) {
+            Audio.playSound("menuMove");
         }
         updateSelected();
     }
