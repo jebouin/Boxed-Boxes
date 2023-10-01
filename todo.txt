@@ -1,5 +1,3 @@
-- LD 2
-	- Push borders
 - SFX
 	- Menu move
 	- Menu select
@@ -18,3 +16,5 @@ IF TIME LEFT
 - Screen shake
 - Particles
 - Speedrun timers
+- More levels
+	- Make stairs by pushing borders

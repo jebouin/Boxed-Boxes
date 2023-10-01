@@ -108,7 +108,7 @@ class Title extends Scene {
             cells = [];
         }
         menu = new Flow(container);
-        menu.paddingTop = 9;
+        menu.paddingTop = 15;
         menu.horizontalSpacing = 12;
         var completedCount = 0;
         for(k in 0...GROUP_COUNT) {
