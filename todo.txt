@@ -1,8 +1,13 @@
+- Completed level save
+- Finish evel selection
+- Level goal (go next/back to menu)
 - Spikes
 - Kill player if borders cut them
-- Boxes outside
-- Merge borders
-- Corner correction
-- Level selection
-- Completed level save and timers
-- Box/solid corner correction
+- Entity/solid corner correction
+- Biomes
+- Level design
+- SFX
+- Music
+
+IF TIME LEFT
+- Speedrun timers

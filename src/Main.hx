@@ -1,5 +1,6 @@
 package ;
 
+import save.Save;
 import hxd.System;
 import h2d.Tile;
 import h2d.Bitmap;
@@ -57,7 +58,9 @@ class Main extends hxd.App {
         window.title = GAME_NAME;
         SceneManager.init();
         fpsCounter = new FPSCounter(Assets.font);
-        startGame();
+        Save.init(function(success) {
+            startGame();
+        });
     }
     function startGame() {
         started = true;
