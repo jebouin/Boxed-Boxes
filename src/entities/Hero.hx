@@ -85,7 +85,7 @@ class Hero extends Entity {
             }
         }
         var fastFall = facing == Down;
-        var sliding = !fastFall && ((facing == Left && wallLeft) || (facing == Right && wallRight));
+        var sliding = !fastFall && ((facing == Left && wallLeft) || (facing == Right && wallRight)) && vy > 0;
         wallJumpTimer += dt;
         var wallJumping = wallJumpTimer <= WALL_JUMP_TIME;
         if(wallJumping) {
@@ -132,7 +132,7 @@ class Hero extends Entity {
         } else if(onGround && controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME) {
             jumped = jump();
         }
-        if(!jumped) {
+        if(!jumped && !onGround) {
             if(controller.isPressed(Action.jump) || (controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME)) {
                 if(wallLeftTimer < wallRightTimer) {
                     if(wallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME)) {

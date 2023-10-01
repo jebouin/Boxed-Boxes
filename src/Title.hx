@@ -190,7 +190,7 @@ class Title extends Scene {
         checkHoldAction(Action.menuDown, 1, 0);
         if(controller.isPressed(Action.menuEnter)) {
             delete();
-            new Game(false, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
+            new Game(true, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
         }
     }
 

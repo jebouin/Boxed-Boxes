@@ -42,7 +42,7 @@ class Game extends Scene {
     var winGraphics : Graphics;
     var ramp : Pixels;
 
-    public function new(initial:Bool, levelId:Int) {
+    public function new(initial:Bool, globalLevelId:Int) {
         super();
         if(inst != null) {
             throw "Game scene already exists";
@@ -55,6 +55,7 @@ class Game extends Scene {
         winGraphics.visible = false;
         state = initial ? Play : TransitionIn;
         //loadFirstLevel();
+        levelId = globalLevelId;
         loadLevelById(levelId);
     }
 
@@ -81,8 +82,10 @@ class Game extends Scene {
         } else if(state == TransitionOut) {
             updateTransitionOut(dt);
             if(stateTimer >= TRANSITION_OUT_TIME) {
-                loadNextLevel();
-                state = TransitionIn;
+                var group = getLevelGroup();
+                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId);
+                delete();
+                return;
             }
         } else if(state == TransitionIn) {
             if(stateTimer >= TRANSITION_IN_TIME) {
@@ -169,6 +172,13 @@ class Game extends Scene {
             dt = 1. - Math.pow(1. - dt, 2);
             var r = dt * 1.5 * Main.WIDTH;
             drawRect(col, r);
+        }
+    }
+
+    public function forceCompleteLevel() {
+        for(g in Gem.all) {
+            hero.x = Std.int(g.anim.x);
+            hero.y = Std.int(g.anim.y);
         }
     }
 }

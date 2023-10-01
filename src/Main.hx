@@ -64,8 +64,9 @@ class Main extends hxd.App {
     }
     function startGame() {
         started = true;
-        new Game(true, 1);
-        //new Title();
+        //new Game(true, 1);
+        new Title();
+        //new LevelComplete(0, 3, 3);
     }
     function initController() {
         controller = new Controller();
@@ -207,6 +208,9 @@ class Main extends hxd.App {
         if(Game.inst != null) {
             if(Key.isPressed(Key.E)) {
                 Game.inst.loadNextLevel();
+            }
+            if(Key.isPressed(Key.G)) {
+                Game.inst.forceCompleteLevel();
             }
         }
         fpsCounter.update();

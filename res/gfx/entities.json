@@ -41,7 +41,9 @@
    { "name": "gem0", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 120, "w": 224, "h": 16 } }] },
    { "name": "ramp0", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 144, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "ramp1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 152, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] },
-   { "name": "ramp2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 160, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] }
+   { "name": "ramp2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 160, "y": 160, "w": 32, "h": 8 }, "pivot": {"x": 0, "y": 0 } }] },
+   { "name": "button", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 56, "y": 96, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
+   { "name": "buttonSelected", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 72, "y": 96, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] }
   ]
  }
 }
