@@ -58,7 +58,7 @@ class Border {
         group = new TileGroup(tile);
         Game.inst.world.add(group, Game.LAYER_BORDER);
         groupBack = new TileGroup(tileBack);
-        groupBack.alpha = Game.inst.getLevelGroup() == 0 ? .15 : .4;
+        groupBack.alpha = Game.inst.getLevelGroup() == 1 ? .4 : .15;
         groupBack.blendMode = Add;
         Game.inst.world.add(groupBack, Game.LAYER_BORDER_BACK);
         mask = new Graphics(group);
@@ -119,7 +119,6 @@ class Border {
     }
 
     public function stepLeft() {
-        trace("STEP LEFT " + this.id);
         bounds.x -= 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
@@ -137,7 +136,6 @@ class Border {
         return true;
     }
     public function stepRight() {
-        trace("STEP RIGHT " + this.id);
         bounds.x += 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
@@ -151,13 +149,10 @@ class Border {
                 return false;
             }
         }
-        trace("UPDATE WALLS");
         updateWalls();
-        trace("END STEP RIGHT " + this.id);
         return true;
     }
     public function stepUp() {
-        trace("STEP UP " + this.id);
         bounds.y -= 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
@@ -175,7 +170,6 @@ class Border {
         return true;
     }
     public function stepDown() {
-        trace("STEP DOWN " + this.id);
         bounds.y += 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
@@ -193,7 +187,6 @@ class Border {
         return true;
     }
     public function pushLeft(chain:IntMap<Bool>) {
-        trace("BORDER PUSHED LEFT " + this.id);
         bounds.x--;
         for(b in all) {
             if(b == this || !collides(b) || chain.exists(b.id)) continue;
@@ -208,7 +201,6 @@ class Border {
         return stepLeft();
     }
     public function pushRight(chain:IntMap<Bool>) {
-        trace("BORDER PUSHED RIGHT " + this.id);
         bounds.x++;
         for(b in all) {
             if(b == this || !collides(b) || chain.exists(b.id)) continue;
@@ -223,7 +215,6 @@ class Border {
         return stepRight();
     }
     public function pushUp(chain:IntMap<Bool>) {
-        trace("BORDER PUSHED UP " + this.id);
         bounds.y--;
         for(b in all) {
             if(b == this || !collides(b) || chain.exists(b.id)) continue;
@@ -238,7 +229,6 @@ class Border {
         return stepUp();
     }
     public function pushDown(chain:IntMap<Bool>) {
-        trace("BORDER PUSHED DOWN " + this.id);
         bounds.y++;
         for(b in all) {
             if(b == this || !collides(b) || chain.exists(b.id)) continue;

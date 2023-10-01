@@ -26,7 +26,10 @@
 	"__smartColor": "#ADADB5",
 	"__bgPos": null,
 	"externalRelPath": null,
-	"fieldInstances": [],
+	"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "suspend and shoes", "__tile": null, "defUid": 111, "realEditorValues": [{
+		"id": "V_String",
+		"params": ["suspend and shoes"]
+	}] }],
 	"layerInstances": [
 		{
 			"__identifier": "Entities",

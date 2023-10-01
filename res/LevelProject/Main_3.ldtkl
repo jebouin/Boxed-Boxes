@@ -26,7 +26,10 @@
 	"__smartColor": "#ADADB5",
 	"__bgPos": null,
 	"externalRelPath": null,
-	"fieldInstances": [],
+	"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "int box", "__tile": null, "defUid": 111, "realEditorValues": [{
+		"id": "V_String",
+		"params": ["int box"]
+	}] }],
 	"layerInstances": [
 		{
 			"__identifier": "Entities",

@@ -61,7 +61,8 @@ class Game extends Scene {
         winGraphics = new Graphics();
         world.add(winGraphics, LAYER_WIN);
         winGraphics.visible = false;
-        state = initial ? Play : TransitionIn;
+        //state = initial ? Play : TransitionIn;
+        state = Play;
         //loadFirstLevel();
         levelId = globalLevelId;
         loadLevelById(levelId);

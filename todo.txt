@@ -1,9 +1,12 @@
-
-- Go back to title from game
-- Fix start level jump
 - LD 2
-- LD 3
+	- Push borders
 - SFX
+	- Menu move
+	- Menu select
+	- Jump
+	- Death
+	- Win
+- LD 3
 - Biomes
 	- Parallax
 - Key to go back to title

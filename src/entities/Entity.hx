@@ -355,7 +355,6 @@ class Entity {
             if(borderId != -1 && borderId != b.id) continue;
             if(b.horizontalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
-                    trace(this, " step down and push border " + b.id);
                     if(!b.pushDown(new IntMap<Bool>())) {
                         cancelStepDown();
                         return false;

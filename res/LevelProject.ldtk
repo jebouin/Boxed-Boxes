@@ -11,7 +11,7 @@
 	"iid": "7799c960-3b70-11ee-b552-83fdf9fa10c0",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 111,
+	"nextUid": 112,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1928,7 +1928,7 @@
 			"tileRect": { "tilesetUid": 20, "x": 0, "y": 120, "w": 16, "h": 16 },
 			"uiTileRect": null,
 			"nineSliceBorders": [],
-			"maxCount": 0,
+			"maxCount": 1,
 			"limitScope": "PerLevel",
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
@@ -2024,7 +2024,43 @@
 		{ "id": "SpikeD", "tileRect": { "tilesetUid": 3, "x": 8, "y": 24, "w": 8, "h": 8 }, "color": 16705377 },
 		{ "id": "SpikeDL", "tileRect": { "tilesetUid": 3, "x": 0, "y": 24, "w": 8, "h": 8 }, "color": 6539085 },
 		{ "id": "SpikeL", "tileRect": { "tilesetUid": 3, "x": 0, "y": 16, "w": 8, "h": 8 }, "color": 4098376 }
-	], "iconTilesetUid": 3, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }], "externalEnums": [], "levelFields": [] },
+	], "iconTilesetUid": 3, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }], "externalEnums": [], "levelFields": [
+		{
+			"identifier": "Info",
+			"doc": null,
+			"__type": "String",
+			"uid": 111,
+			"type": "F_String",
+			"isArray": false,
+			"canBeNull": true,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "ValueOnly",
+			"editorDisplayScale": 1,
+			"editorDisplayPos": "Above",
+			"editorLinkStyle": "StraightArrow",
+			"editorDisplayColor": null,
+			"editorAlwaysShow": true,
+			"editorShowInWorld": true,
+			"editorCutLongValues": true,
+			"editorTextSuffix": null,
+			"editorTextPrefix": null,
+			"useForSmartColor": false,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": null,
+			"textLanguageMode": null,
+			"symmetricalRef": false,
+			"autoChainRef": true,
+			"allowOutOfLevelRef": true,
+			"allowedRefs": "OnlySame",
+			"allowedRefsEntityUid": null,
+			"allowedRefTags": [],
+			"tilesetUid": null
+		}
+	] },
 	"levels": [
 		{
 			"identifier": "Main_1",
@@ -2045,7 +2081,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_1.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "platformer", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["platformer"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2068,7 +2107,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_2.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first box", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["first box"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2091,7 +2133,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_3.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "int box", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["int box"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2114,7 +2159,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Test.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2137,7 +2182,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_10.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "easy push boxes out + in", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["easy push boxes out + in"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2160,7 +2208,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_A.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2183,7 +2231,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_6.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "suspend and shoes", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["suspend and shoes"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2206,7 +2257,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_8.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["border wall jump"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2229,7 +2283,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_4.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "box ledge jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["box ledge jump"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2252,7 +2309,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_5.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "box tight", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["box tight"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2275,7 +2335,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_13.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "interesting merge", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["interesting merge"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2298,7 +2361,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_12.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first merge", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["first merge"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2306,11 +2372,11 @@
 			"identifier": "Main_14",
 			"iid": "b410c0b0-3b70-11ee-8473-3d052cae6c5f",
 			"uid": 47,
-			"worldX": 2960,
-			"worldY": 1432,
+			"worldX": 2968,
+			"worldY": 1424,
 			"worldDepth": 0,
-			"pxWid": 320,
-			"pxHei": 320,
+			"pxWid": 352,
+			"pxHei": 216,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -2321,7 +2387,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_14.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "easy merge + spikes", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["easy merge + spikes"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2333,7 +2402,7 @@
 			"worldY": 1424,
 			"worldDepth": 0,
 			"pxWid": 320,
-			"pxHei": 320,
+			"pxHei": 224,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -2344,7 +2413,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_15.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "many boxes out but easy", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["many boxes out but easy"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2353,10 +2425,10 @@
 			"iid": "b8c80730-3b70-11ee-8473-2d816d6d59f2",
 			"uid": 49,
 			"worldX": 2464,
-			"worldY": 1896,
+			"worldY": 1912,
 			"worldDepth": 0,
 			"pxWid": 320,
-			"pxHei": 320,
+			"pxHei": 216,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -2367,7 +2439,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_16.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first push border", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["first push border"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2390,7 +2465,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_17.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2413,7 +2488,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_19.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2421,11 +2496,11 @@
 			"identifier": "Main_20",
 			"iid": "c13550d0-3b70-11ee-8473-e3abe2bd0612",
 			"uid": 53,
-			"worldX": 5968,
-			"worldY": 672,
+			"worldX": 5992,
+			"worldY": 616,
 			"worldDepth": 0,
-			"pxWid": 320,
-			"pxHei": 320,
+			"pxWid": 496,
+			"pxHei": 256,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -2436,7 +2511,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_20.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "silly and buggy", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["silly and buggy"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2459,7 +2537,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_21.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2482,7 +2560,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_22.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2505,7 +2583,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_23.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2528,7 +2606,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_24.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2551,7 +2629,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_25.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2574,7 +2652,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_26.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2597,7 +2675,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_27.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2620,7 +2698,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_B.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2643,7 +2721,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_7.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["first wall jump"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2666,7 +2747,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_9.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "int border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["int border wall jump"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2689,7 +2773,7 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_18.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -2712,7 +2796,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_11.ldtkl",
-			"fieldInstances": [],
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "interesting box out", "__tile": null, "defUid": 111, "realEditorValues": [{
+				"id": "V_String",
+				"params": ["interesting box out"]
+			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		}
