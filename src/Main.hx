@@ -67,9 +67,13 @@ class Main extends hxd.App {
     }
     function startGame() {
         started = true;
+        #if debug
         //new Game(true, 1);
         new Title(1);
         //new LevelComplete(0, 3, 3);
+        #else
+        new Title(1);
+        #end
     }
     function initController() {
         controller = new Controller();
@@ -90,10 +94,10 @@ class Main extends hxd.App {
         controller.bindKey(Action.jump, [Key.X, Key.SPACE, Key.SHIFT]);
         controller.bindKey(Action.retry, [Key.R, Key.V]);
         controller.bindKey(Action.pause, [Key.ESCAPE, Key.DELETE, Key.P]);
-        controller.bindKey(Action.menuUp, Key.W);
-        controller.bindKey(Action.menuRight, Key.D);
-        controller.bindKey(Action.menuDown, Key.S);
-        controller.bindKey(Action.menuLeft, Key.A);
+        controller.bindKey(Action.menuUp, [Key.W, Key.UP]);
+        controller.bindKey(Action.menuRight, [Key.D, Key.RIGHT]);
+        controller.bindKey(Action.menuDown, [Key.S, Key.DOWN]);
+        controller.bindKey(Action.menuLeft, [Key.A, Key.LEFT]);
         controller.bindKey(Action.menuEnter, [Key.X, Key.SPACE, Key.SHIFT, Key.ENTER]);
         controller.bindKey(Action.menuQuit, [Key.ESCAPE, Key.DELETE]);
         #end

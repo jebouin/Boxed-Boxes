@@ -91,7 +91,6 @@ class Save {
                 var s = new Serializer();
                 s.beginLoad(bytes);
                 gameData = s.getDynamic();
-                gameData.init();
                 s.endLoad();
             } catch(e) {
                 gameData = new GameSaveData();

@@ -1,15 +1,5 @@
-- SFX
-	- Menu move
-	- Menu select
-	- Jump
-	- Death
-	- Win
-- LD 3
-- Biomes
-	- Parallax
-- Key to go back to title
-
 IF TIME LEFT
+- Parallax
 - Constraint to level bounds
 - Music
 - Entity/solid corner correction

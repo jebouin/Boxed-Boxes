@@ -85,7 +85,7 @@ class Death {
         over.endFill();
         over.blendMode = Add;
         Game.inst.hud.add(over, Game.LAYER_FLASH);
-        over.alpha = .5;
+        over.alpha = .7;
     }
 
     public function delete() {
@@ -102,6 +102,6 @@ class Death {
     }
 
     public function updateConstantRate(dt:Float) {
-        over.alpha = Util.sodStep(over.alpha, 0., .999, dt);
+        over.alpha = Util.sodStep(over.alpha, 0., .998, dt);
     }
 }

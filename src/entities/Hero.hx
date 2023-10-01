@@ -169,7 +169,7 @@ class Hero extends Entity {
     public override function die(dx:Float, dy:Float) {
         super.die(dx, dy);
         Game.inst.onDeath(dx, dy);
-        Audio.playSound("death");
+        Audio.playSound("death", false, .5);
     }
 
     function jump() {
