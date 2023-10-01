@@ -7032,18 +7032,18 @@
 						},
 						{
 							"__identifier": "Border",
-							"__grid": [23,11],
+							"__grid": [22,8],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": { "tilesetUid": 20, "x": 8, "y": 32, "w": 16, "h": 16 },
 							"__smartColor": "#D77643",
-							"__worldX": 688,
-							"__worldY": 104,
+							"__worldX": 680,
+							"__worldY": 80,
 							"iid": "c5b31190-3b70-11ee-8473-fb2666f553c2",
 							"width": 40,
 							"height": 24,
 							"defUid": 28,
-							"px": [184,88],
+							"px": [176,64],
 							"fieldInstances": []
 						}
 					]

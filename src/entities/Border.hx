@@ -119,11 +119,10 @@ class Border {
     }
 
     public function stepLeft() {
-        trace("border " + id + " stepping left");
         bounds.x -= 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
-            if(verticalWallIntersectsEntity(e)) {
+            if(verticalWallIntersectsEntity(e, e.isInside)) {
                 if(!e.pushLeft(new IntMap<Bool>())) {
                     bounds.x += 1;
                     return false;
@@ -134,11 +133,10 @@ class Border {
         return true;
     }
     public function stepRight() {
-        trace("border " + id + " stepping right");
         bounds.x += 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
-            if(verticalWallIntersectsEntity(e)) {
+            if(verticalWallIntersectsEntity(e, e.isInside)) {
                 if(!e.pushRight(new IntMap<Bool>())) {
                     bounds.x -= 1;
                     return false;
@@ -149,11 +147,10 @@ class Border {
         return true;
     }
     public function stepUp() {
-        trace("border " + id + " stepping up");
         bounds.y -= 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
-            if(horizontalWallIntersectsEntity(e)) {
+            if(horizontalWallIntersectsEntity(e, e.isInside)) {
                 if(!e.pushUp(new IntMap<Bool>())) {
                     bounds.y += 1;
                     return false;
@@ -164,12 +161,10 @@ class Border {
         return true;
     }
     public function stepDown() {
-        trace("border " + id + " stepping down");
         bounds.y += 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
-            if(horizontalWallIntersectsEntity(e)) {
-                trace("border " + id + " pushing down " + e);
+            if(horizontalWallIntersectsEntity(e, e.isInside)) {
                 if(!e.pushDown(new IntMap<Bool>())) {
                     bounds.y -= 1;
                     return false;
@@ -248,26 +243,29 @@ class Border {
             || bounds.yMin >= other.bounds.yMax
             || bounds.yMax <= other.bounds.yMin);
     }
-    inline public function horizontalWallIntersectsEntity(e:Entity) {
-        return topWallIntersectsEntity(e) || bottomWallIntersectsEntity(e);
+    inline public function horizontalWallIntersectsEntity(e:Entity, inside:Bool) {
+        return topWallIntersectsEntity(e, inside) || bottomWallIntersectsEntity(e, inside);
     }
-    inline public function verticalWallIntersectsEntity(e:Entity) {
-        return leftWallIntersectsEntity(e) || rightWallIntersectsEntity(e);
+    inline public function verticalWallIntersectsEntity(e:Entity, inside:Bool) {
+        return leftWallIntersectsEntity(e, inside) || rightWallIntersectsEntity(e, inside);
     }
-    inline public function leftWallIntersectsEntity(e:Entity) {
-        return e.x + e.hitbox.xMin < bounds.xMin && e.x + e.hitbox.xMax > bounds.xMin && wallIntersectsSegment(wallLeft, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y);
+    inline public function leftWallIntersectsEntity(e:Entity, inside:Bool) {
+        return e.x + e.hitbox.xMin < bounds.xMin && e.x + e.hitbox.xMax > bounds.xMin && wallIntersectsSegment(wallLeft, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y, inside);
     }
-    inline public function rightWallIntersectsEntity(e:Entity) {
-        return e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMax && wallIntersectsSegment(wallRight, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y);
+    inline public function rightWallIntersectsEntity(e:Entity, inside:Bool) {
+        return e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMax && wallIntersectsSegment(wallRight, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y, inside);
     }
-    inline public function topWallIntersectsEntity(e:Entity) {
-        return e.y + e.hitbox.yMin < bounds.yMin && e.y + e.hitbox.yMax > bounds.yMin && wallIntersectsSegment(wallUp, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x);
+    inline public function topWallIntersectsEntity(e:Entity, inside:Bool) {
+        return e.y + e.hitbox.yMin < bounds.yMin && e.y + e.hitbox.yMax > bounds.yMin && wallIntersectsSegment(wallUp, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x, inside);
     }
-    inline public function bottomWallIntersectsEntity(e:Entity) {
-        return e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMax && wallIntersectsSegment(wallDown, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x);
+    inline public function bottomWallIntersectsEntity(e:Entity, inside:Bool) {
+        return e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMax && wallIntersectsSegment(wallDown, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x, inside);
     }
-    public function wallIntersectsSegment(w:Wall, l:Int, r:Int) {
-        l += 2; r -= 2;
+    public function wallIntersectsSegment(w:Wall, l:Int, r:Int, inside:Bool) {
+        if(inside) {
+            // Corner correction
+            l += 2; r -= 2;
+        }
         for(seg in w) {
             if(seg.pos + seg.length > l && seg.pos < r) return true;
         }
@@ -320,10 +318,6 @@ class Border {
         wallRight = invertWall(holesRight, bounds.height);
         wallUp = invertWall(holesUp, bounds.width);
         wallDown = invertWall(holesDown, bounds.width);
-        if(wallDown[0].pos != 0 || wallDown[0].length != 40) {
-            trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
-        trace(id + " " + wallDown);
     }
 
     public static function simplifyWall(w:Wall) {

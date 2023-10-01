@@ -35,7 +35,7 @@ class Hero extends Entity {
         bitmap = new Bitmap(Assets.getTile("entities", "hero"));
         Game.inst.world.add(bitmap, Game.LAYER_HERO);
         collisionEnabled = canPushBorder = canPushEntities = true;
-        hitbox = IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight);
+        setHitbox(IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight));
     }
 
     public function spawn() {

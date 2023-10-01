@@ -20,14 +20,7 @@ class Box extends Entity {
         this.y = y;
         updateGraphics();
         collisionEnabled = true;
-        hitbox = IBounds.fromValues(0, 0, width, height);
-        var isInside = false;
-        for(b in Border.all) {
-            if(b.containsEntity(this)) {
-                isInside = true;
-                break;
-            }
-        }
+        setHitbox(hitbox = IBounds.fromValues(0, 0, width, height));
         grid.tile = Assets.getTile("entities", "box" + (isInside ? "Inside" : "Outside"));
     }
 

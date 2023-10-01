@@ -47,13 +47,13 @@ class Game extends Scene {
         super.update(dt);
         Entity.updateAll(dt);
         Border.updateAll(dt);
-        for(e in Entity.all) {
+        /*for(e in Entity.all) {
             e.debug();
         }
         for(b in Border.all) {
             b.debug();
         }
-        trace(" ");
+        trace(" ");*/
         camera.update(dt);
         if(Main.inst.controller.isPressed(Action.retry)) {
             retry();
