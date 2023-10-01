@@ -1,10 +1,12 @@
-- Spikes
-- Kill player if borders cut them
-- Entity/solid corner correction
 - Biomes
+	- Parallax
 - Level design
 - SFX
-- Music
+- Key to go back to title
 
 IF TIME LEFT
+- Music
+- Entity/solid corner correction
+- Screen shake
+- Particles
 - Speedrun timers

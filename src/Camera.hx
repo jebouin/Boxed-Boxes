@@ -34,6 +34,9 @@ class Camera {
             targetY = target.y + targetOffY;
         }
     }
+    public function resetTarget() {
+        target = null; 
+    }
 
     public function getTargetWithoutOffset() {
         if(target == null) return null;
@@ -42,8 +45,8 @@ class Camera {
 
     public function update(dt:Float) {
         if(target != null) {
-            var tx = target.x + targetOffX;
-            var ty = target.y + targetOffY;
+            var tx = target.x + targetOffX + 4;
+            var ty = target.y + targetOffY + 8;
             sodX.update(dt, target.eyeOffsetX);
             sodY.update(dt, target.eyeOffsetY);
             targetX = tx + sodX.pos;

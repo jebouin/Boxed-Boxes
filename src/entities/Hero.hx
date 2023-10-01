@@ -166,7 +166,7 @@ class Hero extends Entity {
     
     public override function die(dx:Float, dy:Float) {
         super.die(dx, dy);
-        Game.inst.onDeath();
+        Game.inst.onDeath(dx, dy);
     }
 
     function jump() {

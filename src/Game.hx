@@ -1,5 +1,7 @@
 package ;
 
+import h2d.col.Point;
+import fx.Death;
 import h2d.col.IBounds;
 import hxd.Pixels;
 import h2d.Graphics;
@@ -32,6 +34,8 @@ class Game extends Scene {
     public static var LAYER_WALLS = _layer++;
     public static var LAYER_BORDER = _layer++;
     public static var LAYER_GEM = _layer++;
+    public static var LAYER_FX = _layer++;
+    public static var LAYER_FLASH = _layer++;
     public static var LAYER_DEBUG = _layer++;
     public static var LAYER_WIN = _layer++;
     public static var inst : Game;
@@ -43,6 +47,8 @@ class Game extends Scene {
     var stateTimer : Float = 0.;
     var winGraphics : Graphics;
     var ramp : Pixels;
+    var deathFx : Death;
+    var prevCameraPos : Point;
 
     public function new(initial:Bool, globalLevelId:Int) {
         super();
@@ -68,6 +74,9 @@ class Game extends Scene {
         Entity.deleteAll();
         Border.deleteAll();
         Gem.deleteAll();
+        if(deathFx != null) {
+            deathFx.delete();
+        }
     }
 
     override public function update(dt:Float) {
@@ -96,8 +105,25 @@ class Game extends Scene {
                 state = Play;
             }
         } else if(state == Dead) {
+            var t = stateTimer / DEAD_TIME;
+            deathFx.update(dt, t);
+            camera.targetX = level.heroSpawnX + 4;
+            camera.targetY = level.heroSpawnY + 8;
+            var targetPos = camera.getClampedPosition(level.getCameraBounds());
+            var pos = new Point(t * targetPos.x + (1. - t) * prevCameraPos.x, t * targetPos.y + (1. - t) * prevCameraPos.y);
+            camera.clampedTargetX = pos.x;
+            camera.clampedTargetY = pos.y;
+            camera.update(dt);
             if(stateTimer >= DEAD_TIME) {
                 retry();
+            }
+        }
+    }
+
+    override public function updateConstantRate(dt:Float) {
+        if(state == Dead) {
+            if(deathFx != null) {
+                deathFx.updateConstantRate(dt);
             }
         }
     }
@@ -138,8 +164,15 @@ class Game extends Scene {
         loadLevelById(levelId);
     }
 
-    public function onDeath() {
+    public function onDeath(dx:Float, dy:Float) {
         state = Dead;
+        if(deathFx != null) {
+            deathFx.delete();
+        }
+        deathFx = new Death(hero.x, hero.y, level.heroSpawnX, level.heroSpawnY, dx, dy);
+        prevCameraPos = camera.getClampedPosition(level.getCameraBounds());
+        camera.resetTarget();
+        Main.inst.hitStop(.1);
     }
 
     public function getLevelGroup(?levelId:Int=-1) {
@@ -160,6 +193,10 @@ class Game extends Scene {
             }
         } else {
             winGraphics.visible = false;
+        }
+        if(state != Dead && deathFx != null) {
+            deathFx.delete();
+            deathFx = null;
         }
         return v;
     }
