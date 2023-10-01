@@ -15,7 +15,8 @@ enum Facing {
 class Hero extends Entity {
     public static inline var MOVE_VEL = 90.;
     public static inline var FALL_VEL = 180;
-    public static inline var FALL_FAST_VEL = 150;
+    public static inline var FALL_FAST_VEL = 300;
+    public static inline var FALL_WALL_VEL = 90;
     public static inline var AIR_FRICTION_X = .995;
     public static inline var GRAVITY = .996;
     public static inline var GRAVITY_JUMP = .93;
@@ -23,11 +24,21 @@ class Hero extends Entity {
     public static inline var JUMP_VEL = 290.;
     public static inline var JUMP_COYOTE_TIME = .1;
     public static inline var JUMP_BUFFER_TIME = .15;
+    public static inline var WALL_JUMP_DIST = 2;
+    public static inline var WALL_JUMP_VEL_Y = 250.;
+    public static inline var WALL_JUMP_VEL_X = 170.;
+    public static inline var WALL_JUMP_TIME = .3;
+    public static inline var WALL_JUMP_ACC_X = .9;
+    public static inline var WALL_JUMP_FRICTION_X = .997;
+    public static inline var WALL_JUMP_COYOTE_TIME = .1;
     var bitmap : Bitmap;
     public var eyeOffsetX(default, null) = 0;
     public var eyeOffsetY(default, null) = 0;
     var groundTimer : Float;
+    var wallLeftTimer : Float;
+    var wallRightTimer : Float;
     var jumpBufferTimer : Float;
+    var wallJumpTimer : Float;
     var prevFacing : Facing;
 
     public function new() {
@@ -42,8 +53,9 @@ class Hero extends Entity {
         x = Game.inst.level.heroSpawnX;
         y = Game.inst.level.heroSpawnY;
         vx = vy = 0.;
-        groundTimer = 0.;
+        groundTimer = wallLeftTimer = wallRightTimer = 0.;
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
+        wallJumpTimer = WALL_JUMP_TIME + 1.;
         prevFacing = None;
         updateGraphics();
     }
@@ -54,7 +66,8 @@ class Hero extends Entity {
     }
 
     override public function update(dt:Float) {
-        var onGround = hitDown;
+        // TODO: Use wall jump dist
+        var onGround = hitDown, wallLeft = hitLeft, wallRight = hitRight;
         var controller = Main.inst.controller;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
         var facing = None;
@@ -72,12 +85,28 @@ class Hero extends Entity {
             }
         }
         var fastFall = facing == Down;
-        if(facing == Left) {
-            vx = -MOVE_VEL;
-        } else if(facing == Right) {
-            vx = MOVE_VEL;
+        var sliding = !fastFall && ((facing == Left && wallLeft) || (facing == Right && wallRight));
+        wallJumpTimer += dt;
+        var wallJumping = wallJumpTimer <= WALL_JUMP_TIME;
+        if(wallJumping) {
+            var t = wallJumpTimer / WALL_JUMP_TIME;
+            var moveAcc = Util.lerp(WALL_JUMP_ACC_X, 1., t);
+            var frictionX = Util.lerp(WALL_JUMP_FRICTION_X, onGround ? 1. : AIR_FRICTION_X, t);
+            if(facing == Left) {
+                vx = Util.sodStep(vx, -MOVE_VEL, moveAcc, dt);
+            } else if(facing == Right) {
+                vx = Util.sodStep(vx, MOVE_VEL, moveAcc, dt);
+            } else {
+                vx = Util.sodStep(vx, 0, frictionX, dt);
+            }
         } else {
-            vx = onGround || fastFall ? 0 : Util.sodStep(vx, 0, AIR_FRICTION_X, dt);
+            if(facing == Left) {
+                vx = -MOVE_VEL;
+            } else if(facing == Right) {
+                vx = MOVE_VEL;
+            } else {
+                vx = onGround || fastFall ? 0 : Util.sodStep(vx, 0, AIR_FRICTION_X, dt);
+            }
         }
         if(onGround) {
             groundTimer = 0.;
@@ -85,6 +114,10 @@ class Hero extends Entity {
             groundTimer += dt;
             jumpBufferTimer += dt;
         }
+        if(wallLeft) wallLeftTimer = 0.;
+        else wallLeftTimer += dt;
+        if(wallRight) wallRightTimer = 0.;
+        else wallRightTimer += dt;
         var jumping = vy < 0 && controller.isDown(Action.jump);
         if(vy < 0 && controller.isReleased(Action.jump)) {
             vy *= .5;
@@ -99,7 +132,23 @@ class Hero extends Entity {
         } else if(onGround && controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME) {
             jumped = jump();
         }
-        vy = Util.sodStep(vy, fastFall ? FALL_FAST_VEL : FALL_VEL, fastFall ? GRAVITY_FAST : (jumping ? GRAVITY_JUMP : GRAVITY), dt);
+        if(!jumped) {
+            if(controller.isPressed(Action.jump) || (controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME)) {
+                if(wallLeftTimer < wallRightTimer) {
+                    if(wallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME)) {
+                        wallJump(1);
+                    }
+                } else {
+                    if(wallRight || (vy > 0 && wallRightTimer < WALL_JUMP_COYOTE_TIME)) {
+                        wallJump(-1);
+                    }
+                }
+            }
+        }
+        vy = Util.sodStep(vy, fastFall ? FALL_FAST_VEL : (sliding ? FALL_WALL_VEL : FALL_VEL), fastFall ? GRAVITY_FAST : (jumping ? GRAVITY_JUMP : GRAVITY), dt);
+        if(sliding) {
+            vy = Util.sodStep(vy, 0, .99, dt);
+        }
         super.update(dt);
         updateGraphics();
     }
@@ -109,6 +158,13 @@ class Hero extends Entity {
         groundTimer = JUMP_COYOTE_TIME + 1.;
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         vy = -JUMP_VEL;
+        return true;
+    }
+    function wallJump(dx:Int) {
+        vx = WALL_JUMP_VEL_X * dx;
+        vy = -WALL_JUMP_VEL_Y;
+        jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
+        wallJumpTimer = 0.;
         return true;
     }
 
