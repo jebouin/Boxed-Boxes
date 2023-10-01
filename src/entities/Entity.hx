@@ -41,8 +41,8 @@ class Entity {
     public var y : Int = 0;
     public var vx : Float = 0.;
     public var vy : Float = 0.;
-    var rx : Float;
-    var ry : Float;
+    var rx : Float = 0.;
+    var ry : Float = 0.;
     var deleted : Bool = false;
     public var collisionEnabled : Bool = false;
     public var canPushBorder : Bool = false;
@@ -68,7 +68,7 @@ class Entity {
         deleted = true;
     }
 
-    public function die() {
+    public function die(dx:Float, dy:Float) {
         delete();
     }
 

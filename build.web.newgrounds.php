@@ -2,7 +2,8 @@
 build.web._base.hxml
 
 -lib newgrounds
--D newgrounds
+-D int_ng
+-D test_medals
 -js bin/newgrounds/<?php echo $gameId ?>.js
 --cmd cp -t bin/newgrounds/ bin/js/index.html bin/js/style.css bin/js/avatar.png
 --cmd cp bin/pak/resWeb.pak bin/newgrounds/res.pak

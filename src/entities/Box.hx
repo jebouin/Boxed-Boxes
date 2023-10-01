@@ -42,6 +42,6 @@ class Box extends Entity {
     }
 
     override function onBorderConstraintFixed() {
-        die();
+        die(0, 0);
     }
 }

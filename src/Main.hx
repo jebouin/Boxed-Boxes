@@ -53,20 +53,22 @@ class Main extends hxd.App {
         updateScale();
         var window = hxd.Window.getInstance();
         window.addEventTarget(onEvent);
-        #if (debug || sys)
+        #if sys
         window.vsync = false;
         #end
         window.title = GAME_NAME;
         SceneManager.init();
+        #if debug
         fpsCounter = new FPSCounter(Assets.font);
+        #end
         Save.init(function(success) {
             startGame();
         });
     }
     function startGame() {
         started = true;
-        //new Game(true, 1);
-        new Title();
+        new Game(true, 6);
+        //new Title();
         //new LevelComplete(0, 3, 3);
     }
     function initController() {
@@ -124,7 +126,9 @@ class Main extends hxd.App {
     }
     override function onResize() {
         hxd.Timer.skip();
-        fpsCounter.onResize();
+        if(fpsCounter != null) {
+            fpsCounter.onResize();
+        }
         updateScale();
     }
     function updateScale() {

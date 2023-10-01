@@ -99,4 +99,18 @@ class Save {
         }
         callback(true);
     }
+    static function bytesToString(bytes:haxe.io.Bytes) {
+        var str = "";
+        for(i in 0...bytes.length) {
+            str += String.fromCharCode(bytes.get(i));
+        }
+        return str;
+    }
+    static function stringToBytes(str:String) {
+        var bytes = Bytes.alloc(str.length);
+        for(i in 0...str.length) {
+            bytes.set(i, str.charCodeAt(i));
+        }
+        return bytes;
+    }
 }

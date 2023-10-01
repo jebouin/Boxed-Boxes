@@ -155,7 +155,18 @@ class Hero extends Entity {
                 Game.inst.levelComplete();
             }
         }
+        var dir = Game.inst.level.entityTouchesSpikes(this);
+        var len : Float = dir.dx * dir.dx + dir.dy * dir.dy;
+        if(len > 0) {
+            len = Math.sqrt(len);
+            die(dir.dx / len, dir.dy / len);
+        }
         updateGraphics();
+    }
+    
+    public override function die(dx:Float, dy:Float) {
+        super.die(dx, dy);
+        Game.inst.onDeath();
     }
 
     function jump() {

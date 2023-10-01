@@ -14,11 +14,13 @@ import SceneManager.Scene;
 enum GameState {
     TransitionIn;
     Play;
+    Dead;
     TransitionOut;
 }
 
 class Game extends Scene {
     public static var TRANSITION_IN_TIME = 0.5;
+    public static var DEAD_TIME = .8;
     public static var TRANSITION_OUT_TIME = 1.3;
     static var _layer = 0;
     public static var LAYER_CLEAR = _layer++;
@@ -93,6 +95,10 @@ class Game extends Scene {
             if(stateTimer >= TRANSITION_IN_TIME) {
                 state = Play;
             }
+        } else if(state == Dead) {
+            if(stateTimer >= DEAD_TIME) {
+                retry();
+            }
         }
     }
 
@@ -128,7 +134,12 @@ class Game extends Scene {
     }
 
     public function retry() {
+        state = Play;
         loadLevelById(levelId);
+    }
+
+    public function onDeath() {
+        state = Dead;
     }
 
     public function getLevelGroup(?levelId:Int=-1) {

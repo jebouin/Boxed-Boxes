@@ -1,7 +1,9 @@
 -lib heaps
+-lib hxbit
+-lib castle
 -lib ldtk-haxe-api
 -lib deepnightLibs
--lib hxbit
+-lib newgrounds
 -cp src
 --macro hxd.res.Config.addIgnoredDir("backups")
 --macro hxd.res.Config.addIgnoredDir("bitwigProjects")
