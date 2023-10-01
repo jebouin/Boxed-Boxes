@@ -19,7 +19,7 @@ enum GameState {
 
 class Game extends Scene {
     public static var TRANSITION_IN_TIME = 0.5;
-    public static var TRANSITION_OUT_TIME = 1.5;
+    public static var TRANSITION_OUT_TIME = 1.3;
     static var _layer = 0;
     public static var LAYER_CLEAR = _layer++;
     public static var LAYER_BACK = _layer++;
@@ -83,7 +83,9 @@ class Game extends Scene {
             updateTransitionOut(dt);
             if(stateTimer >= TRANSITION_OUT_TIME) {
                 var group = getLevelGroup();
-                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId);
+                var maskX = winGraphics.x + world.x;
+                var maskY = winGraphics.y + world.y;
+                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId, maskX, maskY);
                 delete();
                 return;
             }
@@ -162,7 +164,7 @@ class Game extends Scene {
             winGraphics.lineTo(0, -r);
             winGraphics.endFill();
         }
-        var endTime = TRANSITION_OUT_TIME - .8;
+        var endTime = TRANSITION_OUT_TIME - .5;
         var t = stateTimer / endTime;
         for(i in 0...ramp.width) {
             var tt = i / ramp.width;

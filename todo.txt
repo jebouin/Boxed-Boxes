@@ -1,6 +1,3 @@
-- Completed level save
-- Finish evel selection
-- Level goal (go next/back to menu)
 - Spikes
 - Kill player if borders cut them
 - Entity/solid corner correction

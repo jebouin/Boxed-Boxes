@@ -42,6 +42,7 @@ class Main extends hxd.App {
     override function init() {
         initController();
         Assets.init();
+        Level.init();
         engine.fullScreen = false;
         engine.autoResize = true;
         engine.backgroundColor = Palette.BLACK;
@@ -211,6 +212,11 @@ class Main extends hxd.App {
             }
             if(Key.isPressed(Key.G)) {
                 Game.inst.forceCompleteLevel();
+            }
+        }
+        if(Title.inst != null) {
+            if(Key.isPressed(Key.G)) {
+                Title.inst.forceCompleteLevel();
             }
         }
         fpsCounter.update();

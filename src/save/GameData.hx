@@ -15,8 +15,9 @@ class GameData implements Serializable {
             levelsCompleted.set(i + 1, false);
         }
         #if debug
-        levelsCompleted.set(1, true);
-        levelsCompleted.set(2, true);
+        /*for(i in 1...27 + 1) {
+            levelsCompleted.set(i, true);
+        }*/
         #end
     }
 

@@ -31,18 +31,21 @@ class LevelRender {
 class Level {
     public static inline var TS = 8;
     public static inline var HTS = 4;
+    public static var project : LevelProject = null;
     public var widthTiles : Int;
     public var heightTiles : Int;
     public var widthPixels : Int;
     public var heightPixels : Int;
     public var heroSpawnX(default, null) : Int = 0;
     public var heroSpawnY(default, null) : Int = 0;
-    var project : LevelProject;
     var level : LevelProject_Level = null;
     var render : LevelRender = null;
 
-    public function new() {
+    public static function init() {
         project = new LevelProject();
+    }
+
+    public function new() {
     }
 
     public function delete() {

@@ -9,7 +9,7 @@ import SceneManager.Scene;
 class LevelCell extends Flow {
     public var selected(default, set) : Bool = false;
     public var locked(default, null) : Bool = false;
-    public var completed(default, null) : Bool = false;
+    public var completed(default, set) : Bool = false;
     public var group(default, null) : Int;
 
     public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool) {
@@ -51,6 +51,11 @@ class LevelCell extends Flow {
         selected = v;
         return v;
     }
+
+    public function set_completed(v:Bool) {
+        completed = v;
+        return v;
+    }
 }
 
 class Title extends Scene {
@@ -72,23 +77,34 @@ class Title extends Scene {
     var holdTimer : Float = 0.;
     var repeatTimer : Float = 0.;
     var lastMovementAction : Controller.Action = Action.menuEnter;
+    var menu : Flow;
 
     public function new() {
         super();
         if(inst != null) {
             throw "Title scene already exists";
         }
+        inst = this;
         container = new Flow(hud);
         container.minWidth = Main.WIDTH;
         container.minHeight = Main.HEIGHT;
         container.layout = Vertical;
         container.horizontalAlign = Middle;
-        container.paddingTop = 5;
+        container.paddingTop = 16;
         container.backgroundTile = Tile.fromColor(0x181425, 1, 1);
         var title = new Text(Assets.fontLarge, container);
         title.text = "SELECT A LEVEL";
         title.textColor = 0xfee761;
-        var menu = new Flow(container);
+        createMenu();
+        updateSelected();
+    }
+
+    function createMenu() {
+        if(menu != null) {
+            menu.remove();
+            cells = [];
+        }
+        menu = new Flow(container);
         menu.paddingTop = 9;
         menu.horizontalSpacing = 12;
         var completedCount = 0;
@@ -115,9 +131,11 @@ class Title extends Scene {
                 for(j in 0...GROUP_WIDTH) {
                     var levelId = k * GROUP_HEIGHT * GROUP_WIDTH + i * GROUP_WIDTH + j + 1;
                     var completed = Save.gameData.data.levelsCompleted.get(levelId);
-                    var topCompleted = i > 0 && cells[k][i - 1][j].completed;
-                    var leftCompleted = j > 0 && cells[k][i][j - 1].completed;
-                    var locked = groupLocked || ((i > 0 || j > 0) && !topCompleted && !leftCompleted && !completed);
+                    var topCompleted = i > 0 && Save.gameData.data.levelsCompleted.get(levelId - GROUP_WIDTH);
+                    var leftCompleted = j > 0 && Save.gameData.data.levelsCompleted.get(levelId - 1);
+                    var bottomCompleted = i < GROUP_HEIGHT - 1 && Save.gameData.data.levelsCompleted.get(levelId + GROUP_WIDTH);
+                    var rightCompleted = j < GROUP_WIDTH - 1 && Save.gameData.data.levelsCompleted.get(levelId + 1);
+                    var locked = groupLocked || ((i > 0 || j > 0) && !topCompleted && !leftCompleted && !rightCompleted && !bottomCompleted && !completed);
                     var cell = new LevelCell(levelId, row, k, completed, locked);
                     cells[k][i].push(cell);
                     if(completed) {
@@ -137,7 +155,6 @@ class Title extends Scene {
                 group.minHeight = height;
             }
         }
-        updateSelected();
     }
 
     override public function delete() {
@@ -151,22 +168,22 @@ class Title extends Scene {
         if(controller.isPressed(Action.menuLeft)) {
             lastMovementAction = Action.menuLeft;
             holdTimer = 0;
-            moveSelection(0, -1);
+            tryMoveSelection(0, -1);
         }
         if(controller.isPressed(Action.menuRight)) {
             lastMovementAction = Action.menuRight;
             holdTimer = 0;
-            moveSelection(0, 1);
+            tryMoveSelection(0, 1);
         }
         if(controller.isPressed(Action.menuUp)) {
             lastMovementAction = Action.menuUp;
             holdTimer = 0;
-            moveSelection(-1, 0);
+            tryMoveSelection(-1, 0);
         }
         if(controller.isPressed(Action.menuDown)) {
             lastMovementAction = Action.menuDown;
             holdTimer = 0;
-            moveSelection(1, 0);
+            tryMoveSelection(1, 0);
         }
         function checkHoldAction(action, di, dj) {
             if(lastMovementAction == action) {
@@ -195,47 +212,50 @@ class Title extends Scene {
     }
 
     function moveSelection(di:Int, dj:Int) {
-        while(dj < 0) {
+        if(dj < 0) {
             if(curJ > 0) {
-                if(!cells[curGroup][curI][curJ - 1].locked) {
-                    curJ--;
-                }
+                curJ--;
             } else if(curGroup > 0) {
-                if(!cells[curGroup - 1][curI][GROUP_WIDTH - 1].locked) {
-                    curGroup--;
-                    curJ = GROUP_WIDTH - 1;
-                }
+                curGroup--;
+                curJ = GROUP_WIDTH - 1;
+            } else {
+                return false;
             }
-            dj++;
-        }
-        while(dj > 0) {
+        } else if(dj > 0) {
             if(curJ < GROUP_WIDTH - 1) {
-                if(!cells[curGroup][curI][curJ + 1].locked) {
-                    curJ++;
-                }
+                curJ++;
             } else if(curGroup < GROUP_COUNT - 1) {
-                if(!cells[curGroup + 1][curI][0].locked) {
-                    curGroup++;
-                    curJ = 0;
-                }
+                curGroup++;
+                curJ = 0;
+            } else {
+                return false;
             }
-            dj--;
-        }
-        while(di < 0) {
+        } else if(di < 0) {
             if(curI > 0) {
-                if(!cells[curGroup][curI - 1][curJ].locked) {
-                    curI--;
-                }
+                curI--;
+            } else {
+                return false;
             }
-            di++;
-        }
-        while(di > 0) {
+        } else if(di > 0) {
             if(curI < GROUP_HEIGHT - 1) {
-                if(!cells[curGroup][curI + 1][curJ].locked) {
-                    curI++;
-                }
+                curI++;
+            } else {
+                return false;
             }
-            di--;
+        }
+        return true;
+    }
+
+    function tryMoveSelection(di:Int, dj:Int) {
+        var prevI = curI, prevJ = curJ, prevGroup = curGroup;
+        if(!moveSelection(di, dj)) return;
+        while(cells[curGroup][curI][curJ].locked) {
+            if(!moveSelection(di, dj)) {
+                curI = prevI;
+                curJ = prevJ;
+                curGroup = prevGroup;
+                break;
+            }
         }
         updateSelected();
     }
@@ -248,5 +268,12 @@ class Title extends Scene {
                 }
             }
         }
+    }
+
+    public function forceCompleteLevel() {
+        var levelId = 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ;
+        Save.gameData.data.completeLevel(levelId);
+        createMenu();
+        updateSelected();
     }
 }

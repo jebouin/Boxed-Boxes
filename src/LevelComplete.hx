@@ -1,3 +1,5 @@
+import h2d.filter.Mask;
+import h2d.Graphics;
 import save.Save;
 import h2d.Bitmap;
 import h2d.Tile;
@@ -50,8 +52,11 @@ class LevelComplete extends Scene {
     var groupId : Int;
     var levelId : Int;
     var globalLevelId : Int;
+    var timer : Float = 0.;
+    var maskX : Float;
+    var maskY : Float;
 
-    public function new(groupId:Int, levelId:Int, globalLevelId:Int) {
+    public function new(groupId:Int, levelId:Int, globalLevelId:Int, maskX:Float, maskY:Float) {
         super();
         if(inst != null) {
             throw "LevelComplete scene already exists";
@@ -59,6 +64,12 @@ class LevelComplete extends Scene {
         this.groupId = groupId;
         this.levelId = levelId;
         this.globalLevelId = globalLevelId;
+        this.maskX = maskX;
+        this.maskY = maskY;
+        var back = new Graphics(world);
+        back.beginFill(0x181425);
+        back.drawRect(0, 0, Main.WIDTH, Main.HEIGHT);
+        back.endFill();
         container = new Flow(hud);
         container.minWidth = Main.WIDTH;
         container.minHeight = Main.HEIGHT;
@@ -82,10 +93,16 @@ class LevelComplete extends Scene {
             var flow = new MenuLine(str, menu, onPressed);
             lines.push(flow);
         }
-        addLine("Continue", onContinuePressed);
-        addLine("Restart", onRestartPressed);
-        addLine("Level select", onTitlePressed);
+        if(levelId < Title.GROUP_WIDTH * Title.GROUP_HEIGHT) {
+            addLine("Continue", onContinuePressed);
+            addLine("Restart", onRestartPressed);
+            addLine("Level select", onTitlePressed);
+        } else {
+            addLine("Level select", onTitlePressed);
+            addLine("Restart", onRestartPressed);
+        }
         updateSelected();
+        hud.visible = false;
     }
 
     function onContinuePressed() {
@@ -140,6 +157,16 @@ class LevelComplete extends Scene {
         if(controller.isPressed(Action.menuEnter)) {
             lines[curId].press();
         }
+        timer += dt;
+        var t = timer / .5;
+        if(t > 1) {
+            t = 1.;
+        }
+        var scale = 1. - Math.pow(1. - t, 2.);
+        hud.scaleX = hud.scaleY = scale;
+        hud.visible = true;
+        hud.x = maskX * (1. - scale);
+        hud.y = maskY * (1. - scale);
     }
 
     function moveSelection(dir:Int) {
