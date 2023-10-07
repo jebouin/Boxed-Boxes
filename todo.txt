@@ -1,10 +1,27 @@
-IF TIME LEFT
+FEEDBACK
+- Add level selection animation (compare previously visible)
+- Level 4 too hard
+	- Remove inertia
+	- Show can jump from bottom border
+	- Remove spikes and use void instead
+	- Make zone larger
+- Level 6 uses wall jump before introducing it
+- Level selection improvements
+	- Current level anim
+- Make menus clickable
+- Fix bugs and inconsistencies
+- Better wall jump (make whole game a bit slower?)
+- Stick to ceiling for a few frames to make it easier to jump over box
+- More levels to introduce border merge
+
+POST-JAM
 - Parallax
 - Constraint to level bounds
 - Music
 - Entity/solid corner correction
 - Screen shake
 - Particles
-- Speedrun timers
 - More levels
 	- Make stairs by pushing borders
+	- 4 * 9 levels (secret world (zone F))
+	- Star bonus collectible

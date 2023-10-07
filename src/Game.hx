@@ -61,9 +61,7 @@ class Game extends Scene {
         winGraphics = new Graphics();
         world.add(winGraphics, LAYER_WIN);
         winGraphics.visible = false;
-        //state = initial ? Play : TransitionIn;
         state = Play;
-        //loadFirstLevel();
         levelId = globalLevelId;
         loadLevelById(levelId);
         camera.update(0);
@@ -169,6 +167,7 @@ class Game extends Scene {
     public function retry() {
         state = Play;
         loadLevelById(levelId);
+        camera.update(0);
     }
 
     public function onDeath(dx:Float, dy:Float) {
