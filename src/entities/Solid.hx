@@ -53,7 +53,6 @@ class Solid {
     #end
 
     public function new(x:Int, y:Int, width:Int, height:Int, collisionType:Enum_Collision) {
-        trace(x, y, width, height, collisionType);
         bounds = IBounds.fromValues(x, y, width, height);
         this.collisionType = collisionType;
         all.push(this);

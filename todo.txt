@@ -1,5 +1,3 @@
-- One way platforms
-- Constraint to level bounds
 - Parallax
 - Add level selection animation (compare previously visible)
 - Level 4 too hard
@@ -12,6 +10,7 @@
 	- Current level anim
 - Make menus clickable
 - Fix bugs and inconsistencies
+	- Jump with stack of boxes on head
 - Better wall jump (make whole game a bit slower?)
 - Stick to ceiling for a few frames to make it easier to jump over box
 - More levels to introduce border merge

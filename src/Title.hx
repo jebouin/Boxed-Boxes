@@ -62,12 +62,12 @@ class Title extends Scene {
     public static inline var HOLD_TIME = .22;
     public static inline var REPEAT_TIME = .08;
     public static inline var GROUP_WIDTH = 3;
-    public static inline var GROUP_HEIGHT = 2;
+    public static inline var GROUP_HEIGHT = 3;
     public static inline var GROUP_COUNT = 3;
     public static inline var LEVEL_COUNT = GROUP_WIDTH * GROUP_HEIGHT * GROUP_COUNT;
     public static var GROUP_NAMES = ["Autumn Forest", "Moonlit Lagoon", "Spiky Cave"];
     public static var GROUP_COLORS = [0x63c74d, 0x0095e9, 0xe43b44];
-    public static var GROUP_COMPLETED_TO_UNLOCK = [0, 4, 10];
+    public static var GROUP_COMPLETED_TO_UNLOCK = [0, 6, 15];
     public static var inst : Title;
     var curI : Int = 0;
     var curJ : Int = 0;

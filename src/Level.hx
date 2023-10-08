@@ -1,5 +1,6 @@
 package ;
 
+import h2d.col.Collider;
 import haxe.ds.Vector;
 import entities.Gem;
 import entities.Border;
@@ -107,6 +108,16 @@ class Level {
             return col == Full || col == PlatformLeft || col == PlatformRight || col == PlatformUp || col == PlatformDown;
         }
         // Load solids
+        inline function createSolid(x:Int, y:Int, width:Int, height:Int, tag:Enum_Collision) {
+            if(x == 0) {
+                x -= TS;
+                width += TS;
+            }
+            if(x + width == widthPixels) {
+                width += TS;
+            }
+            new Solid(x, y, width, height, tag);
+        }
         for(i in 0...heightTiles) {
             var curTag = levelCollisions[i][0];
             var l = 0;
@@ -114,16 +125,17 @@ class Level {
                 var tag = levelCollisions[i][r];
                 if(tag != curTag) {
                     if(isCollisionSolid(curTag)) {
-                        new Solid(l * TS, i * TS, (r - l) * TS, TS, curTag);
+                        createSolid(l * TS, i * TS, (r - l) * TS, TS, curTag);
                     }
                     curTag = tag;
                     l = r;
                 }
             }
             if(isCollisionSolid(curTag)) {
-                new Solid(l * TS, i * TS, (widthTiles - l) * TS, TS, curTag);
+                createSolid(l * TS, i * TS, (widthTiles - l) * TS, TS, curTag);
             }
         }
+        createSolid(0, -(3 * TS - 2), widthPixels, TS, Full);
         // Load borders
         for(b in level.l_Entities.all_Border) {
             new Border(IBounds.fromValues(b.cx * TS, b.cy * TS, b.width, b.height));
@@ -168,7 +180,14 @@ class Level {
         return IBounds.fromValues(0, 0, widthPixels, heightPixels);
     }
 
-    public function entityTouchesSpikes(e:Entity) {
+    public function entityTouchesDeath(e:Entity) {
+        if(e.x + e.hitbox.xMax < 0) {
+            return {dx: -1, dy: 0};
+        } else if(e.x + e.hitbox.xMin > widthPixels) {
+            return {dx: 1, dy: 0};
+        } else if(e.y + e.hitbox.yMin > heightPixels) {
+            return {dx: 0, dy: 1};
+        }
         var margin = 2, spikeLength = 3;
         var bounds = IBounds.fromValues(e.x + e.hitbox.xMin + margin, e.y + e.hitbox.yMin + margin, e.hitbox.width - margin * 2, e.hitbox.height - margin * 2);
         var tx1 = Std.int(bounds.xMin / TS);
@@ -176,7 +195,9 @@ class Level {
         var tx2 = Std.int(bounds.xMax / TS);
         var ty2 = Std.int(bounds.yMax / TS);
         for(tx in tx1...tx2 + 1) {
+            if(tx < 0 || tx >= widthTiles) continue;
             for(ty in ty1...ty2 + 1) {
+                if(ty < 0 || ty >= heightTiles) continue;
                 var boundsUp = IBounds.fromValues(tx * TS, ty * TS, TS, spikeLength);
                 var boundsDown = IBounds.fromValues(tx * TS, ty * TS + TS - spikeLength, TS, spikeLength);
                 var boundsLeft = IBounds.fromValues(tx * TS, ty * TS, spikeLength, TS);
