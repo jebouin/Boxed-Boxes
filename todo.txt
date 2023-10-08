@@ -23,4 +23,4 @@
 - Screen shake
 - More levels
 	- Make stairs by pushing borders
-	- 4 * 9 levels (secret world (zone F))
+	- Hard mode (grab gem then go back, more spikes)

@@ -61,6 +61,7 @@ class Entity {
     public var isInside(default, null) : Bool = false;
     var stepping : Bool = false;
     var movementType : MovementType = Full;
+    var triedPushingHorizontal : Bool = false;
 
     public function new(?hitbox:IBounds=null) {
         id = all.length;
@@ -111,6 +112,7 @@ class Entity {
             moveNoCollision(dx, dy);
             return;
         }
+        triedPushingHorizontal = false;
         rx += dx;
         ry += dy;
         var amountX = Math.round(rx);
@@ -223,6 +225,7 @@ class Entity {
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e)) continue;
             if(canPushEntities) {
+                triedPushingHorizontal = true;
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushLeft(chain)) {
@@ -238,6 +241,7 @@ class Entity {
             if(borderId != -1 && borderId != b.id) continue;
             if(b.verticalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
+                    triedPushingHorizontal = true;
                     if(!b.pushLeft(new IntMap<Bool>())) {
                         cancelStepLeft();
                         return false;
@@ -262,6 +266,7 @@ class Entity {
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e)) continue;
             if(canPushEntities) {
+                triedPushingHorizontal = true;
                 var chain = new IntMap<Bool>();
                 chain.set(id, true);
                 if(!e.pushRight(chain)) {
@@ -277,6 +282,7 @@ class Entity {
             if(borderId != -1 && borderId != b.id) continue;
             if(b.verticalWallIntersectsEntity(this, isInside)) {
                 if(forceCanPushBorder || canPushBorder) {
+                    triedPushingHorizontal = true;
                     if(!b.pushRight(new IntMap<Bool>())) {
                         cancelStepRight();
                         return false;

@@ -41,6 +41,8 @@ class Hero extends Entity {
     var jumpBufferTimer : Float;
     var wallJumpTimer : Float;
     var prevFacing : Facing;
+    var prevTriedPushingHorizontal : Bool;
+    var triedPushingHorizontalTimer : Float;
 
     public function new() {
         super();
@@ -163,6 +165,15 @@ class Hero extends Entity {
         if(len > 0) {
             len = Math.sqrt(len);
             die(dir.dx / len, dir.dy / len);
+        }
+        if(triedPushingHorizontal) {
+            anim.play(Assets.getAnimData("entities", "heroRunPush").tiles, anim.currentFrame);
+            triedPushingHorizontalTimer = 0.;
+        } else {
+            triedPushingHorizontalTimer += dt;
+            if(triedPushingHorizontalTimer > .1) {
+                anim.play(Assets.getAnimData("entities", "heroRun").tiles, anim.currentFrame);
+            }
         }
         anim.update(dt);
         updateGraphics();
