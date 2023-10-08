@@ -42,6 +42,7 @@ class Game extends Scene {
     public var level : Level;
     public var hero : Hero;
     public var camera : Camera;
+    var background : Background;
     var levelId : Int = 1;
     public var state(default, set) : GameState;
     var stateTimer : Float = 0.;
@@ -58,6 +59,7 @@ class Game extends Scene {
         inst = this;
         camera = new Camera();
         level = new Level();
+        background = new Background();
         winGraphics = new Graphics();
         world.add(winGraphics, LAYER_WIN);
         winGraphics.visible = false;
@@ -65,6 +67,7 @@ class Game extends Scene {
         levelId = globalLevelId;
         loadLevelById(levelId);
         camera.update(0);
+
     }
 
     override public function delete() {
@@ -77,6 +80,7 @@ class Game extends Scene {
         if(deathFx != null) {
             deathFx.delete();
         }
+        background.delete();
     }
 
     override public function update(dt:Float) {
@@ -123,6 +127,7 @@ class Game extends Scene {
                 retry();
             }
         }
+        background.update(dt);
     }
 
     override public function updateConstantRate(dt:Float) {
