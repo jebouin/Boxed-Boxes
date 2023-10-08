@@ -31,7 +31,8 @@ class Hero extends Entity {
     public static inline var WALL_JUMP_ACC_X = .9;
     public static inline var WALL_JUMP_FRICTION_X = .997;
     public static inline var WALL_JUMP_COYOTE_TIME = .1;
-    var bitmap : Bitmap;
+    // TODO: Add debug graphics
+    var anim : Anim;
     public var eyeOffsetX(default, null) = 0;
     public var eyeOffsetY(default, null) = 0;
     var groundTimer : Float;
@@ -43,10 +44,10 @@ class Hero extends Entity {
 
     public function new() {
         super();
-        bitmap = new Bitmap(Assets.getTile("entities", "hero"));
-        Game.inst.world.add(bitmap, Game.LAYER_HERO);
+        anim = new Anim(Assets.getAnimData("entities", "heroRun").tiles, 20, true);
+        Game.inst.world.add(anim, Game.LAYER_HERO);
         collisionEnabled = canPushBorder = canPushEntities = true;
-        setHitbox(IBounds.fromValues(0, 0, bitmap.tile.iwidth, bitmap.tile.iheight));
+        setHitbox(IBounds.fromValues(0, 0, Level.TS, 2 * Level.TS));
         movementType = Alternate;
     }
 
@@ -62,7 +63,7 @@ class Hero extends Entity {
     }
 
     override public function delete() {
-        bitmap.remove();
+        anim.remove();
         super.delete();
     }
 
@@ -77,12 +78,12 @@ class Hero extends Entity {
                 facing = Up;
             } else if(Util.fabs(ca) <= Math.PI * .25) {
                 facing = Right;
-                bitmap.scaleX = 1;
+                anim.scaleX = 1;
             } else if(Util.fabs(ca - Math.PI * .5) <= Math.PI * .25) {
                 facing = Down;
             } else {
                 facing = Left;
-                bitmap.scaleX = -1;
+                anim.scaleX = -1;
             }
         }
         var fastFall = facing == Down;
@@ -163,6 +164,7 @@ class Hero extends Entity {
             len = Math.sqrt(len);
             die(dir.dx / len, dir.dy / len);
         }
+        anim.update(dt);
         updateGraphics();
     }
     
@@ -190,7 +192,7 @@ class Hero extends Entity {
     }
 
     function updateGraphics() {
-        bitmap.x = x + (bitmap.scaleX < 0 ? bitmap.tile.iwidth : 0);
-        bitmap.y = y;
+        anim.x = x + (hitbox.xMin + hitbox.xMax) * .5;
+        anim.y = y + hitbox.yMax;
     }
 }

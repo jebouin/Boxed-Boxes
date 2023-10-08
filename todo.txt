@@ -1,5 +1,7 @@
-- Parallax
+- Character animations
+- Better parallax system
 - Add level selection animation (compare previously visible)
+- Particles
 - Level 4 too hard
 	- Remove inertia
 	- Show can jump from bottom border
@@ -9,6 +11,7 @@
 - Level selection improvements
 	- Current level anim
 - Make menus clickable
+- Mobile controls?
 - Fix bugs and inconsistencies
 	- Jump with stack of boxes on head
 - Better wall jump (make whole game a bit slower?)
@@ -18,7 +21,6 @@
 - Music
 - Entity/solid corner correction
 - Screen shake
-- Particles
 - More levels
 	- Make stairs by pushing borders
 	- 4 * 9 levels (secret world (zone F))

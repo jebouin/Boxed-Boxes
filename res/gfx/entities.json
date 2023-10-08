@@ -11,6 +11,7 @@
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.3-rc2-x64",
+  "image": "entities.png",
   "format": "I8",
   "size": { "w": 256, "h": 256 },
   "scale": "1",
@@ -45,7 +46,8 @@
    { "name": "button", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 56, "y": 96, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "buttonSelected", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 72, "y": 96, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "gem1", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 136, "w": 224, "h": 16 } }] },
-   { "name": "gem2", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 152, "w": 224, "h": 16 } }] }
+   { "name": "gem2", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 152, "w": 224, "h": 16 } }] },
+   { "name": "heroRun", "color": "#0000ffff", "data": "12,24", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 176, "w": 216, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] }
   ]
  }
 }
