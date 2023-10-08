@@ -103,26 +103,25 @@ class Level {
     }
 
     function loadEntities() {
+        inline function isCollisionSolid(col:Enum_Collision) {
+            return col == Full || col == PlatformLeft || col == PlatformRight || col == PlatformUp || col == PlatformDown;
+        }
         // Load solids
         for(i in 0...heightTiles) {
-            var l = -1, r = -1;
-            for(j in 0...widthTiles) {
-                var tag = levelCollisions[i][j];
-                if(tag == Full) {
-                    if(l == -1) {
-                        l = j;
+            var curTag = levelCollisions[i][0];
+            var l = 0;
+            for(r in 0...widthTiles) {
+                var tag = levelCollisions[i][r];
+                if(tag != curTag) {
+                    if(isCollisionSolid(curTag)) {
+                        new Solid(l * TS, i * TS, (r - l) * TS, TS, curTag);
                     }
-                    r = j;
-                } else {
-                    if(l != -1) {
-                        new Solid(l * TS, i * TS, (r - l + 1) * TS, TS);
-                        l = -1;
-                        r = -1;
-                    }
+                    curTag = tag;
+                    l = r;
                 }
             }
-            if(l != -1) {
-                new Solid(l * TS, i * TS, (r - l + 1) * TS, TS);
+            if(isCollisionSolid(curTag)) {
+                new Solid(l * TS, i * TS, (widthTiles - l) * TS, TS, curTag);
             }
         }
         // Load borders

@@ -2,6 +2,7 @@ package entities;
 
 import h2d.Graphics;
 import h2d.col.IBounds;
+import assets.LevelProject;
 
 class Solid {
     public static var all : Array<Solid> = [];
@@ -13,35 +14,48 @@ class Solid {
         all = [];
     }
 
-    public static function entityCollides(entity:Entity) {
-        for(s in all) {
-            if(s.bounds.xMin >= entity.x + entity.hitbox.xMax || s.bounds.xMax <= entity.x + entity.hitbox.xMin ||
-               s.bounds.yMin >= entity.y + entity.hitbox.yMax || s.bounds.yMax <= entity.y + entity.hitbox.yMin) {
-                continue;
-            }
-            return true;
-        }
-        return false;
+    public static function entityCollides(entity:Entity, dx:Int, dy:Int) {
+        return entityCollidesAt(entity, entity.x, entity.y, dx, dy);
     }
 
-    public static function entityCollidesAt(entity:Entity, x:Int, y:Int) {
+    public static function entityCollidesAt(entity:Entity, x:Int, y:Int, dx:Int, dy:Int) {
         for(s in all) {
-            if(s.bounds.xMin >= x + entity.hitbox.xMax || s.bounds.xMax <= x + entity.hitbox.xMin ||
-               s.bounds.yMin >= y + entity.hitbox.yMax || s.bounds.yMax <= y + entity.hitbox.yMin) {
-                continue;
+            if(s.collisionType == Full) {
+                if(x + entity.hitbox.xMax > s.bounds.xMin && x + entity.hitbox.xMin < s.bounds.xMax && 
+                   y + entity.hitbox.yMax > s.bounds.yMin && y + entity.hitbox.yMin < s.bounds.yMax) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformLeft && dx < 0) {
+                if(s.bounds.yMin < y + entity.hitbox.yMax && s.bounds.yMax > y + entity.hitbox.yMin && x + entity.hitbox.xMin == s.bounds.xMax - 1) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformRight && dx > 0) {
+                if(s.bounds.yMin < y + entity.hitbox.yMax && s.bounds.yMax > y + entity.hitbox.yMin && x + entity.hitbox.xMax == s.bounds.xMin + 1) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformUp && dy < 0) {
+                if(s.bounds.xMin < x + entity.hitbox.xMax && s.bounds.xMax > x + entity.hitbox.xMin && y + entity.hitbox.yMin == s.bounds.yMax - 1) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformDown && dy > 0) {
+                if(s.bounds.xMin < x + entity.hitbox.xMax && s.bounds.xMax > x + entity.hitbox.xMin && y + entity.hitbox.yMax == s.bounds.yMin + 1) {
+                    return true;
+                }
             }
-            return true;
         }
         return false;
     }
 
     public var bounds(default, null) : IBounds;
+    var collisionType : Enum_Collision;
     #if debug
     var g : Graphics;
     #end
 
-    public function new(x:Int, y:Int, width:Int, height:Int) {
+    public function new(x:Int, y:Int, width:Int, height:Int, collisionType:Enum_Collision) {
+        trace(x, y, width, height, collisionType);
         bounds = IBounds.fromValues(x, y, width, height);
+        this.collisionType = collisionType;
         all.push(this);
         #if debug
         g = new Graphics();

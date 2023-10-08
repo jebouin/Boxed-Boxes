@@ -216,7 +216,7 @@ class Entity {
         if(stepping) return false;
         stepping = true;
         x--;
-        if(Solid.entityCollides(this)) {
+        if(Solid.entityCollides(this, -1, 0)) {
             cancelStepLeft();
             return false;
         }
@@ -255,7 +255,7 @@ class Entity {
         if(stepping) return false;
         stepping = true;
         x++;
-        if(Solid.entityCollides(this)) {
+        if(Solid.entityCollides(this, 1, 0)) {
             cancelStepRight();
             return false;
         }
@@ -294,7 +294,7 @@ class Entity {
         if(stepping) return false;
         stepping = true;
         y--;
-        if(Solid.entityCollides(this)) {
+        if(Solid.entityCollides(this, 0, -1)) {
             cancelStepUp();
             return false;
         }
@@ -333,7 +333,7 @@ class Entity {
         if(stepping) return false;
         stepping = true;
         y++;
-        if(Solid.entityCollides(this)) {
+        if(Solid.entityCollides(this, 0, 1)) {
             cancelStepDown();
             return false;
         }

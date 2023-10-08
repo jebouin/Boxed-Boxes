@@ -1,4 +1,6 @@
-FEEDBACK
+- One way platforms
+- Constraint to level bounds
+- Parallax
 - Add level selection animation (compare previously visible)
 - Level 4 too hard
 	- Remove inertia
@@ -13,10 +15,7 @@ FEEDBACK
 - Better wall jump (make whole game a bit slower?)
 - Stick to ceiling for a few frames to make it easier to jump over box
 - More levels to introduce border merge
-
-POST-JAM
-- Parallax
-- Constraint to level bounds
+- Undo (rewind?)
 - Music
 - Entity/solid corner correction
 - Screen shake
@@ -24,4 +23,3 @@ POST-JAM
 - More levels
 	- Make stairs by pushing borders
 	- 4 * 9 levels (secret world (zone F))
-	- Star bonus collectible
