@@ -44,9 +44,6 @@ class Hero extends Entity {
     var prevTriedPushingHorizontal : Bool;
     var triedPushingHorizontalTimer : Float;
     var curAnimName : String;
-    var isOnGround : Bool = false;
-    var hasWallLeft : Bool = false;
-    var hasWallRight : Bool = false;
 
     public function new() {
         super();
@@ -75,6 +72,9 @@ class Hero extends Entity {
 
     override public function update(dt:Float) {
         // TODO: Use wall jump dist
+        var hasWallLeft = Solid.entityCollidesAt(this, x - WALL_JUMP_DIST, y, -1, 0);
+        var hasWallRight = Solid.entityCollidesAt(this, x + WALL_JUMP_DIST, y, 1, 0);
+        var isOnGround = Solid.entityCollidesAt(this, x, y + 1, 0, 1);
         var controller = Main.inst.controller;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
         var facing = None;
@@ -228,27 +228,5 @@ class Hero extends Entity {
     function updateGraphics() {
         anim.x = x + (hitbox.xMin + hitbox.xMax) * .5;
         anim.y = y + hitbox.yMax;
-    }
-
-    override function beforeTryMoveDown() {
-        isOnGround = false;
-    }
-    override function afterTryMoveDown() {
-        isOnGround = hitDown;
-    }
-    override function beforeTryMoveUp() {
-        isOnGround = false;
-    }
-    override function beforeTryMoveLeft() {
-        hasWallLeft = false;
-    }
-    override function afterTryMoveLeft() {
-        hasWallLeft = hitLeft;
-    }
-    override function beforeTryMoveRight() {
-        hasWallRight = false;
-    }
-    override function afterTryMoveRight() {
-        hasWallRight = hitRight;
     }
 }

@@ -119,14 +119,6 @@ class Entity {
         var amountY = Math.round(ry);
         rx -= amountX;
         ry -= amountY;
-        var triedMoveLeft = amountX < 0;
-        var triedMoveRight = amountX > 0;
-        var triedMoveUp = amountY < 0;
-        var triedMoveDown = amountY > 0;
-        if(triedMoveLeft) beforeTryMoveLeft();
-        if(triedMoveRight) beforeTryMoveRight();
-        if(triedMoveUp) beforeTryMoveUp();
-        if(triedMoveDown) beforeTryMoveDown();
         if(movementType == Full) {
             if(amountX != 0) {
                 while(amountX < 0) {
@@ -220,10 +212,6 @@ class Entity {
                 turn++;
             }
         }
-        if(triedMoveLeft) afterTryMoveLeft();
-        if(triedMoveRight) afterTryMoveRight();
-        if(triedMoveUp) afterTryMoveUp();
-        if(triedMoveDown) afterTryMoveDown();
     }
 
     public function stepLeft(forceCanPushBorder:Bool=false) {
@@ -538,13 +526,4 @@ class Entity {
             }
         }
     }
-
-    function beforeTryMoveLeft() {}
-    function beforeTryMoveRight() {}
-    function beforeTryMoveUp() {}
-    function beforeTryMoveDown() {}
-    function afterTryMoveLeft() {}
-    function afterTryMoveRight() {}
-    function afterTryMoveUp() {}
-    function afterTryMoveDown() {}
 }

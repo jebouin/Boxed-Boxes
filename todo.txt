@@ -1,5 +1,4 @@
 POST-JAM
-- Fix infinite wall jump
 - Character animations
 	- Jump run
 	- Jump idle
