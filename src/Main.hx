@@ -68,7 +68,7 @@ class Main extends hxd.App {
     function startGame() {
         started = true;
         #if debug
-        new Game(true, 1);
+        new Game(true, 8);
         //new Title(1);
         //new LevelComplete(0, 3, 3);
         #else
@@ -221,7 +221,11 @@ class Main extends hxd.App {
         }
         if(Game.inst != null) {
             if(Key.isPressed(Key.E)) {
-                Game.inst.loadNextLevel();
+                if(Key.isDown(Key.SHIFT)) {
+                    Game.inst.loadPreviousLevel();
+                } else {
+                    Game.inst.loadNextLevel();
+                }
             }
             if(Key.isPressed(Key.G)) {
                 Game.inst.forceCompleteLevel();

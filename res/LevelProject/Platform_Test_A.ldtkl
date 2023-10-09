@@ -11,8 +11,8 @@
 	"identifier": "Platform_Test_A",
 	"iid": "794c69d0-6280-11ee-b338-99140bf7634a",
 	"uid": 135,
-	"worldX": 1696,
-	"worldY": 1608,
+	"worldX": 1680,
+	"worldY": 2088,
 	"worldDepth": 0,
 	"pxWid": 328,
 	"pxHei": 208,
@@ -59,8 +59,8 @@
 					"__tags": [],
 					"__tile": { "tilesetUid": 20, "x": 0, "y": 32, "w": 8, "h": 8 },
 					"__smartColor": "#BE4A2F",
-					"__worldX": 1824,
-					"__worldY": 1736,
+					"__worldX": 1808,
+					"__worldY": 2216,
 					"iid": "794c69d2-6280-11ee-b338-b95fb3ca5278",
 					"width": 8,
 					"height": 8,
@@ -910,5 +910,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": []
+	"__neighbours": [{ "levelIid": "801c61b0-6280-11ee-b338-bd548a4f61df", "dir": "s" }]
 }

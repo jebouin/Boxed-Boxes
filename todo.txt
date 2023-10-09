@@ -1,3 +1,4 @@
+POST-JAM
 - Character animations
 - Better parallax system
 - Add level selection animation (compare previously visible)
@@ -23,4 +24,6 @@
 - Screen shake
 - More levels
 	- Make stairs by pushing borders
+	- Push border with boxes inside
 	- Hard mode (grab gem then go back, more spikes)
+- NG integration

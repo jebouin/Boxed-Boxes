@@ -150,11 +150,23 @@ class Game extends Scene {
         level.loadLevelById(levelId);
     }
 
+    public function loadLastLevel() {
+        levelId = Title.GROUP_COUNT * Title.GROUP_WIDTH * Title.GROUP_HEIGHT;
+    }
+
     public function loadNextLevel() {
         if(level.loadLevelById(levelId + 1)) {
             levelId++;
         } else {
             loadFirstLevel();
+        }
+    }
+
+    public function loadPreviousLevel() {
+        if(level.loadLevelById(levelId - 1)) {
+            levelId--;
+        } else {
+            loadLastLevel();
         }
     }
 
