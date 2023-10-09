@@ -1,18 +1,17 @@
 POST-JAM
-- Character animations
-	- Jump run
-	- Jump idle
-- Better parallax system
-- Add level selection animation (compare previously visible)
+- Fix lag during first jump
+- Jump animations
 - Particles
+- Screen shake/flash/rumble
+- Better parallax system
+- Current level animated cursor
+- Add level selection animation (compare previously visible)
 - Level 4 too hard
 	- Remove inertia
 	- Show can jump from bottom border
 	- Remove spikes and use void instead
 	- Make zone larger
 - Level 6 uses wall jump before introducing it
-- Level selection improvements
-	- Current level anim
 - Make menus clickable
 - Mobile controls?
 - Fix bugs and inconsistencies

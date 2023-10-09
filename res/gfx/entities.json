@@ -47,10 +47,13 @@
    { "name": "buttonSelected", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 72, "y": 96, "w": 16, "h": 16 }, "pivot": {"x": 0, "y": 0 } }] },
    { "name": "gem1", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 136, "w": 224, "h": 16 } }] },
    { "name": "gem2", "color": "#0000ffff", "data": "14,60", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 152, "w": 224, "h": 16 } }] },
-   { "name": "heroRun", "color": "#0000ffff", "data": "12,24", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 176, "w": 216, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
-   { "name": "heroRunPush", "color": "#0000ffff", "data": "12,24", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 194, "w": 216, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
+   { "name": "heroRun", "color": "#0000ffff", "data": "12,20", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 176, "w": 216, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
+   { "name": "heroRunPush", "color": "#0000ffff", "data": "12,20", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 194, "w": 216, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
    { "name": "heroWallSlide", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 212, "w": 18, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
-   { "name": "heroIdle", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 18, "y": 212, "w": 18, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] }
+   { "name": "heroIdle", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 18, "y": 212, "w": 18, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
+   { "name": "heroJumpSide", "color": "#0000ffff", "data": "5,1", "keys": [{ "frame": 0, "bounds": {"x": 36, "y": 212, "w": 90, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
+   { "name": "heroJumpNeutral", "color": "#0000ffff", "data": "5,1", "keys": [{ "frame": 0, "bounds": {"x": 126, "y": 212, "w": 90, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] },
+   { "name": "heroLand", "color": "#0000ffff", "data": "2,10", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 230, "w": 36, "h": 18 }, "pivot": {"x": 9, "y": 18 } }] }
   ]
  }
 }

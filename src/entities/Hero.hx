@@ -175,10 +175,14 @@ class Hero extends Entity {
         if(!isOnGround) {
             if(slidingAnim) {
                 newAnimName = "wallSlide";
+            } else if(facing == Left || facing == Right) {
+                newAnimName = "jumpSide";
+            } else {
+                newAnimName = "jumpNeutral";
             }
         } else {
             if(facing == None || facing == Up || facing == Down) {
-                newAnimName = "idle";
+                newAnimName = curAnimName == "jumpSide" || curAnimName == "jumpNeutral" || curAnimName == "land" ? "land" : "idle";
             } else {
                 if(triedPushingHorizontal) {
                     newAnimName = "runPush";
@@ -196,7 +200,18 @@ class Hero extends Entity {
         if(newAnimName != curAnimName) {
             curAnimName = newAnimName;
             var fullAnimName = "hero" + curAnimName.toUpperCase().charAt(0) + curAnimName.substr(1);
-            anim.play(Assets.getAnimData("entities", fullAnimName).tiles, newFrame);
+            var data = Assets.getAnimData("entities", fullAnimName);
+            anim.play(data.tiles, newFrame);
+            anim.speed = data.fps;
+            anim.loops = true;
+        }
+        if(curAnimName == "jumpSide") {
+            anim.currentFrame = Util.fclamp(anim.frames.length / 2 + vy / 50, 0, anim.frames.length - 1);
+        } else if(curAnimName == "jumpNeutral") {
+            var frame = (vy - (-JUMP_VEL)) / (FALL_VEL - (-JUMP_VEL)) * anim.frames.length;
+            anim.currentFrame = Util.fclamp(frame, 0, anim.frames.length - 1);
+        } else if(curAnimName == "land") {
+            anim.loops = false;
         }
         anim.update(dt);
         updateGraphics();
