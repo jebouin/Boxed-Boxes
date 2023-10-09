@@ -1,5 +1,8 @@
 POST-JAM
+- Fix infinite wall jump
 - Character animations
+	- Jump run
+	- Jump idle
 - Better parallax system
 - Add level selection animation (compare previously visible)
 - Particles

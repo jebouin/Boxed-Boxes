@@ -43,6 +43,10 @@ class Hero extends Entity {
     var prevFacing : Facing;
     var prevTriedPushingHorizontal : Bool;
     var triedPushingHorizontalTimer : Float;
+    var curAnimName : String;
+    var isOnGround : Bool = false;
+    var hasWallLeft : Bool = false;
+    var hasWallRight : Bool = false;
 
     public function new() {
         super();
@@ -71,7 +75,6 @@ class Hero extends Entity {
 
     override public function update(dt:Float) {
         // TODO: Use wall jump dist
-        var onGround = hitDown, wallLeft = hitLeft, wallRight = hitRight;
         var controller = Main.inst.controller;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
         var facing = None;
@@ -89,13 +92,14 @@ class Hero extends Entity {
             }
         }
         var fastFall = facing == Down;
-        var sliding = !fastFall && ((facing == Left && wallLeft) || (facing == Right && wallRight)) && vy > 0;
+        var slidingAnim = !fastFall && ((facing == Left && hasWallLeft) || (facing == Right && hasWallRight));
+        var slidingPhysics = slidingAnim && vy > 0;
         wallJumpTimer += dt;
         var wallJumping = wallJumpTimer <= WALL_JUMP_TIME;
         if(wallJumping) {
             var t = wallJumpTimer / WALL_JUMP_TIME;
             var moveAcc = Util.lerp(WALL_JUMP_ACC_X, 1., t);
-            var frictionX = Util.lerp(WALL_JUMP_FRICTION_X, onGround ? 1. : AIR_FRICTION_X, t);
+            var frictionX = Util.lerp(WALL_JUMP_FRICTION_X, isOnGround ? 1. : AIR_FRICTION_X, t);
             if(facing == Left) {
                 vx = Util.sodStep(vx, -MOVE_VEL, moveAcc, dt);
             } else if(facing == Right) {
@@ -109,18 +113,18 @@ class Hero extends Entity {
             } else if(facing == Right) {
                 vx = MOVE_VEL;
             } else {
-                vx = onGround || fastFall ? 0 : Util.sodStep(vx, 0, AIR_FRICTION_X, dt);
+                vx = isOnGround || fastFall ? 0 : Util.sodStep(vx, 0, AIR_FRICTION_X, dt);
             }
         }
-        if(onGround) {
+        if(isOnGround) {
             groundTimer = 0.;
         } else {
             groundTimer += dt;
             jumpBufferTimer += dt;
         }
-        if(wallLeft) wallLeftTimer = 0.;
+        if(hasWallLeft) wallLeftTimer = 0.;
         else wallLeftTimer += dt;
-        if(wallRight) wallRightTimer = 0.;
+        if(hasWallRight) wallRightTimer = 0.;
         else wallRightTimer += dt;
         var jumping = vy < 0 && controller.isDown(Action.jump);
         if(vy < 0 && controller.isReleased(Action.jump)) {
@@ -133,24 +137,24 @@ class Hero extends Entity {
             } else {
                 jumpBufferTimer = 0.;
             }
-        } else if(onGround && controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME) {
+        } else if(isOnGround && controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME) {
             jumped = jump();
         }
-        if(!jumped && !onGround) {
+        if(!jumped && !isOnGround) {
             if(controller.isPressed(Action.jump) || (controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME)) {
                 if(wallLeftTimer < wallRightTimer) {
-                    if(wallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME)) {
+                    if(hasWallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME)) {
                         wallJump(1);
                     }
                 } else {
-                    if(wallRight || (vy > 0 && wallRightTimer < WALL_JUMP_COYOTE_TIME)) {
+                    if(hasWallRight || (vy > 0 && wallRightTimer < WALL_JUMP_COYOTE_TIME)) {
                         wallJump(-1);
                     }
                 }
             }
         }
-        vy = Util.sodStep(vy, fastFall ? FALL_FAST_VEL : (sliding ? FALL_WALL_VEL : FALL_VEL), fastFall ? GRAVITY_FAST : (jumping ? GRAVITY_JUMP : GRAVITY), dt);
-        if(sliding) {
+        vy = Util.sodStep(vy, fastFall ? FALL_FAST_VEL : (slidingPhysics ? FALL_WALL_VEL : FALL_VEL), fastFall ? GRAVITY_FAST : (jumping ? GRAVITY_JUMP : GRAVITY), dt);
+        if(slidingPhysics) {
             vy = Util.sodStep(vy, 0, .99, dt);
         }
         super.update(dt);
@@ -166,14 +170,33 @@ class Hero extends Entity {
             len = Math.sqrt(len);
             die(dir.dx / len, dir.dy / len);
         }
-        if(triedPushingHorizontal) {
-            anim.play(Assets.getAnimData("entities", "heroRunPush").tiles, anim.currentFrame);
-            triedPushingHorizontalTimer = 0.;
-        } else {
-            triedPushingHorizontalTimer += dt;
-            if(triedPushingHorizontalTimer > .1) {
-                anim.play(Assets.getAnimData("entities", "heroRun").tiles, anim.currentFrame);
+        var newAnimName = "idle";
+        var newFrame = 0.;
+        if(!isOnGround) {
+            if(slidingAnim) {
+                newAnimName = "wallSlide";
             }
+        } else {
+            if(facing == None || facing == Up || facing == Down) {
+                newAnimName = "idle";
+            } else {
+                if(triedPushingHorizontal) {
+                    newAnimName = "runPush";
+                    newFrame = anim.currentFrame;
+                    triedPushingHorizontalTimer = 0.;
+                } else {
+                    triedPushingHorizontalTimer += dt;
+                    if(triedPushingHorizontalTimer > .1) {
+                        newAnimName = "run";
+                        newFrame = anim.currentFrame;
+                    }
+                }
+            }
+        }
+        if(newAnimName != curAnimName) {
+            curAnimName = newAnimName;
+            var fullAnimName = "hero" + curAnimName.toUpperCase().charAt(0) + curAnimName.substr(1);
+            anim.play(Assets.getAnimData("entities", fullAnimName).tiles, newFrame);
         }
         anim.update(dt);
         updateGraphics();
@@ -205,5 +228,27 @@ class Hero extends Entity {
     function updateGraphics() {
         anim.x = x + (hitbox.xMin + hitbox.xMax) * .5;
         anim.y = y + hitbox.yMax;
+    }
+
+    override function beforeTryMoveDown() {
+        isOnGround = false;
+    }
+    override function afterTryMoveDown() {
+        isOnGround = hitDown;
+    }
+    override function beforeTryMoveUp() {
+        isOnGround = false;
+    }
+    override function beforeTryMoveLeft() {
+        hasWallLeft = false;
+    }
+    override function afterTryMoveLeft() {
+        hasWallLeft = hitLeft;
+    }
+    override function beforeTryMoveRight() {
+        hasWallRight = false;
+    }
+    override function afterTryMoveRight() {
+        hasWallRight = hitRight;
     }
 }
