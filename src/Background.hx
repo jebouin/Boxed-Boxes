@@ -8,18 +8,28 @@ class Background {
     var parallaxes : Array<Parallax> = [];
 
     public function new() {
-        addParallax(0, 0, .1);
-        addParallax(0, 1, .3);
-        addParallax(0, 2, .5);
-        addParallax(0, 3, .8);
+        loadLevel(0);
     }
 
     public function addParallax(zone:Int, frame:Int, speed:Float) {
-        var tile = Res.load("gfx/backgrounds/back" + zone + ".png").toTile();
-        var sub = tile.sub(0, frame * Main.HEIGHT, Main.WIDTH, Main.HEIGHT);
+        var r = Res.load("gfx/backgrounds/back" + zone + ".png");
+        var sub = r.toTile().sub(0, frame * Main.HEIGHT, Main.WIDTH, Main.HEIGHT);
         var p = new Parallax(sub, Game.LAYER_BACK, speed);
         parallaxes.push(p);
         // TODO: Sort
+    }
+
+    public function loadLevel(globalLevelId:Int) {
+        for(p in parallaxes) {
+            p.remove();
+        }
+        var zone = Std.int(globalLevelId / (Title.GROUP_WIDTH * Title.GROUP_HEIGHT));
+        var tile = Res.load("gfx/backgrounds/back" + zone + ".png").toTile();
+        var count = Std.int(tile.iheight / Main.HEIGHT);
+        for(i in 0...count) {
+            var f = Math.exp(-(3 * (count - i - 1) / count)) * .8;
+            addParallax(zone, i, f);
+        }
     }
 
     public function delete() {

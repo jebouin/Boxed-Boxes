@@ -1,6 +1,4 @@
 POST-JAM
-- Fix lag during first jump
-- Jump animations
 - Particles
 - Screen shake/flash/rumble
 - Better parallax system
@@ -28,3 +26,4 @@ POST-JAM
 	- Push border with boxes inside
 	- Hard mode (grab gem then go back, more spikes)
 - NG integration
+- Test all menus clickable

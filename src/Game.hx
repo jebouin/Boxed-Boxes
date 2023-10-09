@@ -179,6 +179,7 @@ class Game extends Scene {
         hero.spawn();
         camera.setBounds(level.getCameraBounds());
         camera.setTarget(hero, true);
+        background.loadLevel(levelId);
     }
 
     public function retry() {

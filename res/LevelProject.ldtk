@@ -11,7 +11,7 @@
 	"iid": "7799c960-3b70-11ee-b552-83fdf9fa10c0",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 186,
+	"nextUid": 188,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -4074,11 +4074,11 @@
 			"identifier": "Main_7",
 			"iid": "cf1f5890-6280-11ee-b338-f14eba9b6da0",
 			"uid": 154,
-			"worldX": 256,
-			"worldY": 1120,
+			"worldX": 144,
+			"worldY": 1104,
 			"worldDepth": 0,
-			"pxWid": 360,
-			"pxHei": 288,
+			"pxWid": 608,
+			"pxHei": 504,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4089,9 +4089,9 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_7.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test parallax", "__tile": null, "defUid": 111, "realEditorValues": [{
 				"id": "V_String",
-				"params": ["todo"]
+				"params": ["test parallax"]
 			}] }],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4201,11 +4201,11 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_15",
+			"identifier": "Main_16",
 			"iid": "b2af5bf0-3b70-11ee-8473-b958353bfa84",
 			"uid": 46,
-			"worldX": 3408,
-			"worldY": 664,
+			"worldX": 2504,
+			"worldY": 1128,
 			"worldDepth": 0,
 			"pxWid": 320,
 			"pxHei": 208,
@@ -4218,7 +4218,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_15.ldtkl",
+			"externalRelPath": "LevelProject/Main_16.ldtkl",
 			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "interesting merge", "__tile": null, "defUid": 111, "realEditorValues": [{
 				"id": "V_String",
 				"params": ["interesting merge"]
@@ -4331,11 +4331,11 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_16",
+			"identifier": "Main_15",
 			"iid": "209ee1d0-6280-11ee-b338-93b36455061a",
 			"uid": 158,
-			"worldX": 2520,
-			"worldY": 1128,
+			"worldX": 3408,
+			"worldY": 672,
 			"worldDepth": 0,
 			"pxWid": 320,
 			"pxHei": 216,
@@ -4348,10 +4348,10 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_16.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+			"externalRelPath": "LevelProject/Main_15.ldtkl",
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "push box between borders", "__tile": null, "defUid": 111, "realEditorValues": [{
 				"id": "V_String",
-				"params": ["todo"]
+				"params": ["push box between borders"]
 			}] }],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4360,8 +4360,8 @@
 			"identifier": "Main_17",
 			"iid": "32169f70-6280-11ee-b338-5106a1e13b1e",
 			"uid": 159,
-			"worldX": 3000,
-			"worldY": 1120,
+			"worldX": 2960,
+			"worldY": 1128,
 			"worldDepth": 0,
 			"pxWid": 320,
 			"pxHei": 216,
@@ -4453,19 +4453,19 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_25.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 1", "__tile": null, "defUid": 111, "realEditorValues": [{
 				"id": "V_String",
-				"params": ["todo"]
+				"params": ["test mechanics 1"]
 			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
 		{
 			"identifier": "Main_26",
-			"iid": "3bc31fd0-6280-11ee-b338-276536f3f014",
-			"uid": 162,
-			"worldX": 5064,
-			"worldY": 1096,
+			"iid": "010275f0-6280-11ee-8593-a7091c9dec2f",
+			"uid": 186,
+			"worldX": 5056,
+			"worldY": 1120,
 			"worldDepth": 0,
 			"pxWid": 496,
 			"pxHei": 256,
@@ -4479,18 +4479,18 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_26.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 2", "__tile": null, "defUid": 111, "realEditorValues": [{
 				"id": "V_String",
-				"params": ["todo"]
+				"params": ["test mechanics 2"]
 			}] }],
 			"layerInstances": null,
 			"__neighbours": []
 		},
 		{
 			"identifier": "Main_27",
-			"iid": "3d6277f0-6280-11ee-b338-8deefb926d3c",
-			"uid": 163,
-			"worldX": 5704,
+			"iid": "0232dfa0-6280-11ee-8593-373729bb0820",
+			"uid": 187,
+			"worldX": 5712,
 			"worldY": 1096,
 			"worldDepth": 0,
 			"pxWid": 496,
@@ -4505,9 +4505,9 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_27.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 3", "__tile": null, "defUid": 111, "realEditorValues": [{
 				"id": "V_String",
-				"params": ["todo"]
+				"params": ["test mechanics 3"]
 			}] }],
 			"layerInstances": null,
 			"__neighbours": []

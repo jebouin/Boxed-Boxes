@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.Graphics;
 import h2d.col.IBounds;
 import h2d.Bitmap;
 import Controller;
@@ -31,8 +32,10 @@ class Hero extends Entity {
     public static inline var WALL_JUMP_ACC_X = .9;
     public static inline var WALL_JUMP_FRICTION_X = .997;
     public static inline var WALL_JUMP_COYOTE_TIME = .1;
-    // TODO: Add debug graphics
     var anim : Anim;
+    #if debug_collisions
+    var debugGraphics : Graphics;
+    #end
     public var eyeOffsetX(default, null) = 0;
     public var eyeOffsetY(default, null) = 0;
     var groundTimer : Float;
@@ -52,6 +55,13 @@ class Hero extends Entity {
         collisionEnabled = canPushBorder = canPushEntities = true;
         setHitbox(IBounds.fromValues(0, 0, Level.TS, 2 * Level.TS));
         movementType = Alternate;
+        #if debug_collisions
+        debugGraphics = new Graphics();
+        debugGraphics.beginFill(0xFFFFFF);
+        debugGraphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        debugGraphics.endFill();
+        Game.inst.world.add(debugGraphics, Game.LAYER_DEBUG);
+        #end
     }
 
     public function spawn() {
@@ -67,14 +77,17 @@ class Hero extends Entity {
 
     override public function delete() {
         anim.remove();
+        #if debug_collisions
+        debugGraphics.remove();
+        #end
         super.delete();
     }
 
     override public function update(dt:Float) {
-        // TODO: Use wall jump dist
-        var hasWallLeft = Solid.entityCollidesAt(this, x - WALL_JUMP_DIST, y, -1, 0);
-        var hasWallRight = Solid.entityCollidesAt(this, x + WALL_JUMP_DIST, y, 1, 0);
-        var isOnGround = Solid.entityCollidesAt(this, x, y + 1, 0, 1);
+        // TODO: Check collision each frame
+        var isOnGround = hitDown;
+        var hasWallLeft = hitLeft;
+        var hasWallRight = hitRight;
         var controller = Main.inst.controller;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
         var facing = None;
@@ -243,5 +256,10 @@ class Hero extends Entity {
     function updateGraphics() {
         anim.x = x + (hitbox.xMin + hitbox.xMax) * .5;
         anim.y = y + hitbox.yMax;
+        #if debug_collisions
+        anim.visible = false;
+        debugGraphics.x = x;
+        debugGraphics.y = y;
+        #end
     }
 }

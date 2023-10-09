@@ -12,7 +12,7 @@ class LevelCell extends Flow {
     public var completed(default, set) : Bool = false;
     public var group(default, null) : Int;
 
-    public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool) {
+    public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool, onClick:Void->Void) {
         super(parent);
         this.group = group;
         this.completed = completed;
@@ -31,6 +31,10 @@ class LevelCell extends Flow {
             var props = getProperties(levelText);
             props.offsetX = 1;
         }
+        enableInteractive = true;
+        interactive.onClick = function(e) {
+            onClick();
+        };
     }
     
     public function set_selected(v:Bool) {
@@ -139,7 +143,9 @@ class Title extends Scene {
                     var bottomCompleted = i < GROUP_HEIGHT - 1 && Save.gameData.data.levelsCompleted.get(levelId + GROUP_WIDTH);
                     var rightCompleted = j < GROUP_WIDTH - 1 && Save.gameData.data.levelsCompleted.get(levelId + 1);
                     var locked = groupLocked || ((i > 0 || j > 0) && !topCompleted && !leftCompleted && !rightCompleted && !bottomCompleted && !completed);
-                    var cell = new LevelCell(levelId, row, k, completed, locked);
+                    var cell = new LevelCell(levelId, row, k, completed, locked, function() {
+                        chooseLevel(k, i, j);
+                    });
                     cells[k][i].push(cell);
                     if(completed) {
                         completedCount++;
@@ -209,10 +215,14 @@ class Title extends Scene {
         checkHoldAction(Action.menuUp, -1, 0);
         checkHoldAction(Action.menuDown, 1, 0);
         if(controller.isPressed(Action.menuEnter)) {
-            Audio.playSound("menuSelect");
-            delete();
-            new Game(true, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
+            chooseLevel(curGroup, curI, curJ);
         }
+    }
+
+    function chooseLevel(curGroup:Int, curI:Int, curJ:Int) {
+        Audio.playSound("menuSelect");
+        delete();
+        new Game(true, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
     }
 
     function moveSelection(di:Int, dj:Int) {
