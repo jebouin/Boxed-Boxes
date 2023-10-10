@@ -29,6 +29,5 @@ POST-JAM
 - Test all menus clickable
 
 Physics issues
-- Level 23 left box sometime disappears
-- Level 24 ending very broken
 - Hard to fit box in holes
+- Level 24 ending weird/unclear behavior?

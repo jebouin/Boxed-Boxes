@@ -154,6 +154,7 @@ class Entity {
         if(collisionEnabled) {
             var res = StepResult.newLeft();
             tryStepLeft(res);
+            trace(res);
             res.apply(this);
             if(!res.success) {
                 vx = 0;

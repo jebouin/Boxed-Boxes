@@ -79,6 +79,7 @@ class Border {
     public function update(dt:Float) {
         group.x = groupBack.x = bounds.x;
         group.y = groupBack.y = bounds.y;
+        trace(bounds.x);
     }
 
     public function setBounds(b:IBounds) {
@@ -124,6 +125,7 @@ class Border {
     public function canStepLeft(res:StepResult) {
         res.pushedBorders.set(this.id, true);
         bounds.x--;
+        updateWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
@@ -149,6 +151,7 @@ class Border {
     public function canStepRight(res:StepResult) {
         res.pushedBorders.set(this.id, true);
         bounds.x++;
+        updateWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
@@ -174,6 +177,7 @@ class Border {
     public function canStepUp(res:StepResult) {
         res.pushedBorders.set(this.id, true);
         bounds.y--;
+        updateWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(horizontalWallIntersectsEntity(e, e.isInside)) {
@@ -199,6 +203,7 @@ class Border {
     public function canStepDown(res:StepResult) {
         res.pushedBorders.set(this.id, true);
         bounds.y++;
+        updateWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(horizontalWallIntersectsEntity(e, e.isInside)) {
