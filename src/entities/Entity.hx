@@ -7,14 +7,6 @@ import h2d.Tile;
 import h2d.col.IBounds;
 import h2d.Bitmap;
 
-typedef StepResult = {
-    var dx : Int;
-    var dy : Int;
-    var success : Bool;
-    var triedPushingHorizontal : Bool;
-    var pushedEntities : IntMap<Bool>;
-};
-
 class Entity {
     public static var all : Array<Entity> = [];
     public static var idToEntity : IntMap<Entity> = new IntMap<Entity>();
@@ -110,8 +102,8 @@ class Entity {
     public var y : Int = 0;
     public var vx : Float = 0.;
     public var vy : Float = 0.;
-    var rx : Float = 0.;
-    var ry : Float = 0.;
+    public var rx : Float = 0.;
+    public var ry : Float = 0.;
     var deleted : Bool = false;
     public var collisionEnabled : Bool = false;
     public var canPushBorders : Bool = false;
@@ -122,8 +114,7 @@ class Entity {
     var hitDown : Bool = false;
     var borderId : Int = -1;
     public var isInside(default, null) : Bool = false;
-    var stepping : Bool = false;
-    var triedPushingHorizontal : Bool = false;
+    public var triedPushingHorizontal : Bool = false;
 
     public function new(?hitbox:IBounds=null) {
         id = all.length;
@@ -156,29 +147,13 @@ class Entity {
         updateBorderConstraint();
     }
 
-    public function applyStepResult(res:StepResult) {
-        trace(this, this.id, res);
-        for(k in res.pushedEntities.keys()) {
-            trace(k);
-        }
-        triedPushingHorizontal = res.triedPushingHorizontal;
-        if(res.success) {
-            rx -= res.dx;
-            ry -= res.dy;
-            for(id in res.pushedEntities.keys()) {
-                var e = idToEntity.get(id);
-                e.x += res.dx;
-                e.y += res.dy;
-            }
-        }
-    }
-
     public function tryMoveLeft() {
         var amountX = Math.round(rx);
         if(amountX >= 0) return false;
         if(collisionEnabled) {
-            var res = canStepLeft(new IntMap<Bool>());
-            applyStepResult(res);
+            var res = StepResult.newLeft();
+            canStepLeft(res);
+            res.apply(this);
             if(!res.success) {
                 vx = 0;
                 hitLeft = true;
@@ -187,6 +162,7 @@ class Entity {
             }
         } else {
             rx++;
+            x--;
         }
         return true;
     }
@@ -195,8 +171,9 @@ class Entity {
         var amountX = Math.round(rx);
         if(amountX <= 0) return false;
         if(collisionEnabled) {
-            var res = canStepRight(new IntMap<Bool>());
-            applyStepResult(res);
+            var res = StepResult.newRight();
+            canStepRight(res);
+            res.apply(this);
             if(!res.success) {
                 vx = 0;
                 hitRight = true;
@@ -205,6 +182,7 @@ class Entity {
             }
         } else {
             rx--;
+            x++;
         }
         return true;
     }
@@ -213,8 +191,9 @@ class Entity {
         var amountY = Math.round(ry);
         if(amountY >= 0) return false;
         if(collisionEnabled) {
-            var res = canStepUp(new IntMap<Bool>());
-            applyStepResult(res);
+            var res = StepResult.newUp();
+            canStepUp(res);
+            res.apply(this);
             if(!res.success) {
                 vy = 0;
                 hitUp = true;
@@ -223,6 +202,7 @@ class Entity {
             }
         } else {
             ry++;
+            y--;
         }
         return true;
     }
@@ -231,8 +211,9 @@ class Entity {
         var amountY = Math.round(ry);
         if(amountY <= 0) return false;
         if(collisionEnabled) {
-            var res = canStepDown(new IntMap<Bool>());
-            applyStepResult(res);
+            var res = StepResult.newDown();
+            canStepDown(res);
+            res.apply(this);
             if(!res.success) {
                 vy = 0;
                 hitDown = true;
@@ -241,141 +222,157 @@ class Entity {
             }
         } else {
             ry--;
+            y++;
         }
         return true;
     }
 
-    // Assume graph of entities pushing -> pushed is acyclic since direction is constant (stepping bool should not be needed)
-    public function canStepLeft(pushedEntities:IntMap<Bool>, canPushEntities:Bool=false, canPushBorders:Bool=false) : StepResult {
+    // Assume graph of entities pushing -> pushed is acyclic since direction is constant
+    public function canStepLeft(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
-        pushedEntities.set(id, true);
-        var result = {success: false, dx: -1, dy: 0, pushedEntities: pushedEntities, triedPushingHorizontal: false};
-        if(stepping) return result;
-        result.success = true;
-        stepping = true;
+        res.pushedEntities.set(id, true);
         x--;
         if(Solid.entityCollides(this, -1, 0)) {
-            result.success = false;
+            res.cancel();
+            return;
         }
-        if(result.success) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e) || pushedEntities.exists(e.id)) continue;
-                if(canPushEntities) {
-                    result.triedPushingHorizontal = true;
-                    pushedEntities.set(id, true);
-                    var pushResult = e.canStepLeft(pushedEntities, canPushEntities, canPushBorders);
-                    if(!pushResult.success) {
-                        result.success = false;
-                        break;
-                    }
-                } else {
-                    result.success = false;
-                    break;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
+            if(canPushEntities) {
+                res.triedPushingHorizontal = true;
+                e.canStepLeft(res, canPushEntities, canPushBorders);
+                if(!res.success) {
+                    return;
                 }
+            } else {
+                res.cancel();
+                return;
+            }
+        }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(res.pushedBorders.exists(b.id) || !b.verticalWallIntersectsEntity(this, isInside)) continue;
+            if(canPushBorders) {
+                b.canStepLeft(res);
+                if(!res.success) {
+                    return;
+                }
+            } else {
+                res.cancel();
+                return;
             }
         }
         x++;
-        stepping = false;
-        return result;
     }
-    public function canStepRight(pushedEntities:IntMap<Bool>, canPushEntities:Bool=false, canPushBorders:Bool=false) : StepResult {
+    public function canStepRight(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
-        pushedEntities.set(id, true);
-        var result = {success: false, dx: 1, dy: 0, pushedEntities: pushedEntities, triedPushingHorizontal: false};
-        if(stepping) return result;
-        result.success = true;
-        stepping = true;
+        res.pushedEntities.set(id, true);
         x++;
         if(Solid.entityCollides(this, 1, 0)) {
-            result.success = false;
+            res.cancel();
+            return;
         }
-        if(result.success) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e) || pushedEntities.exists(e.id)) continue;
-                if(canPushEntities) {
-                    result.triedPushingHorizontal = true;
-                    pushedEntities.set(id, true);
-                    var pushResult = e.canStepRight(pushedEntities, canPushEntities, canPushBorders);
-                    if(!pushResult.success) {
-                        result.success = false;
-                        break;
-                    }
-                } else {
-                    result.success = false;
-                    break;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
+            if(canPushEntities) {
+                res.triedPushingHorizontal = true;
+                e.canStepRight(res, canPushEntities, canPushBorders);
+                if(!res.success) {
+                    return;
                 }
+            } else {
+                res.cancel();
+                return;
+            }
+        }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(res.pushedBorders.exists(b.id) || !b.verticalWallIntersectsEntity(this, isInside)) continue;
+            if(canPushBorders) {
+                b.canStepRight(res);
+                if(!res.success) {
+                    return;
+                }
+            } else {
+                res.cancel();
+                return;
             }
         }
         x--;
-        stepping = false;
-        return result;
-
     }
-    public function canStepUp(pushedEntities:IntMap<Bool>, canPushEntities:Bool=false, canPushBorders:Bool=false) : StepResult {
+    public function canStepUp(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
-        pushedEntities.set(id, true);
-        var result = {success: false, dx: 0, dy: -1, pushedEntities: pushedEntities, triedPushingHorizontal: false};
-        if(stepping) return result;
-        result.success = true;
-        stepping = true;
+        res.pushedEntities.set(id, true);
         y--;
         if(Solid.entityCollides(this, 0, -1)) {
-            result.success = false;
+            res.cancel();
+            return;
         }
-        if(result.success) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e) || pushedEntities.exists(e.id)) continue;
-                if(canPushEntities) {
-                    pushedEntities.set(id, true);
-                    var pushResult = e.canStepUp(pushedEntities, canPushEntities, canPushBorders);
-                    if(!pushResult.success) {
-                        result.success = false;
-                        break;
-                    }
-                } else {
-                    result.success = false;
-                    break;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
+            if(canPushEntities) {
+                e.canStepUp(res, canPushEntities, canPushBorders);
+                if(!res.success) {
+                    return;
                 }
+            } else {
+                res.cancel();
+                return;
+            }
+        }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(res.pushedBorders.exists(b.id) || !b.horizontalWallIntersectsEntity(this, isInside)) continue;
+            if(canPushBorders) {
+                b.canStepUp(res);
+                if(!res.success) {
+                    return;
+                }
+            } else {
+                res.cancel();
+                return;
             }
         }
         y++;
-        stepping = false;
-        return result;
     }
-    public function canStepDown(pushedEntities:IntMap<Bool>, canPushEntities:Bool=false, canPushBorders:Bool=false) : StepResult {
+    public function canStepDown(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
-        pushedEntities.set(id, true);
-        var result = {success: false, dx: 0, dy: 1, pushedEntities: pushedEntities, triedPushingHorizontal: false};
-        if(stepping) return result;
-        result.success = true;
-        stepping = true;
+        res.pushedEntities.set(id, true);
         y++;
         if(Solid.entityCollides(this, 0, 1)) {
-            result.success = false;
+            res.cancel();
+            return;
         }
-        if(result.success) {
-            for(e in all) {
-                if(!e.collisionEnabled || e == this || !collides(e) || pushedEntities.exists(e.id)) continue;
-                if(canPushEntities) {
-                    pushedEntities.set(id, true);
-                    var pushResult = e.canStepDown(pushedEntities, canPushEntities, canPushBorders);
-                    if(!pushResult.success) {
-                        result.success = false;
-                        break;
-                    }
-                } else {
-                    result.success = false;
-                    break;
+        for(e in all) {
+            if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
+            if(canPushEntities) {
+                e.canStepDown(res, canPushEntities, canPushBorders);
+                if(!res.success) {
+                    return;
                 }
+            } else {
+                res.cancel();
+                return;
+            }
+        }
+        for(b in Border.all) {
+            if(borderId != -1 && borderId != b.id) continue;
+            if(res.pushedBorders.exists(b.id) || !b.horizontalWallIntersectsEntity(this, isInside)) continue;
+            if(canPushBorders) {
+                b.canStepDown(res);
+                if(!res.success) {
+                    return;
+                }
+            } else {
+                res.cancel();
+                return;
             }
         }
         y--;
-        stepping = false;
-        return result;
     }
     // Assumes both entities have collision enabled
     inline public function collides(other:Entity) {

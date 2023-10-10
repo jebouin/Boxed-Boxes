@@ -15,6 +15,7 @@ class Border {
     public static var tile : Tile;
     public static var tileBack : Tile;
     public static var all : Array<Border> = [];
+    public static var idToBorder : IntMap<Border> = new IntMap<Border>();
 
     public static function deleteAll() {
         for(b in all) {
@@ -66,11 +67,13 @@ class Border {
         render();
         id = all.length;
         all.push(this);
+        idToBorder.set(id, this);
     }
 
     public function delete() {
         group.remove();
         groupBack.remove();
+        idToBorder.remove(id);
     }
 
     public function update(dt:Float) {
@@ -118,130 +121,110 @@ class Border {
         mask.endFill();
     }
 
-    /*public function stepLeft() {
-        bounds.x -= 1;
+    public function canStepLeft(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.x--;
         for(e in Entity.all) {
-            if(e.canPushBorder) continue;
+            if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
-                if(!e.pushLeft(new IntMap<Bool>())) {
-                    bounds.x += 1;
-                    return false;
+                e.canStepLeft(res, true, true);
+                if(!res.success) {
+                    res.cancel();
+                    return;
                 }
             } else if(rightBorderIntersectsEntity(e)) {
-                bounds.x += 1;
-                return false;
+                res.cancel();
+                return;
             }
         }
-        updateWalls();
-        return true;
+        for(b in all) {
+            if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
+            b.canStepLeft(res);
+            if(!res.success) {
+                res.cancel();
+                return;
+            }
+        }
+        bounds.x++;
     }
-    public function stepRight() {
-        bounds.x += 1;
+    public function canStepRight(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.x++;
         for(e in Entity.all) {
-            if(e.canPushBorder) continue;
+            if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
-                if(!e.pushRight(new IntMap<Bool>())) {
-                    bounds.x -= 1;
-                    return false;
+                e.canStepRight(res, true, true);
+                if(!res.success) {
+                    res.cancel();
+                    return;
                 }
             } else if(leftBorderIntersectsEntity(e)) {
-                bounds.x -= 1;
-                return false;
+                res.cancel();
+                return;
             }
         }
-        updateWalls();
-        return true;
+        for(b in all) {
+            if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
+            b.canStepRight(res);
+            if(!res.success) {
+                res.cancel();
+                return;
+            }
+        }
+        bounds.x--;
     }
-    public function stepUp() {
-        bounds.y -= 1;
+    public function canStepUp(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.y--;
         for(e in Entity.all) {
-            if(e.canPushBorder) continue;
+            if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(horizontalWallIntersectsEntity(e, e.isInside)) {
-                if(!e.pushUp(new IntMap<Bool>())) {
-                    bounds.y += 1;
-                    return false;
+                e.canStepUp(res, true, true);
+                if(!res.success) {
+                    res.cancel();
+                    return;
                 }
             } else if(bottomBorderIntersectsEntity(e)) {
-                bounds.y += 1;
-                return false;
+                res.cancel();
+                return;
             }
         }
-        updateWalls();
-        return true;
+        for(b in all) {
+            if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
+            b.canStepUp(res);
+            if(!res.success) {
+                res.cancel();
+                return;
+            }
+        }
+        bounds.y++;
     }
-    public function stepDown() {
-        bounds.y += 1;
+    public function canStepDown(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.y++;
         for(e in Entity.all) {
-            if(e.canPushBorder) continue;
+            if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(horizontalWallIntersectsEntity(e, e.isInside)) {
-                if(!e.pushDown(new IntMap<Bool>())) {
-                    bounds.y -= 1;
-                    return false;
+                e.canStepDown(res, true, true);
+                if(!res.success) {
+                    res.cancel();
+                    return;
                 }
             } else if(topBorderIntersectsEntity(e)) {
-                bounds.y -= 1;
-                return false;
+                res.cancel();
+                return;
             }
         }
-        updateWalls();
-        return true;
-    }
-    public function pushLeft(chain:IntMap<Bool>) {
-        bounds.x--;
         for(b in all) {
-            if(b == this || !collides(b) || chain.exists(b.id)) continue;
-            chain.set(this.id, true);
-            if(!b.pushLeft(chain)) {
-                bounds.x++;
-                return false;
+            if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
+            b.canStepDown(res);
+            if(!res.success) {
+                res.cancel();
+                return;
             }
-            chain.remove(this.id);
-        }
-        bounds.x++;
-        return stepLeft();
-    }
-    public function pushRight(chain:IntMap<Bool>) {
-        bounds.x++;
-        for(b in all) {
-            if(b == this || !collides(b) || chain.exists(b.id)) continue;
-            chain.set(this.id, true);
-            if(!b.pushRight(chain)) {
-                bounds.x--;
-                return false;
-            }
-            chain.remove(this.id);
-        }
-        bounds.x--;
-        return stepRight();
-    }
-    public function pushUp(chain:IntMap<Bool>) {
-        bounds.y--;
-        for(b in all) {
-            if(b == this || !collides(b) || chain.exists(b.id)) continue;
-            chain.set(this.id, true);
-            if(!b.pushUp(chain)) {
-                bounds.y++;
-                return false;
-            }
-            chain.remove(this.id);
-        }
-        bounds.y++;
-        return stepUp();
-    }
-    public function pushDown(chain:IntMap<Bool>) {
-        bounds.y++;
-        for(b in all) {
-            if(b == this || !collides(b) || chain.exists(b.id)) continue;
-            chain.set(this.id, true);
-            if(!b.pushDown(chain)) {
-                bounds.y--;
-                return false;
-            }
-            chain.remove(this.id);
         }
         bounds.y--;
-        return stepDown();
-    }*/
+    }
 
     inline public function containsEntity(e:Entity) {
         return e.x + e.hitbox.xMin >= bounds.xMin && e.x + e.hitbox.xMax <= bounds.xMax && e.y + e.hitbox.yMin >= bounds.yMin && e.y + e.hitbox.yMax <= bounds.yMax;

@@ -23,7 +23,7 @@ class Background {
         for(p in parallaxes) {
             p.remove();
         }
-        var zone = Std.int(globalLevelId / (Title.GROUP_WIDTH * Title.GROUP_HEIGHT));
+        var zone = Std.int((globalLevelId - 1) / (Title.GROUP_WIDTH * Title.GROUP_HEIGHT));
         var tile = Res.load("gfx/backgrounds/back" + zone + ".png").toTile();
         var count = Std.int(tile.iheight / Main.HEIGHT);
         for(i in 0...count) {
