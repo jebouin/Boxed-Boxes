@@ -21,6 +21,7 @@ enum GameState {
 }
 
 class Game extends Scene {
+    public static var MAX_MOVE_STEPS = 100;
     public static var TRANSITION_IN_TIME = 0.5;
     public static var DEAD_TIME = .8;
     public static var TRANSITION_OUT_TIME = 1.3;

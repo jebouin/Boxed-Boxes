@@ -23,7 +23,6 @@ class Box extends Entity {
         setHitbox(hitbox = IBounds.fromValues(0, 0, width, height));
         updateBorderConstraint();
         grid.tile = Assets.getTile("entities", "box" + (isInside ? "Inside" : "Outside"));
-        movementType = Alternate;
     }
 
     override public function delete() {
@@ -31,9 +30,13 @@ class Box extends Entity {
         grid.remove();
     }
 
-    override public function update(dt:Float) {
+    override public function updateBeforeMove(dt:Float) {
         vy = Util.sodStep(vy, FALL_VEL, GRAVITY, dt);
-        super.update(dt);
+        super.updateBeforeMove(dt);
+    }
+
+    override public function updateAfterMove(dt:Float) {
+        super.updateAfterMove(dt);
         updateGraphics();
     }
 

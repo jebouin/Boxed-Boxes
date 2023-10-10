@@ -38,11 +38,17 @@ class Hero extends Entity {
     #end
     public var eyeOffsetX(default, null) = 0;
     public var eyeOffsetY(default, null) = 0;
+    var isOnGround : Bool = false;
+    var hasWallLeft : Bool = false;
+    var hasWallRight : Bool = false;
+    var isSlidingAnim : Bool = false;
+    var isSlidingPhysics : Bool = false;
     var groundTimer : Float;
     var wallLeftTimer : Float;
     var wallRightTimer : Float;
     var jumpBufferTimer : Float;
     var wallJumpTimer : Float;
+    var facing : Facing;
     var prevFacing : Facing;
     var prevTriedPushingHorizontal : Bool;
     var triedPushingHorizontalTimer : Float;
@@ -54,7 +60,6 @@ class Hero extends Entity {
         Game.inst.world.add(anim, Game.LAYER_HERO);
         collisionEnabled = canPushBorder = canPushEntities = true;
         setHitbox(IBounds.fromValues(0, 0, Level.TS, 2 * Level.TS));
-        movementType = Alternate;
         #if debug_collisions
         debugGraphics = new Graphics();
         debugGraphics.beginFill(0xFFFFFF);
@@ -83,14 +88,11 @@ class Hero extends Entity {
         super.delete();
     }
 
-    override public function update(dt:Float) {
+    override public function updateBeforeMove(dt:Float) {
         // TODO: Check collision each frame
-        var isOnGround = hitDown;
-        var hasWallLeft = hitLeft;
-        var hasWallRight = hitRight;
         var controller = Main.inst.controller;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
-        var facing = None;
+        facing = None;
         if(cd > .5) {
             if(Util.fabs(ca + Math.PI * .5) <= Math.PI * .25) {
                 facing = Up;
@@ -105,8 +107,8 @@ class Hero extends Entity {
             }
         }
         var fastFall = facing == Down;
-        var slidingAnim = !fastFall && ((facing == Left && hasWallLeft) || (facing == Right && hasWallRight));
-        var slidingPhysics = slidingAnim && vy > 0;
+        isSlidingAnim = !fastFall && ((facing == Left && hasWallLeft) || (facing == Right && hasWallRight));
+        isSlidingPhysics = isSlidingAnim && vy > 0;
         wallJumpTimer += dt;
         var wallJumping = wallJumpTimer <= WALL_JUMP_TIME;
         if(wallJumping) {
@@ -166,11 +168,18 @@ class Hero extends Entity {
                 }
             }
         }
-        vy = Util.sodStep(vy, fastFall ? FALL_FAST_VEL : (slidingPhysics ? FALL_WALL_VEL : FALL_VEL), fastFall ? GRAVITY_FAST : (jumping ? GRAVITY_JUMP : GRAVITY), dt);
-        if(slidingPhysics) {
+        vy = Util.sodStep(vy, fastFall ? FALL_FAST_VEL : (isSlidingPhysics ? FALL_WALL_VEL : FALL_VEL), fastFall ? GRAVITY_FAST : (jumping ? GRAVITY_JUMP : GRAVITY), dt);
+        if(isSlidingPhysics) {
             vy = Util.sodStep(vy, 0, .99, dt);
         }
-        super.update(dt);
+        super.updateBeforeMove(dt);
+    }
+
+    override public function updateAfterMove(dt:Float) {
+        super.updateAfterMove(dt);
+        isOnGround = hitDown;
+        hasWallLeft = hitLeft;
+        hasWallRight = hitRight;
         for(g in Gem.all) {
             if(g.collides(this)) {
                 Audio.playSound("gem");
@@ -186,7 +195,7 @@ class Hero extends Entity {
         var newAnimName = "idle";
         var newFrame = 0.;
         if(!isOnGround) {
-            if(slidingAnim) {
+            if(isSlidingAnim) {
                 newAnimName = "wallSlide";
             } else if(facing == Left || facing == Right) {
                 newAnimName = "jumpSide";

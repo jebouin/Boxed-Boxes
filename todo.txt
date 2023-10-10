@@ -1,4 +1,7 @@
 POST-JAM
+- Fix bugs and inconsistencies
+	- Jump with stack of boxes on head
+- Only move camera up when on platform
 - Particles
 - Screen shake/flash/rumble
 - Better parallax system
@@ -12,8 +15,6 @@ POST-JAM
 - Level 6 uses wall jump before introducing it
 - Make menus clickable
 - Mobile controls?
-- Fix bugs and inconsistencies
-	- Jump with stack of boxes on head
 - Better wall jump (make whole game a bit slower?)
 - Stick to ceiling for a few frames to make it easier to jump over box
 - More levels to introduce border merge

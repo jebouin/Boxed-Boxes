@@ -7,31 +7,84 @@ import h2d.Tile;
 import h2d.col.IBounds;
 import h2d.Bitmap;
 
-enum MovementType {
-    Full;
-    // USed for boxes, makes sure they fall down before moving horizontally
-    Alternate;
-}
-
 class Entity {
     public static var all : Array<Entity> = [];
-    static var cnt : Int = 0;
+
+    static function sortTopDown() {
+        all.sort(function(a, b) {
+            return a.y - b.y;
+        });
+    }
+    static function sortBottomUp() {
+        all.sort(function(a, b) {
+            return (b.y + b.hitbox.yMax) - (a.y + a.hitbox.yMax);
+        });
+    }
+    static function sortLeftRight() { 
+        all.sort(function(a, b) {
+            return a.x - b.x;
+        });
+    }
+    static function sortRightLeft() {
+        all.sort(function(a, b) {
+            return (b.x + b.hitbox.xMax) - (a.x + a.hitbox.xMax);
+        });
+    }
 
     public static function updateAll(dt:Float) {
-        for(e in all) {
-            e.beforeUpdate();
-        }
-        cnt = 0;
-        var i = 0;
-        while(i < all.length) {
-            var entity = all[i];
-            entity.update(dt);
-            if(entity.deleted) {
-                all.splice(i, 1);
-            } else {
-                i++;
+        function iterateAndCheckAll(f:Entity->Void) {
+            var i = 0;
+            while(i < all.length) {
+                var entity = all[i];
+                f(entity);
+                if(entity.deleted) {
+                    all.splice(i, 1);
+                } else {
+                    i++;
+                }
             }
         }
+        iterateAndCheckAll(function(e) {
+            e.updateBeforeMove(dt);
+        });
+        var iterations = 0;
+        while(iterations < Game.MAX_MOVE_STEPS) {
+            var moved = false;
+            sortLeftRight();
+            iterateAndCheckAll(function(e) {
+                if(e.tryMoveLeft()) {
+                    moved = true;
+                }
+            });
+            sortRightLeft();
+            iterateAndCheckAll(function(e) {
+                if(e.tryMoveRight()) {
+                    moved = true;
+                }
+            });
+            sortTopDown();
+            iterateAndCheckAll(function(e) {
+                if(e.tryMoveUp()) {
+                    moved = true;
+                }
+            });
+            sortBottomUp();
+            iterateAndCheckAll(function(e) {
+                if(e.tryMoveDown()) {
+                    moved = true;
+                }
+            });
+            iterations++;
+            if(!moved) {
+                #if debug_collisions
+                trace("No more movement possible after " + iterations + " iterations");
+                #end
+                break;
+            }
+        }
+        iterateAndCheckAll(function(e) {
+            e.updateAfterMove(dt);
+        });
     }
 
     public static function deleteAll() {
@@ -60,7 +113,6 @@ class Entity {
     var borderId : Int = -1;
     public var isInside(default, null) : Bool = false;
     var stepping : Bool = false;
-    var movementType : MovementType = Full;
     var triedPushingHorizontal : Bool = false;
 
     public function new(?hitbox:IBounds=null) {
@@ -80,138 +132,68 @@ class Entity {
         delete();
     }
 
-    public function beforeUpdate() {
+    public function updateBeforeMove(dt:Float) {
         borderId = getBorderId();
+        hitLeft = hitRight = hitUp = hitDown = false;
+        triedPushingHorizontal = false;
+        rx += vx * dt;
+        ry += vy * dt;
     }
 
-    public function update(dt:Float) {
-        hitLeft = hitRight = hitUp = hitDown = false;
-        move(vx * dt, vy * dt);
+    public function updateAfterMove(dt:Float) {
         updateBorderConstraint();
     }
 
-    public function setPosNoCollision(x:Float, y:Float) {
-        var dx = x - this.x;
-        var dy = y - this.y;
-        moveNoCollision(dx, dy);
+    public function tryMoveLeft() {
+        var amountX = Math.round(rx);
+        if(amountX >= 0) return false;
+        if(!collisionEnabled || stepLeft()) {
+            rx++;
+            return true;
+        }
+        vx = 0;
+        hitLeft = true;
+        rx -= amountX;
+        return false;
     }
 
-    public function moveNoCollision(dx:Float, dy:Float) {
-        rx += dx;
-        ry += dy;
+    public function tryMoveRight() {
         var amountX = Math.round(rx);
-        var amountY = Math.round(ry);
+        if(amountX <= 0) return false;
+        if(!collisionEnabled || stepRight()) {
+            rx--;
+            return true;
+        }
+        vx = 0;
+        hitRight = true;
         rx -= amountX;
-        ry -= amountY;
-        x += amountX;
-        y += amountY;
+        return false;
     }
 
-    public function move(dx:Float, dy:Float) {
-        if(!collisionEnabled) {
-            moveNoCollision(dx, dy);
-            return;
-        }
-        triedPushingHorizontal = false;
-        rx += dx;
-        ry += dy;
-        var amountX = Math.round(rx);
+    public function tryMoveUp() {
         var amountY = Math.round(ry);
-        rx -= amountX;
-        ry -= amountY;
-        if(movementType == Full) {
-            if(amountX != 0) {
-                while(amountX < 0) {
-                    if(!stepLeft()) {
-                        vx = 0;
-                        hitLeft = true;
-                        break;
-                    }
-                    amountX++;
-                }
-                while(amountX > 0) {
-                    if(!stepRight()) {
-                        vx = 0;
-                        hitRight = true;
-                        break;
-                    }
-                    amountX--;
-                }
-            }
-            if(amountY != 0) {
-                while(amountY < 0) {
-                    if(!stepUp()) {
-                        vy = 0;
-                        hitUp = true;
-                        break;
-                    }
-                    amountY++;
-                }
-                while(amountY > 0) {
-                    if(!stepDown()) {
-                        vy = 0;
-                        hitDown = true;
-                        break;
-                    }
-                    amountY--;
-                }
-            }
-        } else if(movementType == Alternate) {
-            var turn : Int = 0;
-            while(amountX != 0 || amountY != 0) {
-                var shouldStepX = turn % 2 == 0 || amountY == 0;
-                if(shouldStepX) {
-                    if(amountX < 0) {
-                        if(!stepLeft()) {
-                            vx = 0;
-                            hitLeft = true;
-                            amountX = 0;
-                        }
-                        if(!hitLeft) {
-                            amountX++;
-                        }
-                        if(amountY >= 0) {
-                            if(stepDown()) {
-                                if(amountY > 0) amountY--;
-                            }
-                        }
-                    }
-                    if(amountX > 0) {
-                        if(!stepRight()) {
-                            vx = 0;
-                            hitRight = true;
-                            amountX = 0;
-                        }
-                        if(!hitRight) {
-                            amountX--;
-                        }
-                        if(amountY >= 0) {
-                            if(stepDown()) {
-                                if(amountY > 0) amountY--;
-                            }
-                        }
-                    }
-                } else {
-                    if(amountY < 0) {
-                        if(!stepUp()) {
-                            vy = 0;
-                            hitUp = true;
-                            break;
-                        }
-                        amountY++;
-                    }
-                    if(amountY > 0) {
-                        if(!stepDown()) {
-                            vy = 0;
-                            hitDown = true;
-                            break;
-                        }
-                        amountY--;
-                    }
-                }
-                turn++;
-            }
+        if(amountY >= 0) return false;
+        if(!collisionEnabled || stepUp()) {
+            ry++;
+            return true;
         }
+        vy = 0;
+        hitUp = true;
+        ry -= amountY;
+        return false;
+    }
+
+    public function tryMoveDown() {
+        var amountY = Math.round(ry);
+        if(amountY <= 0) return false;
+        if(!collisionEnabled || stepDown()) {
+            ry--;
+            return true;
+        }
+        vy = 0;
+        hitDown = true;
+        ry -= amountY;
+        return false;
     }
 
     public function stepLeft(forceCanPushBorder:Bool=false) {
@@ -482,7 +464,7 @@ class Entity {
 
     // Make sure the entity is fully inside a border, inside multiple adjacent borders or outside borders
     // A bit hacky since it shouldn't be needed
-    public function updateBorderConstraint() {
+    function updateBorderConstraint() {
         var bounds = IBounds.fromValues(x + hitbox.xMin, y + hitbox.yMin, hitbox.width, hitbox.height);
         var totalArea = bounds.width * bounds.height;
         var coveredArea = 0, largestInterArea = 0;
