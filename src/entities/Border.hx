@@ -127,13 +127,13 @@ class Border {
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
-                e.canStepLeft(res, true, true);
+                e.tryStepLeft(res, true, true);
                 if(!res.success) {
-                    res.cancel();
+                    res.fail();
                     return;
                 }
             } else if(rightBorderIntersectsEntity(e)) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -141,11 +141,10 @@ class Border {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepLeft(res);
             if(!res.success) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        bounds.x++;
     }
     public function canStepRight(res:StepResult) {
         res.pushedBorders.set(this.id, true);
@@ -153,13 +152,13 @@ class Border {
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
-                e.canStepRight(res, true, true);
+                e.tryStepRight(res, true, true);
                 if(!res.success) {
-                    res.cancel();
+                    res.fail();
                     return;
                 }
             } else if(leftBorderIntersectsEntity(e)) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -167,11 +166,10 @@ class Border {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepRight(res);
             if(!res.success) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        bounds.x--;
     }
     public function canStepUp(res:StepResult) {
         res.pushedBorders.set(this.id, true);
@@ -179,13 +177,13 @@ class Border {
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(horizontalWallIntersectsEntity(e, e.isInside)) {
-                e.canStepUp(res, true, true);
+                e.tryStepUp(res, true, true);
                 if(!res.success) {
-                    res.cancel();
+                    res.fail();
                     return;
                 }
             } else if(bottomBorderIntersectsEntity(e)) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -193,11 +191,10 @@ class Border {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepUp(res);
             if(!res.success) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        bounds.y++;
     }
     public function canStepDown(res:StepResult) {
         res.pushedBorders.set(this.id, true);
@@ -205,13 +202,13 @@ class Border {
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(horizontalWallIntersectsEntity(e, e.isInside)) {
-                e.canStepDown(res, true, true);
+                e.tryStepDown(res, true, true);
                 if(!res.success) {
-                    res.cancel();
+                    res.fail();
                     return;
                 }
             } else if(topBorderIntersectsEntity(e)) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -219,11 +216,10 @@ class Border {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepDown(res);
             if(!res.success) {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        bounds.y--;
     }
 
     inline public function containsEntity(e:Entity) {

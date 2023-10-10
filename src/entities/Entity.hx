@@ -150,9 +150,10 @@ class Entity {
     public function tryMoveLeft() {
         var amountX = Math.round(rx);
         if(amountX >= 0) return false;
+        trace("try move left ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newLeft();
-            canStepLeft(res);
+            tryStepLeft(res);
             res.apply(this);
             if(!res.success) {
                 vx = 0;
@@ -170,9 +171,10 @@ class Entity {
     public function tryMoveRight() {
         var amountX = Math.round(rx);
         if(amountX <= 0) return false;
+        trace("try move right ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newRight();
-            canStepRight(res);
+            tryStepRight(res);
             res.apply(this);
             if(!res.success) {
                 vx = 0;
@@ -190,9 +192,10 @@ class Entity {
     public function tryMoveUp() {
         var amountY = Math.round(ry);
         if(amountY >= 0) return false;
+        trace("try move up ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newUp();
-            canStepUp(res);
+            tryStepUp(res);
             res.apply(this);
             if(!res.success) {
                 vy = 0;
@@ -210,9 +213,10 @@ class Entity {
     public function tryMoveDown() {
         var amountY = Math.round(ry);
         if(amountY <= 0) return false;
+        trace("try move down ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newDown();
-            canStepDown(res);
+            tryStepDown(res);
             res.apply(this);
             if(!res.success) {
                 vy = 0;
@@ -228,25 +232,25 @@ class Entity {
     }
 
     // Assume graph of entities pushing -> pushed is acyclic since direction is constant
-    public function canStepLeft(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
+    public function tryStepLeft(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
         res.pushedEntities.set(id, true);
         x--;
         if(Solid.entityCollides(this, -1, 0)) {
-            res.cancel();
+            res.fail();
             return;
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
             if(canPushEntities) {
                 res.triedPushingHorizontal = true;
-                e.canStepLeft(res, canPushEntities, canPushBorders);
+                e.tryStepLeft(res, canPushEntities, canPushBorders);
                 if(!res.success) {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -259,31 +263,30 @@ class Entity {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        x++;
     }
-    public function canStepRight(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
+    public function tryStepRight(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
         res.pushedEntities.set(id, true);
         x++;
         if(Solid.entityCollides(this, 1, 0)) {
-            res.cancel();
+            res.fail();
             return;
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
             if(canPushEntities) {
                 res.triedPushingHorizontal = true;
-                e.canStepRight(res, canPushEntities, canPushBorders);
+                e.tryStepRight(res, canPushEntities, canPushBorders);
                 if(!res.success) {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -296,30 +299,29 @@ class Entity {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        x--;
     }
-    public function canStepUp(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
+    public function tryStepUp(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
         res.pushedEntities.set(id, true);
         y--;
         if(Solid.entityCollides(this, 0, -1)) {
-            res.cancel();
+            res.fail();
             return;
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
             if(canPushEntities) {
-                e.canStepUp(res, canPushEntities, canPushBorders);
+                e.tryStepUp(res, canPushEntities, canPushBorders);
                 if(!res.success) {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -332,30 +334,29 @@ class Entity {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        y++;
     }
-    public function canStepDown(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
+    public function tryStepDown(res:StepResult, canPushEntities:Bool=false, canPushBorders:Bool=false) {
         canPushEntities = canPushEntities || this.canPushEntities;
         canPushBorders = canPushBorders || this.canPushBorders;
         res.pushedEntities.set(id, true);
         y++;
         if(Solid.entityCollides(this, 0, 1)) {
-            res.cancel();
+            res.fail();
             return;
         }
         for(e in all) {
             if(!e.collisionEnabled || e == this || !collides(e) || res.pushedEntities.exists(e.id)) continue;
             if(canPushEntities) {
-                e.canStepDown(res, canPushEntities, canPushBorders);
+                e.tryStepDown(res, canPushEntities, canPushBorders);
                 if(!res.success) {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
@@ -368,11 +369,10 @@ class Entity {
                     return;
                 }
             } else {
-                res.cancel();
+                res.fail();
                 return;
             }
         }
-        y--;
     }
     // Assumes both entities have collision enabled
     inline public function collides(other:Entity) {

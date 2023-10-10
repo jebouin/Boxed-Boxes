@@ -33,23 +33,17 @@ class StepResult {
         if(success) {
             parent.rx -= dx;
             parent.ry -= dy;
-            for(id in pushedEntities.keys()) {
-                var e = Entity.idToEntity.get(id);
-                e.x += dx;
-                e.y += dy;
-            }
-            for(id in pushedBorders.keys()) {
-                var border = Border.idToBorder.get(id);
-                border.bounds.x += dx;
-                border.bounds.y += dy;
-                border.updateWalls();
-            }
+        } else {
+            moveBack();
         }
     }
 
-    public function cancel() {
+    public function fail() {
         if(!success) return;
         success = false;
+    }
+
+    function moveBack() {
         for(id in pushedEntities.keys()) {
             var entity = Entity.idToEntity.get(id);
             entity.x -= dx;
@@ -60,5 +54,26 @@ class StepResult {
             border.bounds.x -= dx;
             border.bounds.y -= dy;
         }
+    }
+
+    public function toString() {
+        var str = "";
+        if(dx < 0) str += "left";
+        if(dx > 0) str += "right";
+        if(dy < 0) str += "up";
+        if(dy > 0) str += "down";
+        if(!success) str += " (failed)";
+        if(triedPushingHorizontal) str += " (tried pushing horizontally)";
+        if(pushedEntities.keys().hasNext()) {
+            for(id in pushedEntities.keys()) {
+                str += " (pushed entity " + id + ")";
+            }
+        }
+        if(pushedBorders.keys().hasNext()) {
+            for(id in pushedBorders.keys()) {
+                str += " (pushed border " + id + ")";
+            }
+        }
+        return str;
     }
 }

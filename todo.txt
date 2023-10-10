@@ -1,6 +1,5 @@
 POST-JAM
 - Fix on ground
-- Remove stepping bool
 - Only move camera up when on platform
 - Particles
 - Screen shake/flash/rumble
@@ -28,3 +27,8 @@ POST-JAM
 	- Hard mode (grab gem then go back, more spikes)
 - NG integration
 - Test all menus clickable
+
+Physics issues
+- Level 23 left box sometime disappears
+- Level 24 ending very broken
+- Hard to fit box in holes
