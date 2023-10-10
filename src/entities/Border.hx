@@ -118,7 +118,7 @@ class Border {
         mask.endFill();
     }
 
-    public function stepLeft() {
+    /*public function stepLeft() {
         bounds.x -= 1;
         for(e in Entity.all) {
             if(e.canPushBorder) continue;
@@ -241,7 +241,7 @@ class Border {
         }
         bounds.y--;
         return stepDown();
-    }
+    }*/
 
     inline public function containsEntity(e:Entity) {
         return e.x + e.hitbox.xMin >= bounds.xMin && e.x + e.hitbox.xMax <= bounds.xMax && e.y + e.hitbox.yMin >= bounds.yMin && e.y + e.hitbox.yMax <= bounds.yMax;

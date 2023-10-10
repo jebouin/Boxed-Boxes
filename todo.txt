@@ -1,6 +1,6 @@
 POST-JAM
-- Fix bugs and inconsistencies
-	- Jump with stack of boxes on head
+- Fix on ground
+- Remove stepping bool
 - Only move camera up when on platform
 - Particles
 - Screen shake/flash/rumble

@@ -17,6 +17,7 @@ bin/js/*
 !bin/js/index.php
 !bin/js/style.css
 bin/newgrounds
+docs/.~lock*
 promo/*
 res/.tmp
 res/music/export*

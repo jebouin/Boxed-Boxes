@@ -58,7 +58,7 @@ class Hero extends Entity {
         super();
         anim = new Anim(Assets.getAnimData("entities", "heroRun").tiles, 20, true);
         Game.inst.world.add(anim, Game.LAYER_HERO);
-        collisionEnabled = canPushBorder = canPushEntities = true;
+        collisionEnabled = canPushBorders = canPushEntities = true;
         setHitbox(IBounds.fromValues(0, 0, Level.TS, 2 * Level.TS));
         #if debug_collisions
         debugGraphics = new Graphics();
