@@ -51,7 +51,6 @@ class Hero extends Entity {
     var facing : Facing;
     var prevFacing : Facing;
     var prevTriedPushingHorizontal : Bool;
-    var triedPushingHorizontalTimer : Float;
     var curAnimName : String;
 
     public function new() {
@@ -177,7 +176,10 @@ class Hero extends Entity {
 
     override public function updateAfterMove(dt:Float) {
         super.updateAfterMove(dt);
-        isOnGround = hitDown;
+        var res = StepResult.newDown();
+        tryStepDown(res);
+        isOnGround = !res.success;
+        res.moveBack();
         hasWallLeft = hitLeft;
         hasWallRight = hitRight;
         for(g in Gem.all) {
@@ -209,13 +211,9 @@ class Hero extends Entity {
                 if(triedPushingHorizontal) {
                     newAnimName = "runPush";
                     newFrame = anim.currentFrame;
-                    triedPushingHorizontalTimer = 0.;
                 } else {
-                    triedPushingHorizontalTimer += dt;
-                    if(triedPushingHorizontalTimer > .1) {
-                        newAnimName = "run";
-                        newFrame = anim.currentFrame;
-                    }
+                    newAnimName = "run";
+                    newFrame = anim.currentFrame;
                 }
             }
         }

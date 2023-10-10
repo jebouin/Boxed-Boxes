@@ -29,7 +29,9 @@ class StepResult {
     }
 
     public function apply(parent:Entity) {
-        parent.triedPushingHorizontal = triedPushingHorizontal;
+        if(dx != 0) {
+            parent.triedPushingHorizontal = triedPushingHorizontal;
+        }
         if(success) {
             parent.rx -= dx;
             parent.ry -= dy;
@@ -43,7 +45,7 @@ class StepResult {
         success = false;
     }
 
-    function moveBack() {
+    public function moveBack() {
         for(id in pushedEntities.keys()) {
             var entity = Entity.idToEntity.get(id);
             entity.x -= dx;

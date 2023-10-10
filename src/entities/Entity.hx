@@ -48,7 +48,9 @@ class Entity {
         iterateAndCheckAll(function(e) {
             e.updateBeforeMove(dt);
         });
+        #if debug_collisions
         trace("MOVING " + all.length + " ENTITIES");
+        #end
         var iterations = 0;
         while(iterations < Game.MAX_MOVE_STEPS) {
             var moved = false;
@@ -138,7 +140,7 @@ class Entity {
     public function updateBeforeMove(dt:Float) {
         borderId = getBorderId();
         hitLeft = hitRight = hitUp = hitDown = false;
-        triedPushingHorizontal = false;
+        //triedPushingHorizontal = false;
         rx += vx * dt;
         ry += vy * dt;
     }
@@ -150,11 +152,9 @@ class Entity {
     public function tryMoveLeft() {
         var amountX = Math.round(rx);
         if(amountX >= 0) return false;
-        trace("try move left ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newLeft();
             tryStepLeft(res);
-            trace(res);
             res.apply(this);
             if(!res.success) {
                 vx = 0;
@@ -172,7 +172,6 @@ class Entity {
     public function tryMoveRight() {
         var amountX = Math.round(rx);
         if(amountX <= 0) return false;
-        trace("try move right ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newRight();
             tryStepRight(res);
@@ -193,7 +192,6 @@ class Entity {
     public function tryMoveUp() {
         var amountY = Math.round(ry);
         if(amountY >= 0) return false;
-        trace("try move up ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newUp();
             tryStepUp(res);
@@ -214,7 +212,6 @@ class Entity {
     public function tryMoveDown() {
         var amountY = Math.round(ry);
         if(amountY <= 0) return false;
-        trace("try move down ", this, id);
         if(collisionEnabled) {
             var res = StepResult.newDown();
             tryStepDown(res);
