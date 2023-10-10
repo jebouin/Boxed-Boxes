@@ -129,6 +129,7 @@ class Border {
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
+                res.triedPushingHorizontal = true;
                 e.tryStepLeft(res, true, true);
                 if(!res.success) {
                     res.fail();
@@ -155,6 +156,7 @@ class Border {
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
             if(verticalWallIntersectsEntity(e, e.isInside)) {
+                res.triedPushingHorizontal = true;
                 e.tryStepRight(res, true, true);
                 if(!res.success) {
                     res.fail();

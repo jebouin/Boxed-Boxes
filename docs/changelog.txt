@@ -1,0 +1,7 @@
+CHANGELOG
+
+- Added 9 (18?) more levels
+- Changed level order to better introduce mechanics
+- Added musics and more sound effects
+- Polished the graphics and UI
+- Fixed some collision bugs

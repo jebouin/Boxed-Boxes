@@ -1,9 +1,7 @@
 POST-JAM
-- Fix on ground
-- Only move camera up when on platform
+- Better parallax system
 - Particles
 - Screen shake/flash/rumble
-- Better parallax system
 - Current level animated cursor
 - Add level selection animation (compare previously visible)
 - Level 4 too hard
@@ -17,7 +15,6 @@ POST-JAM
 - Better wall jump (make whole game a bit slower?)
 - Stick to ceiling for a few frames to make it easier to jump over box
 - More levels to introduce border merge
-- Undo (rewind?)
 - Music
 - Entity/solid corner correction
 - Screen shake
@@ -28,6 +25,11 @@ POST-JAM
 - NG integration
 - Test all menus clickable
 
-Physics issues
+TO FIX
 - Hard to fit box in holes
 - Level 24 ending weird/unclear behavior?
+
+IF TIME LEFT
+- Only move camera up when on platform
+- Settings menu
+- Undo (rewind?)
