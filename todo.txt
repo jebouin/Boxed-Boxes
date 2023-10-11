@@ -1,11 +1,15 @@
 POST-JAM
-- Add level selection animation (compare previously visible)
-- Make menus clickable
 - NG integration
 - Better wall jump (make whole game a bit slower?)
 	- Bottom left of level 6 annoying wall jump
 - Stick to ceiling for a few frames to make it easier to jump over box
 - Music
+- More SFX
+	- Varied sound with volume
+	- Footstep
+	- Box sliding
+	- Level complete
+	- Level unlock
 - Fix move speed before more LD
 - Level 4 too hard
 	- Remove inertia
@@ -23,15 +27,17 @@ POST-JAM
 - Cover and screenshots
 - Parallax offset level annotation
 - Fullscreen key
-- Mobile controls
+- Add credits below level selection
 
 TO FIX
 - Hard to fit box in holes
 - Level 24 ending weird/unclear behavior?
 
 IF TIME LEFT
+- Multitouch inputs
 - Only move camera up when on platform
 - Settings menu
+- Title screen
 - Undo (rewind?)
 - Gem distortion
 - Move touch input to controller package

@@ -189,4 +189,21 @@ class Fx {
         screenFlash(Game.inst.world, ramp.getPixel(0, 0) & 0xFFFFFF, .4, 1.3);
         rumble(.7, .3);
     }
+
+    public function levelCellCompleted(x:Float, y:Float) {
+        for(i in 0...5) {
+            if(!Particle.canCreate()) return;
+            var star = Assets.getTile("entities", "particleStar");
+            var col = 0xFFFFFF;
+            var p = Particle.create(star, Util.randf(.2, .35), col);
+            var dir = Util.randCircle(90, 130);
+            p.vx = dir.x;
+            p.vy = dir.y;
+            p.xx = x;
+            p.yy = y;
+            p.frx = p.fry = .01;
+            sbFront.add(p, true);
+            p.update(0);
+        }
+    }
 }

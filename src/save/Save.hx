@@ -92,6 +92,7 @@ class Save {
                 s.beginLoad(bytes);
                 gameData = s.getDynamic();
                 s.endLoad();
+                //gameData.init();
             } catch(e) {
                 gameData = new GameSaveData();
             }

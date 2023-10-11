@@ -1,3 +1,7 @@
+import h2d.Interactive;
+import h2d.col.Point;
+import fx.Fx;
+import h2d.ScaleGrid;
 import save.Save;
 import h2d.Bitmap;
 import h2d.Tile;
@@ -6,87 +10,160 @@ import h2d.Text;
 import h2d.Flow;
 import SceneManager.Scene;
 
+enum LevelCellState {
+    Locked;
+    Unlocking;
+    Unlocked;
+    Completing;
+    Completed;
+}
+
 class LevelCell extends Flow {
+    public static inline var COMPLETE_TIME = .5;
+    public static inline var UNLOCK_TIME = .2;
     public var selected(default, set) : Bool = false;
-    public var locked(default, null) : Bool = false;
-    public var completed(default, set) : Bool = false;
     public var group(default, null) : Int;
+    public var state : LevelCellState = Locked;
+    var lockBitmap : Bitmap;
     var levelText : Text;
     var selectedBorder : Anim;
+    var over : ScaleGrid;
+    var onCompleted : Void->Void;
+    var cellI : Int;
+    var cellJ : Int;
+    var lockedTiles : Array<Tile>;
+    var timer : Float = 0.;
 
-    public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void) {
+    public function new(id:Int, parent:Flow, group:Int, i:Int, j:Int, state:LevelCellState, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void, onCompleted:Void->Void) {
         super(parent);
         this.group = group;
-        this.completed = completed;
-        this.locked = locked;
+        this.cellI = i;
+        this.cellJ = j;
+        this.state = state;
+        this.onCompleted = onCompleted;
+        lockedTiles = Assets.getAnimData("entities", "levelCellLocked").tiles;
 	    backgroundTile = Assets.getTile("entities", "levelCell");
 		borderWidth = borderHeight = 6;
 		minWidth = minHeight = 26;
 		horizontalAlign = verticalAlign = Middle;
-        if(locked) {
-            backgroundTile = Tile.fromColor(0x0, 1, 1, 0);
-            var lock = new Bitmap(Assets.getTile("entities", "levelCellLocked"), this);
-        } else {
-            levelText = new Text(Assets.fontLarge, this);
-            levelText.text = Std.string(id);
-            levelText.textColor = completed ? 0xFFFFFF : 0x8b9bb4;
-            var props = getProperties(levelText);
-            props.offsetX = 1;
-            props.offsetY = -1;
-        }
+        lockBitmap = new Bitmap(lockedTiles[0], this);
+        levelText = new Text(Assets.fontLarge, this);
+        levelText.text = Std.string(id);
+        var props = getProperties(levelText);
+        props.offsetX = 1;
+        props.offsetY = -1;
         enableInteractive = true;
         interactive.onClick = function(e) {
-            if(locked) return;
+            if(state == Locked) return;
             onClick();
         };
         interactive.onOver = function(e) {
-            if(locked) return;
+            if(state == Locked) return;
             onOver();
         }
         interactive.onOut = function(e) {
-            if(locked) return;
+            if(state == Locked) return;
             onOut();
         }
+        interactive.name = "levelCell" + id;
         var data = Assets.getAnimData("entities", "cellBorder");
         selectedBorder = new Anim(data.tiles, data.fps, true, this);
-        var props = getProperties(selectedBorder);
+        props = getProperties(selectedBorder);
         props.isAbsolute = true;
+        over = new ScaleGrid(Assets.getTile("entities", "levelCellOver"), 6, 6, 6, 6, this);
+        over.width = over.height = 26;
+        props = getProperties(over);
+        props.isAbsolute = true;
+        over.visible = false;
+        updateGraphics();
     }
     
     public function set_selected(v:Bool) {
-        selectedBorder.visible = !locked && v;
-        if(locked) return v;
-        if(completed) {
-            if(v) {
-                backgroundTile = Assets.getTile("entities", "levelCellCompletedSelected" + group);
-            } else {
-                backgroundTile = Assets.getTile("entities", "levelCellCompleted" + group);
-            }
-        } else {
-            if(v) {
-                backgroundTile = Assets.getTile("entities", "levelCellSelected");
-            } else {
-                backgroundTile = Assets.getTile("entities", "levelCell");
-            }
-        }
-        if(levelText != null) {
-            levelText.alpha = v ? 1 : .85;
-        }
+        selectedBorder.visible = state != Locked && v;
+        if(state == Locked) return v;
         selected = v;
-        return v;
-    }
-
-    public function set_completed(v:Bool) {
-        completed = v;
+        updateGraphics();
         return v;
     }
 
     public function update(dt:Float) {
         selectedBorder.update(dt);
+        if(state == Unlocking) {
+            timer += dt;
+            if(timer > UNLOCK_TIME) {
+                state = Unlocked;
+            }
+            updateGraphics();
+        } else if(state == Completing) {
+            timer += dt;
+            if(timer > COMPLETE_TIME) {
+                state = Completed;
+                over.visible = false;
+                onCompleted();
+            } else {
+                var t = timer / COMPLETE_TIME;
+                over.alpha = 1. - t;
+            }
+            updateGraphics();
+        }
+    }
+
+    public function unlock() {
+        if(state != Locked) return;
+        state = Unlocking;
+        timer = 0;
+        updateGraphics();
+    }
+
+    public function complete() {
+        if(state != Unlocked) return;
+        state = Completing;
+        timer = 0;
+        over.visible = true;
+        var pos = Title.inst.getCellPos(group, cellI, cellJ);
+        Title.inst.fx.levelCellCompleted(pos.x, pos.y);
+        updateGraphics();
+    }
+
+    public function updateGraphics() {
+        switch(state) {
+            case Locked:
+                lockBitmap.visible = true;
+                levelText.visible = false;
+                backgroundTile = Tile.fromColor(0x0, 1, 1, 0);
+            case Unlocking:
+                var t = Util.fmin(timer / UNLOCK_TIME, .99);
+                lockBitmap.visible = true;
+                levelText.visible = false;
+                backgroundTile = lockedTiles[Std.int(t * lockedTiles.length)];
+            case Unlocked:
+                lockBitmap.visible = false;
+                levelText.visible = true;
+                backgroundTile = Assets.getTile("entities", (selected ? "levelCellSelected" : "levelCell"));
+                levelText.textColor = 0x8b9bb4;
+            case Completing:
+                lockBitmap.visible = false;
+                levelText.visible = true;
+                backgroundTile = Assets.getTile("entities", (selected ? "levelCellCompletedSelected" : "levelCellCompleted") + group);
+                levelText.textColor = 0xFFFFFF;
+            case Completed:
+                lockBitmap.visible = false;
+                levelText.visible = true;
+                backgroundTile = Assets.getTile("entities", (selected ? "levelCellCompletedSelected" : "levelCellCompleted") + group);
+                levelText.textColor = 0xFFFFFF;
+        }
+        if(levelText.visible) {
+            levelText.alpha = selected ? 1 : .85;
+        }
     }
 }
 
 class Title extends Scene {
+    static var _layer = 0;
+    public static var LAYER_FX_BACK = _layer++;
+    public static var LAYER_HUD = _layer++;
+    public static var LAYER_FX_MID = _layer++;
+    public static var LAYER_FX_FRONT = _layer++;
     public static inline var HOLD_TIME = .22;
     public static inline var REPEAT_TIME = .08;
     public static inline var GROUP_WIDTH = 3;
@@ -96,16 +173,24 @@ class Title extends Scene {
     public static var GROUP_NAMES = ["Autumn Forest", "Moonlit Lagoon", "Spiky Cave"];
     public static var GROUP_COLORS = [0x63c74d, 0x0095e9, 0xe43b44];
     public static var GROUP_COMPLETED_TO_UNLOCK = [0, 6, 15];
+    public static var SHOW_COMPLETED_DELAY = .25;
+    public static var SHOW_COMPLETED_INTERVAL = .05;
+    public static var SHOW_UNLOCKED_DELAY = .2;
+    public static var SHOW_UNLOCKED_INTERVAL = .05;
     public static var inst : Title;
     var curI : Int = 0;
     var curJ : Int = 0;
     var curGroup : Int = 0;
-    var container : Flow;
+    public var container : Flow;
     var cells : Array<Array<Array<LevelCell> > > = [];
     var holdTimer : Float = 0.;
     var repeatTimer : Float = 0.;
     var lastMovementAction : Controller.Action = Action.menuEnter;
     var menu : Flow;
+    public var fx : Fx;
+    var toShowComplete : Array<LevelCell> = [];
+    var toShowUnlocked : Array<LevelCell> = [];
+    var timer : Float = 0.;
 
     public function new(curLevelId:Int) {
         super();
@@ -113,7 +198,9 @@ class Title extends Scene {
             throw "Title scene already exists";
         }
         inst = this;
-        container = new Flow(hud);
+        fx = new Fx(hud, hud, hud, LAYER_FX_FRONT, LAYER_FX_MID, LAYER_FX_BACK);
+        container = new Flow();
+        hud.add(container, LAYER_HUD);
         container.minWidth = Main.WIDTH;
         container.minHeight = Main.HEIGHT;
         container.layout = Vertical;
@@ -162,18 +249,33 @@ class Title extends Scene {
                 for(j in 0...GROUP_WIDTH) {
                     var levelId = k * GROUP_HEIGHT * GROUP_WIDTH + i * GROUP_WIDTH + j + 1;
                     var completed = Save.gameData.data.levelsCompleted.get(levelId);
+                    var completedShown = Save.gameData.data.levelsCompletedShown.get(levelId);
                     var topCompleted = i > 0 && Save.gameData.data.levelsCompleted.get(levelId - GROUP_WIDTH);
                     var leftCompleted = j > 0 && Save.gameData.data.levelsCompleted.get(levelId - 1);
                     var bottomCompleted = i < GROUP_HEIGHT - 1 && Save.gameData.data.levelsCompleted.get(levelId + GROUP_WIDTH);
                     var rightCompleted = j < GROUP_WIDTH - 1 && Save.gameData.data.levelsCompleted.get(levelId + 1);
+                    var topCompletedShown = i > 0 && Save.gameData.data.levelsCompletedShown.get(levelId - GROUP_WIDTH);
+                    var leftCompletedShown = j > 0 && Save.gameData.data.levelsCompletedShown.get(levelId - 1);
+                    var bottomCompletedShown = i < GROUP_HEIGHT - 1 && Save.gameData.data.levelsCompletedShown.get(levelId + GROUP_WIDTH);
+                    var rightCompletedShown = j < GROUP_WIDTH - 1 && Save.gameData.data.levelsCompletedShown.get(levelId + 1);
                     var locked = groupLocked || ((i > 0 || j > 0) && !topCompleted && !leftCompleted && !rightCompleted && !bottomCompleted && !completed);
-                    var cell = new LevelCell(levelId, row, k, completed, locked, function() {
+                    var lockedShown = groupLocked || ((i > 0 || j > 0) && !topCompletedShown && !leftCompletedShown && !rightCompletedShown && !bottomCompletedShown && !completedShown);
+                    var state = (lockedShown && !completed) ? Locked : (completedShown ? Completed : Unlocked);
+                    var cell = new LevelCell(levelId, row, k, i, j, state, function() {
                         chooseLevel(k, i, j);
                     }, function() {
                         curI = i; curJ = j; curGroup = k;
                         Audio.playSound("menuMove");
                         updateSelected();
-                    }, function() {});
+                    }, function() {}, function() {
+                        Save.gameData.data.showCompletedLevel(levelId);
+                    });
+                    if(state == Unlocked && completed) {
+                        toShowComplete.push(cell);
+                    }
+                    if(state == Locked && !locked) {
+                        toShowUnlocked.push(cell);
+                    }
                     cells[k][i].push(cell);
                     if(completed) {
                         completedCount++;
@@ -192,10 +294,12 @@ class Title extends Scene {
                 group.minHeight = height;
             }
         }
+        trace(toShowComplete, toShowUnlocked);
     }
 
     override public function delete() {
         super.delete();
+        fx.clear();
         inst = null;
     }
 
@@ -205,6 +309,26 @@ class Title extends Scene {
             for(i in 0...GROUP_HEIGHT) {
                 for(j in 0...GROUP_WIDTH) {
                     cells[k][i][j].update(dt);
+                }
+            }
+        }
+        timer += dt;
+        if(toShowComplete.length > 0) {
+            if(timer > SHOW_COMPLETED_DELAY) {
+                timer -= SHOW_COMPLETED_INTERVAL;
+                var cell = toShowComplete.shift();
+                cell.complete();
+                if(toShowComplete.length == 0) {
+                    timer = 0.;
+                }
+            }
+        } else if(toShowUnlocked.length > 0) {
+            if(timer > SHOW_UNLOCKED_DELAY) {
+                timer -= SHOW_UNLOCKED_INTERVAL;
+                var cell = toShowUnlocked.shift();
+                cell.unlock();
+                if(toShowUnlocked.length == 0) {
+                    timer = 0.;
                 }
             }
         }
@@ -252,6 +376,11 @@ class Title extends Scene {
         if(controller.isPressed(Action.menuEnter)) {
             chooseLevel(curGroup, curI, curJ);
         }
+        fx.update(dt);
+    }
+
+    override public function updateConstantRate(dt:Float) {
+        fx.updateConstantRate(dt);
     }
 
     function chooseLevel(curGroup:Int, curI:Int, curJ:Int) {
@@ -299,7 +428,7 @@ class Title extends Scene {
         var prevI = curI, prevJ = curJ, prevGroup = curGroup;
         if(!moveSelection(di, dj)) return;
         var moved = true;
-        while(cells[curGroup][curI][curJ].locked) {
+        while(cells[curGroup][curI][curJ].state == Locked) {
             if(!moveSelection(di, dj)) {
                 curI = prevI;
                 curJ = prevJ;
@@ -329,5 +458,12 @@ class Title extends Scene {
         Save.gameData.data.completeLevel(levelId);
         createMenu();
         updateSelected();
+    }
+
+    // Hacky, for some reason cell absX/absY return 0,0?
+    public function getCellPos(k:Int, i:Int, j:Int) {
+        var baseX = 30;
+        var baseY = 71;
+        return new Point(baseX + 6 + k * (20 + 26 * GROUP_WIDTH) + j * 26, baseY + 6 + i * 26);
     }
 }
