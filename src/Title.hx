@@ -11,30 +11,38 @@ class LevelCell extends Flow {
     public var locked(default, null) : Bool = false;
     public var completed(default, set) : Bool = false;
     public var group(default, null) : Int;
+    var levelText : Text;
 
-    public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool, onClick:Void->Void) {
+    public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void) {
         super(parent);
         this.group = group;
         this.completed = completed;
         this.locked = locked;
 	    backgroundTile = Assets.getTile("entities", "levelCell");
 		borderWidth = borderHeight = 6;
-		minWidth = minHeight = 25;
+		minWidth = minHeight = 26;
 		horizontalAlign = verticalAlign = Middle;
         if(locked) {
             backgroundTile = Tile.fromColor(0x0, 1, 1, 0);
             var lock = new Bitmap(Assets.getTile("entities", "levelCellLocked"), this);
         } else {
-            var levelText = new Text(Assets.fontLarge, this);
+            levelText = new Text(Assets.fontLarge, this);
             levelText.text = Std.string(id);
             levelText.textColor = completed ? 0xFFFFFF : 0x8b9bb4;
             var props = getProperties(levelText);
             props.offsetX = 1;
+            props.offsetY = -1;
         }
         enableInteractive = true;
         interactive.onClick = function(e) {
             onClick();
         };
+        interactive.onOver = function(e) {
+            onOver();
+        }
+        interactive.onOut = function(e) {
+            onOut();
+        }
     }
     
     public function set_selected(v:Bool) {
@@ -51,6 +59,9 @@ class LevelCell extends Flow {
             } else {
                 backgroundTile = Assets.getTile("entities", "levelCell");
             }
+        }
+        if(levelText != null) {
+            levelText.alpha = v ? 1 : .85;
         }
         selected = v;
         return v;
@@ -145,7 +156,11 @@ class Title extends Scene {
                     var locked = groupLocked || ((i > 0 || j > 0) && !topCompleted && !leftCompleted && !rightCompleted && !bottomCompleted && !completed);
                     var cell = new LevelCell(levelId, row, k, completed, locked, function() {
                         chooseLevel(k, i, j);
-                    });
+                    }, function() {
+                        curI = i; curJ = j; curGroup = k;
+                        Audio.playSound("menuMove");
+                        updateSelected();
+                    }, function() {});
                     cells[k][i].push(cell);
                     if(completed) {
                         completedCount++;

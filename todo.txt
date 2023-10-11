@@ -1,13 +1,13 @@
 POST-JAM
-- Shake camera pos not world offset
 - Current level animated cursor
 - Add level selection animation (compare previously visible)
 - Make menus clickable
-- Mobile controls?
+- NG integration
 - Better wall jump (make whole game a bit slower?)
 	- Bottom left of level 6 annoying wall jump
 - Stick to ceiling for a few frames to make it easier to jump over box
 - Music
+- Fix move speed before more LD
 - Level 4 too hard
 	- Remove inertia
 	- Show can jump from bottom border
@@ -20,10 +20,11 @@ POST-JAM
 	- Make stairs by pushing borders
 	- Push border with boxes inside
 	- Hard mode (grab gem then go back, more spikes)
-- NG integration
 - Test all menus clickable
 - Cover and screenshots
 - Parallax offset level annotation
+- Fullscreen key
+- Mobile controls
 
 TO FIX
 - Hard to fit box in holes

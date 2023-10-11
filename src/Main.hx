@@ -69,8 +69,8 @@ class Main extends hxd.App {
     function startGame() {
         started = true;
         #if debug
-        new Game(true, 7);
-        //new Title(1);
+        //new Game(true, 7);
+        new Title(3);
         //new LevelComplete(0, 3, 3);
         #else
         new Title(1);

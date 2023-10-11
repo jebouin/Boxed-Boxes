@@ -45,11 +45,13 @@ class Parallax extends Object {
 
     public function update() {
         if(Game.inst == null) return;
-        var xMin = Game.inst.camera.clampedTargetX - Main.WIDTH2;
-        var yMin = Game.inst.camera.clampedTargetY - Main.HEIGHT2;
-        var xOff = (Game.inst.camera.clampedTargetX - levelWidth * .5) * (1. - speed);
+        var cameraClampedTargetX = -Game.inst.world.x + Main.WIDTH2;
+        var cameraClampedTargetY = -Game.inst.world.y + Main.HEIGHT2;
+        var xMin = cameraClampedTargetX - Main.WIDTH2;
+        var yMin = cameraClampedTargetY - Main.HEIGHT2;
+        var xOff = (cameraClampedTargetX - levelWidth * .5) * (1. - speed);
         xMin = Math.floor((xMin - xOff) / tile.width) * tile.iwidth + xOff;
-        var yOff = midSlicePos + (Game.inst.camera.clampedTargetY - levelHeight * .5) * (1. - speed);
+        var yOff = midSlicePos + (cameraClampedTargetY - levelHeight * .5) * (1. - speed);
         var sliceIndexBase = Math.floor((yMin - yOff) / sliceHeight);
         yMin = sliceIndexBase * sliceHeight + yOff;
         for(i in 0...displayedSliceCount) {

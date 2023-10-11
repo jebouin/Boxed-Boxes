@@ -137,7 +137,6 @@ class Game extends Scene {
                 retry();
             }
         }
-        background.update(dt);
         fx.update(dt);
     }
 
@@ -149,6 +148,7 @@ class Game extends Scene {
         }
         fx.updateConstantRate(dt);
         camera.updateConstantRate(dt);
+        background.update(dt);
     }
 
     public function levelComplete() {
