@@ -13,6 +13,7 @@ import hxd.Key;
 extern class External {
     static function updateProgress(p:Int):Void;
     static function onGameLoaded():Void;
+    static function isUsingMobile():Bool;
 }
 
 @:build(Macros.buildTemplate())
@@ -69,8 +70,8 @@ class Main extends hxd.App {
     function startGame() {
         started = true;
         #if debug
-        //new Game(true, 7);
-        new Title(3);
+        //new Game(true, 1);
+        new Title(1);
         //new LevelComplete(0, 3, 3);
         #else
         new Title(1);

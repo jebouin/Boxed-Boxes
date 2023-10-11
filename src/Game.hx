@@ -1,5 +1,6 @@
 package ;
 
+import ui.TouchInput;
 import fx.Fx;
 import h2d.col.Point;
 import fx.Death;
@@ -55,6 +56,7 @@ class Game extends Scene {
     public var fx : Fx;
     var deathFx : Death;
     var prevCameraPos : Point;
+    public var touchInput : TouchInput;
 
     public function new(initial:Bool, globalLevelId:Int) {
         super();
@@ -73,6 +75,13 @@ class Game extends Scene {
         loadLevelById(levelId);
         fx = new Fx(world, world, world, LAYER_FX_FRONT, LAYER_FX_MID, LAYER_FX_BACK);
         camera.update(0);
+        touchInput = new TouchInput();
+        touchInput.hide();
+        #if js
+        if(External.isUsingMobile()) {
+            touchInput.show();
+        }
+        #end
     }
 
     override public function delete() {
@@ -86,6 +95,7 @@ class Game extends Scene {
             deathFx.delete();
         }
         background.delete();
+        touchInput.delete();
     }
 
     override public function update(dt:Float) {
@@ -138,6 +148,7 @@ class Game extends Scene {
             }
         }
         fx.update(dt);
+        touchInput.afterUpdate();
     }
 
     override public function updateConstantRate(dt:Float) {

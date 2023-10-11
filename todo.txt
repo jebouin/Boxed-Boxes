@@ -1,5 +1,4 @@
 POST-JAM
-- Current level animated cursor
 - Add level selection animation (compare previously visible)
 - Make menus clickable
 - NG integration
@@ -35,3 +34,4 @@ IF TIME LEFT
 - Settings menu
 - Undo (rewind?)
 - Gem distortion
+- Move touch input to controller package

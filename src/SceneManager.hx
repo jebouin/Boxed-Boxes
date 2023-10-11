@@ -2,12 +2,20 @@ package ;
 
 import h3d.Engine;
 
+// Scene with custom viewport to fix letterboxed pixel-perfect events
+class PixelPerfectScene extends h2d.Scene {
+	override function screenToViewport(e : hxd.Event) {
+		e.relX = (e.relX - Main.inst.screen.x) / Main.inst.scale;
+		e.relY = (e.relY - Main.inst.screen.y) / Main.inst.scale;
+	}
+}
+
 class Scene {
 	public var onFocusGain : Void->Void;
 	public var onFocusLoss : Void->Void;
 	public var onDelete : Void->Void;
-    public var world : h2d.Scene;
-	public var hud : h2d.Scene;
+    public var world : PixelPerfectScene;
+	public var hud : PixelPerfectScene;
 	public var masking(default, null) : Bool = false;
 	public var maskUpdate(default, null) : Bool = true;
 	public var deleted : Bool = false;
@@ -15,9 +23,9 @@ class Scene {
 	public function new(masking:Bool=false) {
 		this.masking = masking;
 		SceneManager.add(this);
-        world = new h2d.Scene();
+        world = new PixelPerfectScene();
         world.scaleMode = ScaleMode.Stretch(Main.WIDTH, Main.HEIGHT);
-        hud = new h2d.Scene();
+        hud = new PixelPerfectScene();
         hud.scaleMode = ScaleMode.Stretch(Main.WIDTH, Main.HEIGHT);
 		Main.inst.sevents.addScene(world);
 		Main.inst.sevents.addScene(hud);

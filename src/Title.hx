@@ -12,6 +12,7 @@ class LevelCell extends Flow {
     public var completed(default, set) : Bool = false;
     public var group(default, null) : Int;
     var levelText : Text;
+    var selectedBorder : Anim;
 
     public function new(id:Int, parent:Flow, group:Int, completed:Bool, locked:Bool, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void) {
         super(parent);
@@ -35,17 +36,25 @@ class LevelCell extends Flow {
         }
         enableInteractive = true;
         interactive.onClick = function(e) {
+            if(locked) return;
             onClick();
         };
         interactive.onOver = function(e) {
+            if(locked) return;
             onOver();
         }
         interactive.onOut = function(e) {
+            if(locked) return;
             onOut();
         }
+        var data = Assets.getAnimData("entities", "cellBorder");
+        selectedBorder = new Anim(data.tiles, data.fps, true, this);
+        var props = getProperties(selectedBorder);
+        props.isAbsolute = true;
     }
     
     public function set_selected(v:Bool) {
+        selectedBorder.visible = !locked && v;
         if(locked) return v;
         if(completed) {
             if(v) {
@@ -70,6 +79,10 @@ class LevelCell extends Flow {
     public function set_completed(v:Bool) {
         completed = v;
         return v;
+    }
+
+    public function update(dt:Float) {
+        selectedBorder.update(dt);
     }
 }
 
@@ -188,6 +201,13 @@ class Title extends Scene {
 
     override public function update(dt:Float) {
         super.update(dt);
+        for(k in 0...GROUP_COUNT) {
+            for(i in 0...GROUP_HEIGHT) {
+                for(j in 0...GROUP_WIDTH) {
+                    cells[k][i][j].update(dt);
+                }
+            }
+        }
         var controller = Main.inst.controller;
         if(controller.isPressed(Action.menuLeft)) {
             lastMovementAction = Action.menuLeft;

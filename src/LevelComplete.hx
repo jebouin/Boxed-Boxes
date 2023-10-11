@@ -12,7 +12,7 @@ class MenuLine extends Flow {
     public var selected(default, set) : Bool = false;
     var onPress : Void->Void;
 
-    public function new(str:String, parent:Flow, onPress:Void->Void) {
+    public function new(str:String, parent:Flow, onPress:Void->Void, onOver:Void->Void, onOut:Void->Void) {
         this.onPress = onPress;
         super(parent);
         var text = new Text(Assets.font, this);
@@ -22,6 +22,16 @@ class MenuLine extends Flow {
         paddingTop = 2;
         minWidth = 70;
         horizontalAlign = Middle;
+        enableInteractive = true;
+        interactive.onClick = function(e) {
+            onPress();
+        };
+        interactive.onOver = function(e) {
+            onOver();
+        }
+        interactive.onOut = function(e) {
+            onOut();
+        }
     }
     
     public function set_selected(v:Bool) {
@@ -89,29 +99,44 @@ class LevelComplete extends Scene {
         menu.layout = Vertical;
         menu.verticalSpacing = 4;
         menu.horizontalAlign = Middle;
-        function addLine(str:String, onPressed) {
-            var flow = new MenuLine(str, menu, onPressed);
+        function addLine(str:String, onPressed, onOver) {
+            var flow = new MenuLine(str, menu, onPressed, onOver, function() {});
             lines.push(flow);
         }
         if(levelId < Title.GROUP_WIDTH * Title.GROUP_HEIGHT) {
-            addLine("Continue", onContinuePressed);
-            addLine("Restart", onRestartPressed);
-            addLine("Level select", onTitlePressed);
+            addLine("Continue", onContinuePressed, onContinueOver);
+            addLine("Restart", onRestartPressed, onRestartOver);
+            addLine("Level select", onTitlePressed, onTitleOver);
         } else {
-            addLine("Level select", onTitlePressed);
-            addLine("Restart", onRestartPressed);
+            addLine("Level select", onTitlePressed, onTitleOver);
+            addLine("Restart", onRestartPressed, onRestartOver);
         }
         updateSelected();
         hud.visible = false;
     }
 
+    function onContinueOver() {
+        curId = 0;
+        Audio.playSound("menuMove");
+        updateSelected();
+    }
     function onContinuePressed() {
         delete();
         new Game(false, globalLevelId + 1);
     }
+    function onRestartOver() {
+        curId = 1;
+        Audio.playSound("menuMove");
+        updateSelected();
+    }
     function onRestartPressed() {
         delete();
         new Game(true, globalLevelId);
+    }
+    function onTitleOver() {
+        curId = 2;
+        Audio.playSound("menuMove");
+        updateSelected();
     }
     function onTitlePressed() {
         delete();

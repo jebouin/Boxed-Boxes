@@ -89,7 +89,7 @@ class Hero extends Entity {
 
     override public function updateBeforeMove(dt:Float) {
         // TODO: Check collision each frame
-        var controller = Main.inst.controller;
+        var controller = Main.inst.controller, touchInput = Game.inst.touchInput;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
         facing = None;
         if(cd > .5) {
@@ -97,14 +97,17 @@ class Hero extends Entity {
                 facing = Up;
             } else if(Util.fabs(ca) <= Math.PI * .25) {
                 facing = Right;
-                anim.scaleX = 1;
             } else if(Util.fabs(ca - Math.PI * .5) <= Math.PI * .25) {
                 facing = Down;
             } else {
                 facing = Left;
-                anim.scaleX = -1;
             }
         }
+        if(touchInput.isLeftDown != touchInput.isRightDown) {
+            facing = touchInput.isLeftDown ? Left : Right;
+        }
+        if(facing == Right) anim.scaleX = 1;
+        else if(facing == Left) anim.scaleX = -1;
         var fastFall = facing == Down;
         isSlidingAnim = !fastFall && ((facing == Left && hasWallLeft) || (facing == Right && hasWallRight));
         isSlidingPhysics = isSlidingAnim && vy > 0;
@@ -140,22 +143,25 @@ class Hero extends Entity {
         else wallLeftTimer += dt;
         if(hasWallRight) wallRightTimer = 0.;
         else wallRightTimer += dt;
-        var jumping = vy < 0 && controller.isDown(Action.jump);
-        if(vy < 0 && controller.isReleased(Action.jump)) {
+        var jumpDown = controller.isDown(Action.jump) || touchInput.isJumpDown;
+        var jumpPressed = controller.isPressed(Action.jump) || touchInput.isJumpPressed();
+        var jumpReleased = controller.isReleased(Action.jump) || touchInput.isJumpReleased();
+        var jumping = vy < 0 && jumpDown;
+        if(vy < 0 && jumpReleased) {
             vy *= .5;
         }
         var jumped = false;
-        if(controller.isPressed(Action.jump)) {
+        if(jumpPressed) {
             if(jump()) {
                 jumped = true;
             } else {
                 jumpBufferTimer = 0.;
             }
-        } else if(isOnGround && controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME) {
+        } else if(isOnGround && jumpDown && jumpBufferTimer <= JUMP_BUFFER_TIME) {
             jumped = jump();
         }
         if(!jumped && !isOnGround) {
-            if(controller.isPressed(Action.jump) || (controller.isDown(Action.jump) && jumpBufferTimer <= JUMP_BUFFER_TIME)) {
+            if(jumpPressed || (jumpDown && jumpBufferTimer <= JUMP_BUFFER_TIME)) {
                 if(wallLeftTimer < wallRightTimer) {
                     if(hasWallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME)) {
                         wallJump(1);
