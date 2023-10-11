@@ -1,5 +1,6 @@
 package ;
 
+import fx.Fx;
 import h2d.col.Point;
 import fx.Death;
 import h2d.col.IBounds;
@@ -28,14 +29,16 @@ class Game extends Scene {
     static var _layer = 0;
     public static var LAYER_CLEAR = _layer++;
     public static var LAYER_BACK = _layer++;
+    public static var LAYER_FX_BACK = _layer++;
     public static var LAYER_BACK_WALLS = _layer++;
     public static var LAYER_BORDER_BACK = _layer++;
+    public static var LAYER_FX_MID = _layer++;
     public static var LAYER_HERO = _layer++;
     public static var LAYER_ENTITIES = _layer++;
     public static var LAYER_WALLS = _layer++;
     public static var LAYER_BORDER = _layer++;
     public static var LAYER_GEM = _layer++;
-    public static var LAYER_FX = _layer++;
+    public static var LAYER_FX_FRONT = _layer++;
     public static var LAYER_FLASH = _layer++;
     public static var LAYER_DEBUG = _layer++;
     public static var LAYER_WIN = _layer++;
@@ -49,6 +52,7 @@ class Game extends Scene {
     var stateTimer : Float = 0.;
     var winGraphics : Graphics;
     var ramp : Pixels;
+    public var fx : Fx;
     var deathFx : Death;
     var prevCameraPos : Point;
 
@@ -68,7 +72,7 @@ class Game extends Scene {
         levelId = globalLevelId;
         loadLevelById(levelId);
         camera.update(0);
-
+        fx = new Fx(world, world, world, LAYER_FX_FRONT, LAYER_FX_MID, LAYER_FX_BACK);
     }
 
     override public function delete() {
@@ -129,6 +133,7 @@ class Game extends Scene {
             }
         }
         background.update(dt);
+        fx.update(dt);
     }
 
     override public function updateConstantRate(dt:Float) {
@@ -137,6 +142,7 @@ class Game extends Scene {
                 deathFx.updateConstantRate(dt);
             }
         }
+        fx.updateConstantRate(dt);
     }
 
     public function levelComplete() {

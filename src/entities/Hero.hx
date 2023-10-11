@@ -233,7 +233,14 @@ class Hero extends Entity {
         } else if(curAnimName == "land") {
             anim.loops = false;
         }
+        var curFrame = Std.int(anim.currentFrame);
         anim.update(dt);
+        var newFrame = Std.int(anim.currentFrame);
+        if(curAnimName == "run" || curAnimName == "runPush") {
+            if(newFrame != curFrame && (newFrame == 3 || newFrame == 9)) {
+                Game.inst.fx.footStep(anim.x - 2 * anim.scaleX, anim.y - 1, Util.sign(anim.scaleX), newFrame == 3);
+            }
+        }
         updateGraphics();
     }
     
@@ -249,6 +256,8 @@ class Hero extends Entity {
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         vy = -JUMP_VEL;
         Audio.playSound("jump", false, .3);
+        var dx = facing == Left ? -1 : (facing == Right ? 1 : 0);
+        Game.inst.fx.jump(anim.x - 4 * dx, anim.y, dx);
         return true;
     }
     function wallJump(dx:Int) {
@@ -257,6 +266,7 @@ class Hero extends Entity {
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         wallJumpTimer = 0.;
         Audio.playSound("wallJump", false, .3);
+        Game.inst.fx.wallJump(anim.x - dx * anim.frames[0].iwidth * .5, anim.y - 2, dx);
         return true;
     }
 

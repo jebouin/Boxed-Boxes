@@ -26,7 +26,7 @@ class Pixel {
         this.height = height;
         var tile = Tile.fromColor(0xFFFFFF, width, height);
         b = new Bitmap(tile);
-        Game.inst.world.add(b, Game.LAYER_FX);
+        Game.inst.world.add(b, Game.LAYER_FX_FRONT);
         var acc = Util.randCircle(1000, 2000);
         accx = acc.x;
         accy = acc.y;

@@ -14,6 +14,33 @@ class Solid {
         all = [];
     }
 
+    public static function pointCollides(x:Int, y:Int, dx:Int, dy:Int) {
+        for(s in all) {
+            if(s.collisionType == Full) {
+                if(x > s.bounds.xMin && x < s.bounds.xMax && y > s.bounds.yMin && y < s.bounds.yMax) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformLeft && dx < 0) {
+                if(s.bounds.yMin < y && s.bounds.yMax > y && x == s.bounds.xMax - 1) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformRight && dx > 0) {
+                if(s.bounds.yMin < y && s.bounds.yMax > y && x == s.bounds.xMin + 1) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformUp && dy < 0) {
+                if(s.bounds.xMin < x && s.bounds.xMax > x && y == s.bounds.yMax - 1) {
+                    return true;
+                }
+            } else if(s.collisionType == PlatformDown && dy > 0) {
+                if(s.bounds.xMin < x && s.bounds.xMax > x && y == s.bounds.yMin + 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public static function entityCollides(entity:Entity, dx:Int, dy:Int) {
         return entityCollidesAt(entity, entity.x, entity.y, dx, dy);
     }

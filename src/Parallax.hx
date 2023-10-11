@@ -20,7 +20,6 @@ class Parallax extends Object {
     var levelHeight : Int;
 
     public function new(tile:Tile, sliceHeight:Int, layer:Int, speed:Float, levelWidth:Int, levelHeight:Int) {
-        trace(tile, sliceHeight, layer, speed);
         super();
         Game.inst.world.add(this, layer);
         this.sliceHeight = sliceHeight;
@@ -42,7 +41,6 @@ class Parallax extends Object {
         midSlicePos = (levelHeight * .5 - sliceHeight * .5);
         sliceIndexMid = Math.floor(midSlicePos / sliceHeight);
         centerOffY = midSlicePos - sliceIndexMid * sliceHeight;
-        trace(centerOffY);
     }
 
     public function update() {

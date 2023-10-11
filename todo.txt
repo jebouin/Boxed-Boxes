@@ -1,7 +1,6 @@
 POST-JAM
-- Better parallax system
-- Particles
 - Screen shake/flash/rumble
+- Side wall detection improvement (level 21)
 - Current level animated cursor
 - Add level selection animation (compare previously visible)
 - Level 4 too hard
@@ -17,13 +16,14 @@ POST-JAM
 - More levels to introduce border merge
 - Music
 - Entity/solid corner correction
-- Screen shake
 - More levels
 	- Make stairs by pushing borders
 	- Push border with boxes inside
 	- Hard mode (grab gem then go back, more spikes)
 - NG integration
 - Test all menus clickable
+- Cover and screenshots
+- Parallax offset level annotation
 
 TO FIX
 - Hard to fit box in holes
