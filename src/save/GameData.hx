@@ -2,6 +2,9 @@ package save;
 
 import haxe.ds.IntMap;
 import hxbit.Serializable;
+#if int_ng
+import integration.Newgrounds;
+#end
 
 class GameData implements Serializable {
     @:s public var levelsCompleted(default, null) : IntMap<Bool> = new IntMap<Bool>();
@@ -26,6 +29,9 @@ class GameData implements Serializable {
     public function completeLevel(id:Int) {
         levelsCompleted.set(id, true);
         Save.saveGame();
+        #if int_ng
+        Newgrounds.checkMedals();
+        #end
     }
     public function showCompletedLevel(id:Int) {
         levelsCompletedShown.set(id, true);

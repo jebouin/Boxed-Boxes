@@ -3,13 +3,13 @@ POST-JAM
 - Better wall jump (make whole game a bit slower?)
 	- Bottom left of level 6 annoying wall jump
 - Stick to ceiling for a few frames to make it easier to jump over box
-- Music
 - More SFX
 	- Varied sound with volume
 	- Footstep
 	- Box sliding
 	- Level complete
 	- Level unlock
+- Music
 - Fix move speed before more LD
 - Level 4 too hard
 	- Remove inertia
@@ -28,6 +28,8 @@ POST-JAM
 - Parallax offset level annotation
 - Fullscreen key
 - Add credits below level selection
+- Update newgrounds and itch cover and promo images
+- Make video walkthrough
 
 TO FIX
 - Hard to fit box in holes

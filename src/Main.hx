@@ -8,6 +8,9 @@ import h3d.mat.Texture;
 import ui.FPSCounter;
 import Controller;
 import hxd.Key;
+#if int_ng
+import integration.Newgrounds;
+#end
 
 @:native("")
 extern class External {
@@ -63,7 +66,17 @@ class Main extends hxd.App {
         #if debug
         fpsCounter = new FPSCounter(Assets.font);
         #end
+        #if int_ng
+        Newgrounds.init(initSave);
+        #else
+        initSave();
+        #end
+    }
+    function initSave() {
         Save.init(function(success) {
+            #if int_ng
+            Newgrounds.checkMedals();
+            #end
             startGame();
         });
     }
@@ -239,6 +252,10 @@ class Main extends hxd.App {
             }
         }
         fpsCounter.update();
+        #else
+        if(Key.isPressed(Key.F)) {
+            setFullscreen(!engine.fullScreen);
+        }
         #end
     }
     public function hitStop(duration:Float) {
