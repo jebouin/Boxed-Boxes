@@ -57,18 +57,18 @@
 			"entityInstances": [
 				{
 					"__identifier": "Hero",
-					"__grid": [41,27],
+					"__grid": [24,14],
 					"__pivot": [0,0],
 					"__tags": [],
 					"__tile": { "tilesetUid": 20, "x": 0, "y": 32, "w": 8, "h": 8 },
 					"__smartColor": "#BE4A2F",
-					"__worldX": 6040,
-					"__worldY": 1312,
+					"__worldX": 5904,
+					"__worldY": 1208,
 					"iid": "57045920-6280-11ee-98fd-c32dc9daed96",
 					"width": 8,
 					"height": 8,
 					"defUid": 21,
-					"px": [328,216],
+					"px": [192,112],
 					"fieldInstances": []
 				},
 				{

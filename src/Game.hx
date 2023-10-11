@@ -51,7 +51,7 @@ class Game extends Scene {
     public var state(default, set) : GameState;
     var stateTimer : Float = 0.;
     var winGraphics : Graphics;
-    var ramp : Pixels;
+    public var ramp : Pixels;
     public var fx : Fx;
     var deathFx : Death;
     var prevCameraPos : Point;
@@ -71,8 +71,8 @@ class Game extends Scene {
         state = Play;
         levelId = globalLevelId;
         loadLevelById(levelId);
-        camera.update(0);
         fx = new Fx(world, world, world, LAYER_FX_FRONT, LAYER_FX_MID, LAYER_FX_BACK);
+        camera.update(0);
     }
 
     override public function delete() {
@@ -124,6 +124,11 @@ class Game extends Scene {
             camera.targetX = level.heroSpawnX + 4;
             camera.targetY = level.heroSpawnY + 8;
             var targetPos = camera.getClampedPosition(level.getCameraBounds());
+            if(t < .4) {
+                t = 0.;
+            } else {
+                t = Util.smoothStep((t - .4) / .6);
+            }
             var pos = new Point(t * targetPos.x + (1. - t) * prevCameraPos.x, t * targetPos.y + (1. - t) * prevCameraPos.y);
             camera.clampedTargetX = pos.x;
             camera.clampedTargetY = pos.y;
@@ -143,13 +148,20 @@ class Game extends Scene {
             }
         }
         fx.updateConstantRate(dt);
+        camera.updateConstantRate(dt);
     }
 
     public function levelComplete() {
+        fx.gem();
         Save.gameData.data.completeLevel(levelId);
+        updateRamp();
+        state = TransitionOut;
+    }
+
+    public function updateRamp() {
         var rampTile = Assets.getTile("entities", "ramp" + getLevelGroup());
         ramp = rampTile.getTexture().capturePixels(0, 0, IBounds.fromValues(rampTile.ix, rampTile.iy, rampTile.iwidth, rampTile.iheight));
-        state = TransitionOut;
+        return ramp;
     }
 
     public function loadFirstLevel() {

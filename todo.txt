@@ -1,20 +1,20 @@
 POST-JAM
-- Screen shake/flash/rumble
-- Side wall detection improvement (level 21)
+- Shake camera pos not world offset
 - Current level animated cursor
 - Add level selection animation (compare previously visible)
+- Make menus clickable
+- Mobile controls?
+- Better wall jump (make whole game a bit slower?)
+	- Bottom left of level 6 annoying wall jump
+- Stick to ceiling for a few frames to make it easier to jump over box
+- Music
 - Level 4 too hard
 	- Remove inertia
 	- Show can jump from bottom border
 	- Remove spikes and use void instead
 	- Make zone larger
 - Level 6 uses wall jump before introducing it
-- Make menus clickable
-- Mobile controls?
-- Better wall jump (make whole game a bit slower?)
-- Stick to ceiling for a few frames to make it easier to jump over box
 - More levels to introduce border merge
-- Music
 - Entity/solid corner correction
 - More levels
 	- Make stairs by pushing borders
@@ -33,3 +33,4 @@ IF TIME LEFT
 - Only move camera up when on platform
 - Settings menu
 - Undo (rewind?)
+- Gem distortion

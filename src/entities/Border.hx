@@ -79,7 +79,6 @@ class Border {
     public function update(dt:Float) {
         group.x = groupBack.x = bounds.x;
         group.y = groupBack.y = bounds.y;
-        trace(bounds.x);
     }
 
     public function setBounds(b:IBounds) {

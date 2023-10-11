@@ -177,4 +177,16 @@ class Fx {
         p.targetScaleY = 0;
         sbMid.add(p, true);
     }
+
+    public function die(dx:Float, dy:Float) {
+        screenBounce(-dx * 10, -dy * 10, 2., .5, 0);
+        rumble(.4, .2);
+    }
+
+    public function gem() {
+        screenShake(10, 10, 1.5, 1., 0);
+        var ramp = Game.inst.updateRamp();
+        screenFlash(Game.inst.world, ramp.getPixel(0, 0) & 0xFFFFFF, .4, 1.3);
+        rumble(.7, .3);
+    }
 }

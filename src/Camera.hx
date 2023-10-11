@@ -55,11 +55,14 @@ class Camera {
             clampedTargetX = newClampedTarget.x;
             clampedTargetY = newClampedTarget.y;
         }
+    }
+
+    public function updateConstantRate(dt:Float) {
         var world = Game.inst.world;
         var wx = clampedTargetX - viewportWidth * .5;
         var wy = clampedTargetY - viewportHeight * .5;
-        world.x = -wx;
-        world.y = -wy;
+        world.x = -wx + Game.inst.fx.shakeX;
+        world.y = -wy + Game.inst.fx.shakeY;
     }
 
     public function updateViewport() {

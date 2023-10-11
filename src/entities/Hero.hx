@@ -180,8 +180,14 @@ class Hero extends Entity {
         tryStepDown(res);
         isOnGround = !res.success;
         res.moveBack();
-        hasWallLeft = hitLeft;
-        hasWallRight = hitRight;
+        res = StepResult.newLeft();
+        tryStepLeft(res);
+        hasWallLeft = !res.success;
+        res.moveBack();
+        res = StepResult.newRight();
+        tryStepRight(res);
+        hasWallRight = !res.success;
+        res.moveBack();
         for(g in Gem.all) {
             if(g.collides(this)) {
                 Audio.playSound("gem");
@@ -247,6 +253,7 @@ class Hero extends Entity {
     public override function die(dx:Float, dy:Float) {
         super.die(dx, dy);
         Game.inst.onDeath(dx, dy);
+        Game.inst.fx.die(dx, dy);
         Audio.playSound("death", false, .5);
     }
 
@@ -266,7 +273,7 @@ class Hero extends Entity {
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         wallJumpTimer = 0.;
         Audio.playSound("wallJump", false, .3);
-        Game.inst.fx.wallJump(anim.x - dx * anim.frames[0].iwidth * .5, anim.y - 2, dx);
+        Game.inst.fx.wallJump(anim.x - dx * anim.frames[0].iwidth * .5, anim.y - 4, dx);
         return true;
     }
 
