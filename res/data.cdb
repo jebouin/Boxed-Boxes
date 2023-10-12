@@ -119,6 +119,18 @@
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true
+				},
+				{
+					"name": "cave",
+					"playNext": "",
+					"loop": true,
+					"continueDuringPause": true
+				},
+				{
+					"name": "caveBack",
+					"playNext": "",
+					"loop": true,
+					"continueDuringPause": true
 				}
 			],
 			"separators": [],

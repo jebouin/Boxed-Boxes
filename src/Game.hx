@@ -84,9 +84,6 @@ class Game extends Scene {
             touchInput.show();
         }
         #end
-        /*if(!Audio.isMusicPlaying()) {
-            Audio.playMusic("forest");
-        }*/
     }
 
     override public function delete() {
@@ -173,7 +170,7 @@ class Game extends Scene {
         updateRamp();
         state = TransitionOut;
         Audio.stopMusic(Audio.MUSIC_FADE_IN_TIME);
-        Audio.playMusic("forestBack", null, Audio.MUSIC_FADE_OUT_TIME);
+        Audio.playMusic(Title.GROUP_MUSIC_NAMES[getLevelGroup()] + "Back", null, Audio.MUSIC_FADE_OUT_TIME);
     }
 
     public function updateRamp() {

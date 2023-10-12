@@ -64,6 +64,9 @@ class Audio {
     }
     public static function stopMusic(?fadeTime:Float=0.) {
         if(musicChannel == null) return;
+        if(musicBackChannel != null) {
+            musicBackChannel.stop();
+        }
         musicBackChannel = musicChannel;
         musicBack = music;
         musicChannel = null;

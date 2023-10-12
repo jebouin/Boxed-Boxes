@@ -160,6 +160,7 @@ class LevelCell extends Flow {
 }
 
 class Title extends Scene {
+    public static var MUSIC_FADE_TIME = .2;
     static var _layer = 0;
     public static var LAYER_FX_BACK = _layer++;
     public static var LAYER_HUD = _layer++;
@@ -174,6 +175,7 @@ class Title extends Scene {
     public static var GROUP_NAMES = ["Autumn Forest", "Moonlit Lagoon", "Spiky Cave"];
     public static var GROUP_COLORS = [0x63c74d, 0x0095e9, 0xe43b44];
     public static var GROUP_COMPLETED_TO_UNLOCK = [0, 6, 15];
+    public static var GROUP_MUSIC_NAMES = ["forest", "lagoon", "cave"];
     public static var SHOW_COMPLETED_DELAY = .25;
     public static var SHOW_COMPLETED_INTERVAL = .05;
     public static var SHOW_UNLOCKED_DELAY = .2;
@@ -192,6 +194,7 @@ class Title extends Scene {
     var toShowComplete : Array<LevelCell> = [];
     var toShowUnlocked : Array<LevelCell> = [];
     var timer : Float = 0.;
+    var curMusicName : String = null;
 
     public function new(curLevelId:Int) {
         super();
@@ -387,7 +390,8 @@ class Title extends Scene {
     function chooseLevel(curGroup:Int, curI:Int, curJ:Int) {
         Audio.playSound("menuSelect");
         delete();
-        Audio.playMusic("forest");
+        Audio.stopMusic(Audio.MUSIC_FADE_IN_TIME);
+        Audio.playMusic(GROUP_MUSIC_NAMES[curGroup], null, Audio.MUSIC_FADE_IN_TIME);
         new Game(true, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
     }
 
@@ -453,6 +457,7 @@ class Title extends Scene {
                 }
             }
         }
+        updateMusic();
     }
 
     public function forceCompleteLevel() {
@@ -467,5 +472,14 @@ class Title extends Scene {
         var baseX = 30;
         var baseY = 71;
         return new Point(baseX + 6 + k * (20 + 26 * GROUP_WIDTH) + j * 26, baseY + 6 + i * 26);
+    }
+
+    function updateMusic() {
+        var musicName = GROUP_MUSIC_NAMES[curGroup];
+        if(musicName != curMusicName) {
+            curMusicName = musicName;
+            Audio.stopMusic(MUSIC_FADE_TIME);
+            Audio.playMusic(musicName + "Back", MUSIC_FADE_TIME);
+        }
     }
 }
