@@ -101,6 +101,12 @@
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true
+				},
+				{
+					"name": "forestBack",
+					"playNext": "",
+					"loop": true,
+					"continueDuringPause": true
 				}
 			],
 			"separators": [],

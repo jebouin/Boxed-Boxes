@@ -387,6 +387,7 @@ class Title extends Scene {
     function chooseLevel(curGroup:Int, curI:Int, curJ:Int) {
         Audio.playSound("menuSelect");
         delete();
+        Audio.playMusic("forest");
         new Game(true, 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ);
     }
 

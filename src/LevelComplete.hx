@@ -123,6 +123,8 @@ class LevelComplete extends Scene {
     }
     function onContinuePressed() {
         delete();
+        Audio.stopMusic(Audio.MUSIC_FADE_IN_TIME);
+        Audio.playMusic("forest", null, Audio.MUSIC_FADE_IN_TIME);
         new Game(false, globalLevelId + 1);
     }
     function onRestartOver() {
