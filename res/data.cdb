@@ -1,0 +1,134 @@
+{
+	"sheets": [
+		{
+			"name": "soundDef",
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "name",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "variationCount",
+					"kind": null
+				},
+				{
+					"typeStr": "4",
+					"name": "volume",
+					"kind": null
+				},
+				{
+					"typeStr": "2",
+					"name": "scaleVolume",
+					"kind": null
+				}
+			],
+			"lines": [
+				{
+					"name": "death",
+					"variationCount": 0,
+					"volume": 0.5,
+					"scaleVolume": false
+				},
+				{
+					"name": "gem",
+					"variationCount": 0,
+					"volume": 1,
+					"scaleVolume": false
+				},
+				{
+					"name": "jump",
+					"variationCount": 0,
+					"volume": 0.3,
+					"scaleVolume": false
+				},
+				{
+					"name": "levelComplete",
+					"variationCount": 0,
+					"volume": 1,
+					"scaleVolume": false
+				},
+				{
+					"name": "menuMove",
+					"variationCount": 0,
+					"volume": 1,
+					"scaleVolume": false
+				},
+				{
+					"name": "menuSelect",
+					"variationCount": 0,
+					"volume": 1,
+					"scaleVolume": false
+				},
+				{
+					"name": "wallJump",
+					"variationCount": 0,
+					"volume": 0.3,
+					"scaleVolume": false
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "musicDef",
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "name",
+					"kind": null
+				},
+				{
+					"typeStr": "1",
+					"name": "playNext",
+					"kind": null
+				},
+				{
+					"typeStr": "2",
+					"name": "loop",
+					"kind": null
+				},
+				{
+					"typeStr": "2",
+					"name": "continueDuringPause",
+					"kind": null
+				}
+			],
+			"lines": [
+				{
+					"name": "forest",
+					"playNext": "",
+					"loop": true,
+					"continueDuringPause": true
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [
+		{
+			"name": "Difficulty",
+			"cases": [
+				{
+					"name": "Easy",
+					"args": []
+				},
+				{
+					"name": "Normal",
+					"args": []
+				},
+				{
+					"name": "Hard",
+					"args": []
+				},
+				{
+					"name": "Insane",
+					"args": []
+				}
+			]
+		}
+	],
+	"compress": false
+}

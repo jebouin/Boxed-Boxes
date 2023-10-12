@@ -8,6 +8,7 @@ import h3d.mat.Texture;
 import ui.FPSCounter;
 import Controller;
 import hxd.Key;
+import audio.Audio;
 #if int_ng
 import integration.Newgrounds;
 #end
@@ -45,8 +46,8 @@ class Main extends hxd.App {
 
     override function init() {
         initController();
-        Audio.init();
         Assets.init();
+        Audio.init();
         Level.init();
         engine.fullScreen = false;
         engine.autoResize = true;

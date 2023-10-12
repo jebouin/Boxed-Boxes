@@ -1,14 +1,16 @@
 POST-JAM
-- NG integration
-- Better wall jump (make whole game a bit slower?)
-	- Bottom left of level 6 annoying wall jump
-- Stick to ceiling for a few frames to make it easier to jump over box
+- NG save integration
 - More SFX
 	- Varied sound with volume
 	- Footstep
 	- Box sliding
 	- Level complete
 	- Level unlock
+- Finish parallax art
+- Better tile art?
+- Better wall jump (make whole game a bit slower?)
+	- Bottom left of level 6 annoying wall jump
+- Stick to ceiling for a few frames to make it easier to jump over box
 - Music
 - Fix move speed before more LD
 - Level 4 too hard
@@ -30,10 +32,12 @@ POST-JAM
 - Add credits below level selection
 - Update newgrounds and itch cover and promo images
 - Make video walkthrough
+- Only set selected menu option on mousemove when not using other input method
 
 TO FIX
 - Hard to fit box in holes
 - Level 24 ending weird/unclear behavior?
+- Level unlock not showing selected if not completed (to reproduce partially complete a world)
 
 IF TIME LEFT
 - Multitouch inputs

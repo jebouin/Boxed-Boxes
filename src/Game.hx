@@ -15,6 +15,7 @@ import entities.Border;
 import entities.Hero;
 import entities.Entity;
 import SceneManager.Scene;
+import audio.Audio;
 
 enum GameState {
     TransitionIn;
@@ -83,6 +84,7 @@ class Game extends Scene {
             touchInput.show();
         }
         #end
+        Audio.playMusic("forest");
     }
 
     override public function delete() {
@@ -97,6 +99,7 @@ class Game extends Scene {
         }
         background.delete();
         touchInput.delete();
+        Audio.onQuit();
     }
 
     override public function update(dt:Float) {

@@ -9,6 +9,7 @@ import Controller.Action;
 import h2d.Text;
 import h2d.Flow;
 import SceneManager.Scene;
+import audio.Audio;
 
 enum LevelCellState {
     Locked;

@@ -4,6 +4,7 @@ import h2d.Graphics;
 import h2d.col.IBounds;
 import h2d.Bitmap;
 import Controller;
+import audio.Audio;
 
 enum Facing {
     None;

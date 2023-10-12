@@ -7,6 +7,7 @@ import Controller.Action;
 import h2d.Text;
 import h2d.Flow;
 import SceneManager.Scene;
+import audio.Audio;
 
 class MenuLine extends Flow {
     public var selected(default, set) : Bool = false;

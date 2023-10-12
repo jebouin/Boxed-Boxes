@@ -1,3 +1,5 @@
+import audio.VariedSound;
+import audio.Music;
 import assets.AsepriteJson.Slice;
 import h2d.Font;
 import h2d.HtmlText;
@@ -24,10 +26,12 @@ class Assets {
     static inline var LOOPS_COL_FALSE = "#fe5b59ff";
     public static var font : Font;
     public static var fontLarge : Font;
-    public static var nameToSound : StringMap<Sound>;
+    public static var nameToSound : StringMap<VariedSound>;
+    public static var nameToMusic : StringMap<Music>;
     static var sheets : StringMap<SpriteSheet>;
 
     public static function init() {
+        Data.load(hxd.Res.data.entry.getText());
         font = Res.fonts.cc13.toFont();
         fontLarge = Res.fonts.large.toFont();
         loadAllSpriteSheets();
@@ -166,12 +170,15 @@ class Assets {
     }
 
     public static function loadAudio() {
-        nameToSound = new StringMap<Sound>();
-        for(res in hxd.Res.load("sfx")) {
-            var name = res.name.substr(0, res.name.length - 4);
-            var sound = res.toSound();
-            sound.getData();
-            nameToSound.set(name, sound);
+        nameToSound = new StringMap<VariedSound>();
+        for(def in Data.soundDef.all) {
+            var sound = new VariedSound(def);
+            nameToSound.set(def.name, sound);
+        }
+        nameToMusic = new StringMap<Music>();
+        for(def in Data.musicDef.all) {
+            var music = new Music(def);
+            nameToMusic.set(def.name, music);
         }
     }
 }
