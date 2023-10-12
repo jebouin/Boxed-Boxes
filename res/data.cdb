@@ -107,6 +107,18 @@
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true
+				},
+				{
+					"name": "lagoon",
+					"playNext": "",
+					"loop": true,
+					"continueDuringPause": true
+				},
+				{
+					"name": "lagoonBack",
+					"playNext": "",
+					"loop": true,
+					"continueDuringPause": true
 				}
 			],
 			"separators": [],
