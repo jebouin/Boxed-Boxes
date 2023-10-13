@@ -2,6 +2,7 @@ package ;
 
 import Main.External;
 import ui.TouchInput;
+import ui.MouseInput;
 import fx.Fx;
 import h2d.col.Point;
 import fx.Death;
@@ -59,6 +60,7 @@ class Game extends Scene {
     var deathFx : Death;
     var prevCameraPos : Point;
     public var touchInput : TouchInput;
+    public var mouseInput : MouseInput;
 
     public function new(initial:Bool, globalLevelId:Int) {
         super();
@@ -79,9 +81,11 @@ class Game extends Scene {
         camera.update(0);
         touchInput = new TouchInput();
         touchInput.hide();
+        mouseInput = new MouseInput();
         #if js
         if(External.isUsingMobile()) {
             touchInput.show();
+            mouseInput.enabled = false;
         }
         #end
     }
@@ -98,6 +102,7 @@ class Game extends Scene {
         }
         background.delete();
         touchInput.delete();
+        mouseInput.delete();
     }
 
     override public function update(dt:Float) {
@@ -151,6 +156,7 @@ class Game extends Scene {
         }
         fx.update(dt);
         touchInput.afterUpdate();
+        mouseInput.afterUpdate();
     }
 
     override public function updateConstantRate(dt:Float) {
