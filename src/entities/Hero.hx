@@ -252,6 +252,7 @@ class Hero extends Entity {
         if(curAnimName == "run" || curAnimName == "runPush") {
             if(newFrame != curFrame && (newFrame == 3 || newFrame == 9)) {
                 Game.inst.fx.footStep(anim.x - 2 * anim.scaleX, anim.y - 1, Util.sign(anim.scaleX), newFrame == 3);
+                Audio.playSound(newFrame == 3 ? "stepFront" : "stepBack");
             }
         }
         updateGraphics();

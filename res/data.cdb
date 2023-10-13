@@ -28,19 +28,19 @@
 				{
 					"name": "death",
 					"variationCount": 0,
-					"volume": 0.5,
+					"volume": 0.7,
 					"scaleVolume": false
 				},
 				{
 					"name": "gem",
 					"variationCount": 0,
-					"volume": 1,
+					"volume": 0.85,
 					"scaleVolume": false
 				},
 				{
 					"name": "jump",
 					"variationCount": 0,
-					"volume": 0.3,
+					"volume": 0.5,
 					"scaleVolume": false
 				},
 				{
@@ -64,7 +64,31 @@
 				{
 					"name": "wallJump",
 					"variationCount": 0,
-					"volume": 0.3,
+					"volume": 0.75,
+					"scaleVolume": false
+				},
+				{
+					"name": "cellComplete",
+					"variationCount": 0,
+					"volume": 0.6,
+					"scaleVolume": false
+				},
+				{
+					"name": "cellUnlock",
+					"variationCount": 0,
+					"volume": 0.8,
+					"scaleVolume": false
+				},
+				{
+					"name": "stepFront",
+					"variationCount": 0,
+					"volume": 1,
+					"scaleVolume": false
+				},
+				{
+					"name": "stepBack",
+					"variationCount": 0,
+					"volume": 1,
 					"scaleVolume": false
 				}
 			],
@@ -106,42 +130,42 @@
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true,
-					"volume": 0.8
+					"volume": 0.7
 				},
 				{
 					"name": "forestBack",
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true,
-					"volume": 0.8
+					"volume": 0.7
 				},
 				{
 					"name": "lagoon",
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true,
-					"volume": 1
+					"volume": 0.9
 				},
 				{
 					"name": "lagoonBack",
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true,
-					"volume": 1
+					"volume": 0.9
 				},
 				{
 					"name": "cave",
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true,
-					"volume": 1
+					"volume": 0.9
 				},
 				{
 					"name": "caveBack",
 					"playNext": "",
 					"loop": true,
 					"continueDuringPause": true,
-					"volume": 1
+					"volume": 0.9
 				}
 			],
 			"separators": [],

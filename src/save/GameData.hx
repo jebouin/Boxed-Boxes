@@ -20,9 +20,10 @@ class GameData implements Serializable {
             levelsCompletedShown.set(i, false);
         }
         #if debug
-        /*for(i in 1...Title.LEVEL_COUNT + 1) {
-            levelsCompleted.set(i, false);
-        }*/
+        for(i in 1...Title.LEVEL_COUNT + 1) {
+            levelsCompleted.set(i, Std.random(2) == 0);
+            levelsCompletedShown.set(i, false);
+        }
         #end
     }
 

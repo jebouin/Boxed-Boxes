@@ -1,10 +1,6 @@
 POST-JAM
-- Music (3x33 bars)
-- More SFX
-	- Footstep
-	- Box sliding
-	- Level complete
-	- Level unlock
+- Mouse controls
+- Test level select
 - Mute key
 - Fullscreen key
 - Finish parallax art

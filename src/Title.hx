@@ -24,7 +24,8 @@ class LevelCell extends Flow {
     public static inline var UNLOCK_TIME = .2;
     public var selected(default, set) : Bool = false;
     public var group(default, null) : Int;
-    public var state : LevelCellState = Locked;
+    public var state(default, set) : LevelCellState = Locked;
+    var id : Int;
     var lockBitmap : Bitmap;
     var levelText : Text;
     var selectedBorder : Anim;
@@ -35,12 +36,13 @@ class LevelCell extends Flow {
     var lockedTiles : Array<Tile>;
     var timer : Float = 0.;
 
-    public function new(id:Int, parent:Flow, group:Int, i:Int, j:Int, state:LevelCellState, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void, onCompleted:Void->Void) {
+    public function new(id:Int, parent:Flow, group:Int, i:Int, j:Int, initState:LevelCellState, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void, onCompleted:Void->Void) {
         super(parent);
+        this.id = id;
         this.group = group;
         this.cellI = i;
         this.cellJ = j;
-        this.state = state;
+        this.state = initState;
         this.onCompleted = onCompleted;
         lockedTiles = Assets.getAnimData("entities", "levelCellLocked").tiles;
 	    backgroundTile = Assets.getTile("entities", "levelCell");
@@ -124,6 +126,7 @@ class LevelCell extends Flow {
         var pos = Title.inst.getCellPos(group, cellI, cellJ);
         Title.inst.fx.levelCellCompleted(pos.x, pos.y);
         updateGraphics();
+        Audio.playSound("cellComplete");
     }
 
     public function updateGraphics() {
@@ -157,6 +160,11 @@ class LevelCell extends Flow {
             levelText.alpha = selected ? 1 : .85;
         }
     }
+
+    public function set_state(v:LevelCellState) {
+        state = v;
+        return v;
+    }
 }
 
 class Title extends Scene {
@@ -177,9 +185,9 @@ class Title extends Scene {
     public static var GROUP_COMPLETED_TO_UNLOCK = [0, 6, 15];
     public static var GROUP_MUSIC_NAMES = ["forest", "lagoon", "cave"];
     public static var SHOW_COMPLETED_DELAY = .25;
-    public static var SHOW_COMPLETED_INTERVAL = .05;
+    public static var SHOW_COMPLETED_INTERVAL = .1;
     public static var SHOW_UNLOCKED_DELAY = .2;
-    public static var SHOW_UNLOCKED_INTERVAL = .05;
+    public static var SHOW_UNLOCKED_INTERVAL = .0;
     public static var inst : Title;
     var curI : Int = 0;
     var curJ : Int = 0;
@@ -242,6 +250,7 @@ class Title extends Scene {
             var groupTitle = new Text(Assets.font, group);
             groupTitle.text = GROUP_NAMES[k];
             groupTitle.textColor = GROUP_COLORS[k];
+            var prevCompletedCount = completedCount;
             var groupLocked = completedCount < GROUP_COMPLETED_TO_UNLOCK[k];
             var groupMenu = new Flow(group);
             groupMenu.layout = Vertical;
@@ -290,7 +299,7 @@ class Title extends Scene {
                 var width = group.outerWidth, height = group.outerHeight;
                 groupTitle.visible = groupMenu.visible = false;
                 var lockText = new Text(Assets.font, group);
-                lockText.text = "LOCKED\n" + completedCount + "/" + GROUP_COMPLETED_TO_UNLOCK[k];
+                lockText.text = "LOCKED\n" + prevCompletedCount + "/" + GROUP_COMPLETED_TO_UNLOCK[k];
                 lockText.maxWidth = 36;
                 lockText.textColor = 0x3a4466;
                 lockText.textAlign = Center;
@@ -298,7 +307,6 @@ class Title extends Scene {
                 group.minHeight = height;
             }
         }
-        trace(toShowComplete, toShowUnlocked);
     }
 
     override public function delete() {
@@ -327,13 +335,18 @@ class Title extends Scene {
                 }
             }
         } else if(toShowUnlocked.length > 0) {
-            if(timer > SHOW_UNLOCKED_DELAY) {
+            var unlocked = false;
+            while(toShowUnlocked.length > 0 && timer > SHOW_UNLOCKED_DELAY) {
+                unlocked = true;
                 timer -= SHOW_UNLOCKED_INTERVAL;
                 var cell = toShowUnlocked.shift();
                 cell.unlock();
                 if(toShowUnlocked.length == 0) {
                     timer = 0.;
                 }
+            }
+            if(unlocked) {
+                Audio.playSound("cellUnlock");
             }
         }
         var controller = Main.inst.controller;
