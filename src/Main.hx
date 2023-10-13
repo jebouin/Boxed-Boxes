@@ -86,8 +86,8 @@ class Main extends hxd.App {
     function startGame() {
         started = true;
         #if debug
-        //new Game(true, 7);
-        new Title(1);
+        new Game(true, 1);
+        //new Title(1);
         //new LevelComplete(0, 3, 3);
         #else
         new Title(1);
@@ -255,11 +255,15 @@ class Main extends hxd.App {
                 Title.inst.forceCompleteLevel();
             }
         }
+        if(Key.isPressed(Key.W)) {
+            setFullscreen(!engine.fullScreen);
+        }
         fpsCounter.update();
-        #end
+        #else 
         if(Key.isPressed(Key.F)) {
             setFullscreen(!engine.fullScreen);
         }
+        #end
         if(Key.isPressed(Key.M)) {
             Mute.mute();
         }

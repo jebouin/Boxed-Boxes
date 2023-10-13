@@ -11,7 +11,7 @@
 	"iid": "7799c960-3b70-11ee-b552-83fdf9fa10c0",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 190,
+	"nextUid": 192,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -69,6 +69,37 @@
 			"autoRuleGroups": [],
 			"autoSourceLayerDefUid": null,
 			"tilesetDefUid": null,
+			"tilePivotX": 0,
+			"tilePivotY": 0
+		},
+		{
+			"__type": "Tiles",
+			"identifier": "Decoration",
+			"type": "Tiles",
+			"uid": 190,
+			"doc": null,
+			"uiColor": null,
+			"gridSize": 8,
+			"guideGridWid": 0,
+			"guideGridHei": 0,
+			"displayOpacity": 1,
+			"inactiveOpacity": 1,
+			"hideInList": false,
+			"hideFieldsWhenInactive": false,
+			"canSelectWhenInactive": true,
+			"renderInWorldView": true,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"parallaxFactorX": 0,
+			"parallaxFactorY": 0,
+			"parallaxScaling": true,
+			"requiredTags": [],
+			"excludedTags": [],
+			"intGridValues": [],
+			"intGridValuesGroups": [],
+			"autoRuleGroups": [],
+			"autoSourceLayerDefUid": null,
+			"tilesetDefUid": 1,
 			"tilePivotX": 0,
 			"tilePivotY": 0
 		},
@@ -3226,7 +3257,7 @@
 				},
 				{
 					"uid": 177,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [452],
 					"alpha": 1,
@@ -3257,7 +3288,7 @@
 				},
 				{
 					"uid": 182,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [453],
 					"alpha": 1,
@@ -3288,7 +3319,7 @@
 				},
 				{
 					"uid": 178,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [452],
 					"alpha": 1,
@@ -3319,7 +3350,7 @@
 				},
 				{
 					"uid": 183,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [453],
 					"alpha": 1,
@@ -3350,7 +3381,7 @@
 				},
 				{
 					"uid": 179,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [452],
 					"alpha": 1,
@@ -3381,7 +3412,7 @@
 				},
 				{
 					"uid": 184,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [453],
 					"alpha": 1,
@@ -3412,7 +3443,7 @@
 				},
 				{
 					"uid": 180,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [452],
 					"alpha": 1,
@@ -3443,7 +3474,7 @@
 				},
 				{
 					"uid": 181,
-					"active": true,
+					"active": false,
 					"size": 5,
 					"tileIds": [453],
 					"alpha": 1,
@@ -3741,8 +3772,8 @@
 			"customData": [],
 			"savedSelections": [],
 			"cachedPixelData": {
-				"opaqueTiles": "1010110000000000000000000000000011111100000000000000000000000000001000000000000000000000000000000010110000000000000000000000000001111100000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010110000000000000000000000000001111100000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-				"averageColors": "f346fe93fd73fe83fb43fb43eda7eda7000000004dde3dde4dde5bcc4bbc5bcc5bcc5bcc00000000000000000000000000000000000000000000000000000000f234fd73f423fd62fb43fb43ed97ed97000000003dde2fff3dde5bcc4bbc5bcc4bbc4bbc000000000000000000000000000000000000000000000000000000000000fe83fd62fe72ef93000000000000000000004dde3dde4dde0000000000005bcc5bcc000000000000000000000000000000000000000000000000000000000000f736f635f636f424f424e979e9790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f635f112f535f424f424e879e8790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f636f535f636e7470000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000eb85fa75ea85000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f99bf89af89bf679f679eaabeaab0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f89af346f78af679f679e9abe9ab0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f89bf78af89ae9ab0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000113371331133d244d1340000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007133f1347244d134d134000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000113372441254c233e134000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+				"opaqueTiles": "1010110000000000000000000000000011111100000000000000000000000000001000000000000000000000000000000010110000000000000000000000000001111100000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010110000000000000000000000000001111100000000000000000000000000001000000000000000000000000000000000000111011111111000000000000000100001111111111110000000000000000000011111111111100000000000000000000111111111110000000000000000000001111111111100000000000000000000000001111111100000000000000000000000011111111000000000000000000000000111111110000000000000000000000001111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+				"averageColors": "f346fe93fd73fe83fb43fb43eda7eda7000000004dde3dde4dde5bcc4bbc5bcc5bcc5bcc00000000000000000000000000000000000000000000000000000000f234fd73f423fd62fb43fb43ed97ed97000000003dde2fff3dde5bcc4bbc5bcc4bbc4bbc000000000000000000000000000000000000000000000000000000000000fe83fd62fe72ef93000000000000000000004dde3dde4dde0000000000005bcc5bcc000000000000000000000000000000000000000000000000000000000000f736f635f636f424f424e979e9790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f635f112f535f424f424e879e8790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f636f535f636e7470000000000000000000000000000000005683568000000002568356805680000356800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000356825680000256835687568a56885683568000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005568000045680000556845683568456835680000000000000000000000000000000000000000eb85fa75ea85000000000000000000000000000000000000000065685568000000000000456800002568000000000000000000000000000000000000000000000000f99bf89af89bf679f679eaabeaab0000000000000000000065686568000000000000000000000000000000000000000000000000000000000000000000000000f89af346f78af679f679e9abe9ab0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f89bf78af89ae9ab0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000132273221322d422d3220000f134f244f3450000f134f134f134f134f134f134f134f134b13400000000000000000000000000000000000000000000000000007322f4227422d322d3220000f134f345f244f134f244f134f134f456f355f134f134f134b1340000000000000000000000000000000000000000000000000000132274221432c322e3220000f134f356f134f345f134f134f134f456f345f134f134f134b1340000000000000000000000000000000000000000000000000000000000000000000000000000f134f134f134f134f134f134f134f134f134f134f134214400000000000000000000000000000000000000000000000000000000000000000000000000000000f134f134f134f134f134f134f134f134f134f134f134a134813400000000000000000000000000000000000000000000000000000000000000000000000000000000000000009134f134f245f345f244f134f345f134f134d13400000000000000000000000000000000000000000000000000000000000000000000000000000000000000009134f134f345f456f457f456f345f134f134d13400000000000000000000000000000000000000000000000000000000000000000000000000000000000000009134f134f356f345f345f345f345f134f134d13400000000000000000000000000000000000000000000000000000000000000000000000000000000000000009134f134f134f345f134f244f134f134f134d1340000000000000000000000000000000000000000000000000000000000000000000000000000000000000000214441344134413441344134413441344134314400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 			}
 		},
 		{
@@ -3839,6 +3870,41 @@
 			"allowedRefsEntityUid": null,
 			"allowedRefTags": [],
 			"tilesetUid": null
+		},
+		{
+			"identifier": "BackgroundOffsetY",
+			"doc": null,
+			"__type": "Float",
+			"uid": 191,
+			"type": "F_Float",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "NameAndValue",
+			"editorDisplayScale": 1,
+			"editorDisplayPos": "Above",
+			"editorLinkStyle": "StraightArrow",
+			"editorDisplayColor": null,
+			"editorAlwaysShow": false,
+			"editorShowInWorld": true,
+			"editorCutLongValues": true,
+			"editorTextSuffix": null,
+			"editorTextPrefix": null,
+			"useForSmartColor": false,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": null,
+			"textLanguageMode": null,
+			"symmetricalRef": false,
+			"autoChainRef": true,
+			"allowOutOfLevelRef": true,
+			"allowedRefs": "OnlySame",
+			"allowedRefsEntityUid": null,
+			"allowedRefTags": [],
+			"tilesetUid": null
 		}
 	] },
 	"levels": [
@@ -3861,10 +3927,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_1.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "platformer", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["platformer"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "platformer", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["platformer"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -3887,10 +3956,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_2.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first box", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["first box"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "first box", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["first box"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -3913,10 +3985,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_3.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "int box", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["int box"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "int box", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["int box"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -3939,7 +4014,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Test.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -3962,10 +4040,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_20.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "easy push boxes out + in", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["easy push boxes out + in"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "easy push boxes out + in", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["easy push boxes out + in"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -3988,7 +4069,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_A.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4011,10 +4095,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_19.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "suspend and shoes", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["suspend and shoes"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "suspend and shoes", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["suspend and shoes"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4037,10 +4124,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_11.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["border wall jump"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["border wall jump"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4063,10 +4153,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_4.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "box ledge jump", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["box ledge jump"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "box ledge jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["box ledge jump"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -92, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-92] }] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4089,10 +4182,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_7.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test parallax", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["test parallax"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "test parallax", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["test parallax"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4115,10 +4211,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Bug.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "some boxes disappear", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["some boxes disappear"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "some boxes disappear", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["some boxes disappear"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4141,10 +4240,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_8.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["todo"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["todo"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4167,10 +4269,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_9.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "precise push border", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["precise push border"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "precise push border", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["precise push border"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4193,10 +4298,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_5.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "box tight", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["box tight"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "box tight", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["box tight"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4219,10 +4327,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_16.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "interesting merge", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["interesting merge"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "interesting merge", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["interesting merge"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4245,10 +4356,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_14.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first merge", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["first merge"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "first merge", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["first merge"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4271,10 +4385,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_23.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "easy merge + spikes", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["easy merge + spikes"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "easy merge + spikes", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["easy merge + spikes"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4297,10 +4414,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_6.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "many boxes out but easy", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["many boxes out but easy"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "many boxes out but easy", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["many boxes out but easy"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4323,10 +4443,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_13.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first push border", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["first push border"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "first push border", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["first push border"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4349,10 +4472,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_15.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "push box between borders", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["push box between borders"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "push box between borders", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["push box between borders"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4375,10 +4501,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_17.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["todo"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["todo"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4401,10 +4530,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_18.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["todo"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["todo"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4427,10 +4559,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_22.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "silly and buggy", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["silly and buggy"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "silly and buggy", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["silly and buggy"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4453,10 +4588,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_25.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 1", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["test mechanics 1"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 1", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["test mechanics 1"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4479,10 +4617,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_27.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 3", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["test mechanics 3"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 3", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["test mechanics 3"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4505,10 +4646,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_26.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 2", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["test mechanics 2"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 2", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["test mechanics 2"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4531,10 +4675,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_24.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "make stair from fallen parts", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["make stair from fallen parts"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "make stair from fallen parts", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["make stair from fallen parts"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4557,7 +4704,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_B.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4580,10 +4730,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_10.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "first wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["first wall jump"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "first wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["first wall jump"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4606,10 +4759,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_21.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "int border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["int border wall jump"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "int border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["int border wall jump"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4632,10 +4788,13 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_12.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "interesting box out", "__tile": null, "defUid": 111, "realEditorValues": [{
-				"id": "V_String",
-				"params": ["interesting box out"]
-			}] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "interesting box out", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["interesting box out"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": []
 		},
@@ -4658,7 +4817,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Platform_Test_C.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "801c61b0-6280-11ee-b338-bd548a4f61df", "dir": "n" }]
 		},
@@ -4681,7 +4843,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Platform_Test_B.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelIid": "ca6d71a0-6280-11ee-b338-eb1e5f53ef69", "dir": "s" }, { "levelIid": "794c69d0-6280-11ee-b338-99140bf7634a", "dir": "n" } ]
 		},
@@ -4704,7 +4869,10 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Platform_Test_A.ldtkl",
-			"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] }],
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "801c61b0-6280-11ee-b338-bd548a4f61df", "dir": "s" }]
 		}

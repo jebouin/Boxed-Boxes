@@ -1,5 +1,6 @@
 package ;
 
+import hxd.Res;
 import h2d.col.Point;
 import haxe.ds.Vector;
 import h2d.col.IBounds;
@@ -11,8 +12,10 @@ import h2d.Tile;
 import h2d.Object;
 
 class Parallax extends Object {
-    public static inline var DISPLACE_POINT_COUNT_X = 1 + 1;
-    public static inline var DISPLACE_POINT_COUNT_Y = 1 + 1;
+    public static inline var TILE_WIDTH = 512;
+    public static inline var TILE_HEIGHT = 256;
+    public static inline var DISPLACE_POINT_COUNT_X = 32 + 1;
+    public static inline var DISPLACE_POINT_COUNT_Y = 18 + 1;
     var leftElements : Array<Graphics> = [];
     var rightElements : Array<Graphics> = [];
     var sliceHeight : Int;
@@ -28,10 +31,14 @@ class Parallax extends Object {
     var displace : Bool;
     var tiles : Array<Tile> = [];
     var disp : Vector<Vector<Point> >;
+    var displaceMult : Float = 0.;
     var timer : Float = 0.;
+    public var scrollX : Float = 0.;
+    public var scrollY : Float = 0.;
 
-    public function new(tile:Tile, sliceHeight:Int, layer:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool) {
+    public function new(tile:Tile, sliceHeight:Int, layer:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool, displaceMult:Float=0.) {
         this.displace = displace;
+        this.displaceMult = displaceMult;
         super();
         Game.inst.world.add(this, layer);
         this.sliceHeight = sliceHeight;
@@ -43,7 +50,15 @@ class Parallax extends Object {
         for(i in 0...atlasSliceCount) {
             var sub = tile.sub(0, i * sliceHeight, tile.iwidth, sliceHeight);
             var pixels = sub.getTexture().capturePixels(0, 0, IBounds.fromValues(sub.ix, sub.iy, sub.iwidth, sub.iheight));
-            tiles.push(Tile.fromPixels(pixels));
+            var square = Pixels.alloc(512, 256, ARGB);
+            for(y in 0...square.height) {
+                for(x in 0...square.width) {
+                    square.setPixel(x, y, pixels.getPixel(x, y));
+                }
+            }
+            tiles.push(Tile.fromPixels(square));
+            square.dispose();
+            pixels.dispose();
         }
         displayedSliceCount = Math.ceil(Main.HEIGHT / sliceHeight) + 1;
         for(i in 0...displayedSliceCount) {
@@ -54,7 +69,7 @@ class Parallax extends Object {
             g.tileWrap = true;
             rightElements.push(g);
         }
-        midSlicePos = (levelHeight * .5 - sliceHeight * .5);
+        midSlicePos = (Game.inst.level.heroSpawnY - sliceHeight * .75 + Game.inst.level.backgroundOffsetY);
         sliceIndexMid = Math.floor(midSlicePos / sliceHeight);
         centerOffY = midSlicePos - sliceIndexMid * sliceHeight;
         if(displace) {
@@ -74,9 +89,9 @@ class Parallax extends Object {
         var cameraClampedTargetY = -Game.inst.world.y + Main.HEIGHT2;
         var xMin = cameraClampedTargetX - Main.WIDTH2;
         var yMin = cameraClampedTargetY - Main.HEIGHT2;
-        var xOff = (cameraClampedTargetX - levelWidth * .5) * (1. - speed);
+        var xOff = (cameraClampedTargetX - levelWidth * .5 + timer * scrollX) * (1. - speed);
         xMin = Math.floor((xMin - xOff) / sliceWidth) * sliceWidth + xOff;
-        var yOff = midSlicePos + (cameraClampedTargetY - levelHeight * .5) * (1. - speed);
+        var yOff = midSlicePos + (cameraClampedTargetY - levelHeight * .5 + timer * scrollY) * (1. - speed);
         var sliceIndexBase = Math.floor((yMin - yOff) / sliceHeight);
         yMin = sliceIndexBase * sliceHeight + yOff;
         for(i in 0...displayedSliceCount) {
@@ -92,8 +107,10 @@ class Parallax extends Object {
         if(displace) {
             for(i in 0...DISPLACE_POINT_COUNT_Y) {
                 for(j in 0...DISPLACE_POINT_COUNT_X) {
-                    /*disp[i][j].x = Math.sin(timer * 5 + i * .5 + j * .3) * 1.;
-                    disp[i][j].y = Math.sin(timer * 3 + i * .5 + j * .3) * 1.;*/
+                    var nx = Std.int(j / (DISPLACE_POINT_COUNT_X - 1) * Assets.noiseWidth + timer * 40 * displaceMult / 10) % Assets.noiseWidth;
+                    var ny = Std.int(i / (DISPLACE_POINT_COUNT_Y - 1) * Assets.noiseHeight + timer * 20 * displaceMult / 10) % Assets.noiseHeight;
+                    disp[i][j].x = Assets.noiseMapX[ny][nx] * displaceMult;
+                    disp[i][j].y = Assets.noiseMapY[ny][nx] * displaceMult;
                 }
             }
         }
@@ -102,14 +119,15 @@ class Parallax extends Object {
     function renderTile(g:Graphics, t:Tile) {
         g.clear();
         if(displace) {
-            /*var cntX = DISPLACE_POINT_COUNT_X - 1;
+            var uMax = sliceWidth / TILE_WIDTH, vMax = sliceHeight / TILE_HEIGHT;
+            var cntX = DISPLACE_POINT_COUNT_X - 1;
             var cntY = DISPLACE_POINT_COUNT_Y - 1;
             for(i in 0...cntY) {
                 for(j in 0...cntX) {
                     var x1 = j * sliceWidth / cntX, y1 = i * sliceHeight / cntY;
                     var x2 = (j + 1) * sliceWidth / cntX, y2 = (i + 1) * sliceHeight / cntY;
-                    var u1 = j / cntX, v1 = i / cntY;
-                    var u2 = (j + 1) / cntX, v2 = (i + 1) / cntY;
+                    var u1 = j / cntX * uMax, v1 = i / cntY * vMax;
+                    var u2 = (j + 1) / cntX * uMax, v2 = (i + 1) / cntY * vMax;
                     g.beginTileFill(0, 0, 1, 1, t);
                     g.addVertex(x1 + disp[i][j].x, y1 + disp[i][j].y, 1, 1, 1, 1, u1, v1);
                     g.addVertex(x2 + disp[i][j + 1].x, y1 + disp[i][j + 1].y, 1, 1, 1, 1, u2, v1);
@@ -117,13 +135,7 @@ class Parallax extends Object {
                     g.addVertex(x1 + disp[i + 1][j].x, y2 + disp[i + 1][j].y, 1, 1, 1, 1, u1, v2);
                     g.endFill();
                 }
-            }*/
-            g.beginTileFill(0, 0, 1, 1, t);
-            g.addVertex(0, 0, 1, 1, 1, 1, 0, 0);
-            g.addVertex(0, 180, 1, 1, 1, 1, 0, 1);
-            g.addVertex(320, 180, 1, 1, 1, 1, 1, 1);
-            g.addVertex(320, 0, 1, 1, 1, 1, 1, 0);
-            g.endFill();
+            }
         } else {
             g.beginTileFill(0, 0, 1, 1, t);
             g.drawRect(0, 0, sliceWidth, sliceHeight);

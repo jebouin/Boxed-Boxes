@@ -26,10 +26,13 @@
 	"__smartColor": "#ADADB5",
 	"__bgPos": null,
 	"externalRelPath": null,
-	"fieldInstances": [{ "__identifier": "Info", "__type": "String", "__value": "silly and buggy", "__tile": null, "defUid": 111, "realEditorValues": [{
-		"id": "V_String",
-		"params": ["silly and buggy"]
-	}] }],
+	"fieldInstances": [
+		{ "__identifier": "Info", "__type": "String", "__value": "silly and buggy", "__tile": null, "defUid": 111, "realEditorValues": [{
+			"id": "V_String",
+			"params": ["silly and buggy"]
+		}] },
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+	],
 	"layerInstances": [
 		{
 			"__identifier": "Entities",
@@ -200,6 +203,31 @@
 					"fieldInstances": []
 				}
 			]
+		},
+		{
+			"__identifier": "Decoration",
+			"__type": "Tiles",
+			"__cWid": 62,
+			"__cHei": 32,
+			"__gridSize": 8,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 1,
+			"__tilesetRelPath": "gfx/tileset.png",
+			"iid": "1ad0fbd0-6280-11ee-a1b1-817e43763aea",
+			"levelId": 53,
+			"layerDefUid": 190,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 3089456,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Walls",

@@ -40,6 +40,7 @@ class Game extends Scene {
     public static var LAYER_HERO = _layer++;
     public static var LAYER_ENTITIES = _layer++;
     public static var LAYER_WALLS = _layer++;
+    public static var LAYER_DECORATION = _layer++;
     public static var LAYER_BORDER = _layer++;
     public static var LAYER_GEM = _layer++;
     public static var LAYER_FX_FRONT = _layer++;

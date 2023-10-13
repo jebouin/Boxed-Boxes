@@ -14,10 +14,13 @@ import h2d.TileGroup;
 import assets.LevelProject;
 
 class LevelRender {
+    var decoration : TileGroup;
     var walls : TileGroup;
     var backWalls : TileGroup;
 
     public function new(level:LevelProject_Level) {
+        decoration = level.l_Decoration.render();
+        Game.inst.world.add(decoration, Game.LAYER_DECORATION);
         walls = level.l_Walls.render();
         Game.inst.world.add(walls, Game.LAYER_WALLS);
         backWalls = level.l_BackWalls.render();
@@ -25,6 +28,7 @@ class LevelRender {
     }
 
     public function delete() {
+        decoration.remove();
         walls.remove();
         backWalls.remove();
     }
@@ -41,6 +45,7 @@ class Level {
     public var heightPixels : Int;
     public var heroSpawnX(default, null) : Int = 0;
     public var heroSpawnY(default, null) : Int = 0;
+    public var backgroundOffsetY(default, null) : Float = 0.;
     var level : LevelProject_Level = null;
     var render : LevelRender = null;
     var levelCollisions : Vector<Vector<Enum_Collision> >;
@@ -96,6 +101,7 @@ class Level {
         widthPixels = widthTiles * TS;
         heightPixels = heightTiles * TS;
         render = new LevelRender(level);
+        backgroundOffsetY = level.f_BackgroundOffsetY;
         loadCollisions();
         loadEntities();
         Game.inst.onLevelLoaded();

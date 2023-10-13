@@ -29,6 +29,10 @@ class Assets {
     public static var nameToSound : StringMap<VariedSound>;
     public static var nameToMusic : StringMap<Music>;
     static var sheets : StringMap<SpriteSheet>;
+    public static var noiseMapX : Vector<Vector<Float> >;
+    public static var noiseMapY : Vector<Vector<Float> >;
+    public static var noiseWidth : Int;
+    public static var noiseHeight : Int;
 
     public static function init() {
         Data.load(hxd.Res.data.entry.getText());
@@ -36,6 +40,7 @@ class Assets {
         fontLarge = Res.fonts.large.toFont();
         loadAllSpriteSheets();
         loadAudio();
+        loadNoise();
     }
 
     static function loadAllSpriteSheets() {
@@ -179,6 +184,24 @@ class Assets {
         for(def in Data.musicDef.all) {
             var music = new Music(def);
             nameToMusic.set(def.name, music);
+        }
+    }
+
+    public static function loadNoise() {
+        var bd = Res.gfx.textures.noise.toBitmap();
+        bd.lock();
+        noiseWidth = bd.width;
+        noiseHeight = bd.height;
+        noiseMapX = new Vector<Vector<Float> >(noiseHeight);
+        noiseMapY = new Vector<Vector<Float> >(noiseHeight);
+        for(i in 0...noiseHeight) {
+            noiseMapX[i] = new Vector<Float>(noiseWidth);
+            noiseMapY[i] = new Vector<Float>(noiseWidth);
+            for(j in 0...noiseWidth) {
+                var col = bd.getPixel(j, i);
+                noiseMapX[i][j] = (col & 255) / 255.0 * 2 - 1;
+                noiseMapY[i][j] = ((col >> 8) & 255) / 255.0 * 2 - 1;
+            }
         }
     }
 }

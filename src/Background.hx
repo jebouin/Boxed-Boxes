@@ -10,24 +10,30 @@ class Background {
     public function new() {
     }
 
-    public function addParallax(zone:Int, frame:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool) {
+    public function addParallax(zone:Int, frame:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool, displaceMult:Float=0.) {
         var r = Res.load("gfx/backgrounds/back" + zone + ".png");
         var tile = r.toTile();
         var sub = tile.sub(frame * Main.WIDTH, 0, Main.WIDTH, tile.iheight);
-        var p = new Parallax(sub, 180, Game.LAYER_BACK, speed, levelWidth, levelHeight, displace);
+        var p = new Parallax(sub, 180, Game.LAYER_BACK, speed, levelWidth, levelHeight, displace, displaceMult);
         parallaxes.push(p);
+        return p;
     }
 
     public function loadLevel(globalLevelId:Int, levelWidth:Int, levelHeight:Int) {
         for(p in parallaxes) {
             p.remove();
         }
+        parallaxes = [];
         var zone = Std.int((globalLevelId - 1) / (Title.GROUP_WIDTH * Title.GROUP_HEIGHT));
         var tile = Res.load("gfx/backgrounds/back" + zone + ".png").toTile();
         var count = Std.int(tile.iwidth / Main.WIDTH);
-        for(i in 0...count) {
-            var f = Math.exp(-(3 * (count - i - 1) / count)) * .8;
-            addParallax(zone, i, f, levelWidth, levelHeight, i == 2);
+        if(zone == 0) {
+            var p = addParallax(zone, 0, .05, levelWidth, levelHeight, false);
+            p.scrollX = -6;
+            addParallax(zone, 1, .4, levelWidth, levelHeight, false);
+            addParallax(zone, 2, .4, levelWidth, levelHeight, true, 4);
+            addParallax(zone, 3, .6, levelWidth, levelHeight, true, 10);
+            addParallax(zone, 4, .8, levelWidth, levelHeight, false);
         }
     }
 
