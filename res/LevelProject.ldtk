@@ -11,7 +11,7 @@
 	"iid": "7799c960-3b70-11ee-b552-83fdf9fa10c0",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 192,
+	"nextUid": 193,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -3627,7 +3627,7 @@
 			"tileOpacity": 1,
 			"fillOpacity": 0.08,
 			"lineOpacity": 0,
-			"hollow": false,
+			"hollow": true,
 			"color": "#D77643",
 			"renderMode": "Tile",
 			"showName": true,
@@ -3941,7 +3941,7 @@
 			"identifier": "Main_2",
 			"iid": "ebc1f1a0-3b70-11ee-927a-e9050f9a2523",
 			"uid": 105,
-			"worldX": 840,
+			"worldX": 856,
 			"worldY": 200,
 			"worldDepth": 0,
 			"pxWid": 472,
@@ -3970,8 +3970,8 @@
 			"identifier": "Main_3",
 			"iid": "66447570-3b70-11ee-927a-ebdeaf7a94fc",
 			"uid": 103,
-			"worldX": 1480,
-			"worldY": 176,
+			"worldX": 1472,
+			"worldY": 192,
 			"worldDepth": 0,
 			"pxWid": 448,
 			"pxHei": 288,
@@ -4106,11 +4106,11 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_11",
+			"identifier": "Main_12",
 			"iid": "81c844c0-3b70-11ee-8473-cb4f806a5137",
 			"uid": 40,
-			"worldX": 2936,
-			"worldY": 208,
+			"worldX": 3392,
+			"worldY": 224,
 			"worldDepth": 0,
 			"pxWid": 320,
 			"pxHei": 248,
@@ -4123,7 +4123,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_11.ldtkl",
+			"externalRelPath": "LevelProject/Main_12.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "border wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4135,14 +4135,14 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_4",
+			"identifier": "Main_5",
 			"iid": "89a78390-3b70-11ee-8473-1f32aa98dcbe",
 			"uid": 42,
-			"worldX": 256,
+			"worldX": 872,
 			"worldY": 736,
 			"worldDepth": 0,
 			"pxWid": 352,
-			"pxHei": 272,
+			"pxHei": 216,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4152,7 +4152,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_4.ldtkl",
+			"externalRelPath": "LevelProject/Main_5.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "box ledge jump", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4164,14 +4164,14 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_7",
+			"identifier": "Main_8",
 			"iid": "cf1f5890-6280-11ee-b338-f14eba9b6da0",
 			"uid": 154,
-			"worldX": 144,
-			"worldY": 1104,
+			"worldX": 864,
+			"worldY": 1216,
 			"worldDepth": 0,
-			"pxWid": 608,
-			"pxHei": 504,
+			"pxWid": 328,
+			"pxHei": 256,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4181,13 +4181,42 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_7.ldtkl",
+			"externalRelPath": "LevelProject/Main_8.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "test parallax", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["test parallax"]
 				}] },
 				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+			],
+			"layerInstances": null,
+			"__neighbours": []
+		},
+		{
+			"identifier": "Main_9",
+			"iid": "bba970e0-6280-11ee-a1b1-450280ac9f2a",
+			"uid": 192,
+			"worldX": 1504,
+			"worldY": 1224,
+			"worldDepth": 0,
+			"pxWid": 328,
+			"pxHei": 312,
+			"__bgColor": "#696A79",
+			"bgColor": null,
+			"useAutoIdentifier": false,
+			"bgRelPath": null,
+			"bgPos": null,
+			"bgPivotX": 0.5,
+			"bgPivotY": 0.5,
+			"__smartColor": "#ADADB5",
+			"__bgPos": null,
+			"externalRelPath": "LevelProject/Main_9.ldtkl",
+			"fieldInstances": [
+				{ "__identifier": "Info", "__type": "String", "__value": "test parallax", "__tile": null, "defUid": 111, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["test parallax"]
+				}] },
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -100, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-100] }] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4222,14 +4251,14 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_8",
+			"identifier": "Main_4",
 			"iid": "d46d12b0-6280-11ee-b338-d59dd620fdf8",
 			"uid": 155,
-			"worldX": 920,
-			"worldY": 1160,
+			"worldX": 256,
+			"worldY": 704,
 			"worldDepth": 0,
-			"pxWid": 352,
-			"pxHei": 272,
+			"pxWid": 328,
+			"pxHei": 232,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4239,7 +4268,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_8.ldtkl",
+			"externalRelPath": "LevelProject/Main_4.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4251,11 +4280,11 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_9",
+			"identifier": "Main_18",
 			"iid": "d5d0c160-6280-11ee-b338-552002566844",
 			"uid": 156,
-			"worldX": 1512,
-			"worldY": 1184,
+			"worldX": 3416,
+			"worldY": 1128,
 			"worldDepth": 0,
 			"pxWid": 368,
 			"pxHei": 232,
@@ -4268,7 +4297,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_9.ldtkl",
+			"externalRelPath": "LevelProject/Main_18.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "precise push border", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4280,11 +4309,11 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_5",
+			"identifier": "Main_6",
 			"iid": "7138f010-3b70-11ee-927a-bdedd3c99778",
 			"uid": 106,
-			"worldX": 920,
-			"worldY": 696,
+			"worldX": 1520,
+			"worldY": 688,
 			"worldDepth": 0,
 			"pxWid": 320,
 			"pxHei": 304,
@@ -4297,7 +4326,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_5.ldtkl",
+			"externalRelPath": "LevelProject/Main_6.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "box tight", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4396,14 +4425,14 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_6",
+			"identifier": "Main_7",
 			"iid": "b5319a00-3b70-11ee-8473-2fc6c671f183",
 			"uid": 48,
-			"worldX": 1520,
-			"worldY": 728,
+			"worldX": 256,
+			"worldY": 1224,
 			"worldDepth": 0,
 			"pxWid": 320,
-			"pxHei": 224,
+			"pxHei": 216,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4413,7 +4442,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_6.ldtkl",
+			"externalRelPath": "LevelProject/Main_7.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "many boxes out but easy", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4501,35 +4530,6 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_17.ldtkl",
-			"fieldInstances": [
-				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["todo"]
-				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
-			],
-			"layerInstances": null,
-			"__neighbours": []
-		},
-		{
-			"identifier": "Main_18",
-			"iid": "33f1ef20-6280-11ee-b338-fb5fb87241f9",
-			"uid": 160,
-			"worldX": 3368,
-			"worldY": 1080,
-			"worldDepth": 0,
-			"pxWid": 496,
-			"pxHei": 288,
-			"__bgColor": "#696A79",
-			"bgColor": null,
-			"useAutoIdentifier": false,
-			"bgRelPath": null,
-			"bgPos": null,
-			"bgPivotX": 0.5,
-			"bgPivotY": 0.5,
-			"__smartColor": "#ADADB5",
-			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_18.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
@@ -4712,11 +4712,11 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "Main_12",
+			"identifier": "Main_11",
 			"iid": "ac4199f0-3b70-11ee-927a-75670fe02a1f",
 			"uid": 108,
-			"worldX": 3424,
-			"worldY": 184,
+			"worldX": 2936,
+			"worldY": 192,
 			"worldDepth": 0,
 			"pxWid": 320,
 			"pxHei": 296,
@@ -4729,7 +4729,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "LevelProject/Main_12.ldtkl",
+			"externalRelPath": "LevelProject/Main_11.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": "first wall jump", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",

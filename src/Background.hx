@@ -38,10 +38,10 @@ class Background {
             addParallax(zone, 4, .8, levelWidth, levelHeight, false);
         } else if(zone == 1) {
             addParallax(zone, 0, 0, levelWidth, levelHeight, false);
-            var p = addParallax(zone, 1, .3, levelWidth, levelHeight, true);
+            var p = addParallax(zone, 1, .1, levelWidth, levelHeight, true);
             p.displaceMultX = 10;
-            addParallax(zone, 2, .3, levelWidth, levelHeight, false);
-            addParallax(zone, 3, .3, levelWidth, levelHeight, false);
+            addParallax(zone, 2, .1, levelWidth, levelHeight, false);
+            addParallax(zone, 3, .1, levelWidth, levelHeight, false);
             addParallax(zone, 4, .8, levelWidth, levelHeight, false);
         }
     }

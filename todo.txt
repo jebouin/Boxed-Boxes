@@ -5,22 +5,14 @@ POST-JAM
 	- Bottom left of level 6 annoying wall jump
 - Stick to ceiling for a few frames to make it easier to jump over box
 - NG save integration
-- Fix move speed before more LD
-- Level 4 too hard
-	- Remove inertia
-	- Show can jump from bottom border
-	- Remove spikes and use void instead
-	- Make zone larger
-- Level 6 uses wall jump before introducing it
 - More levels to introduce border merge
 - Entity/solid corner correction
 - More levels
 	- Make stairs by pushing borders
 	- Push border with boxes inside
-	- Hard mode (grab gem then go back, more spikes)
+	- Walk on spike with wiggle room
 - Test all menus clickable
 - Cover and screenshots
-- Parallax offset level annotation
 - Add credits below level selection
 - Update newgrounds and itch cover and promo images
 - Make video walkthrough
@@ -42,3 +34,4 @@ IF TIME LEFT
 - Gem distortion
 - Move touch input to controller package
 - Parallax cross shape (prevent repeating moon)
+- Hard mode (grab gem then go back, more spikes)

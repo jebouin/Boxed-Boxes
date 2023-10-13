@@ -197,7 +197,7 @@ class Entity {
             tryStepUp(res);
             res.apply(this);
             if(!res.success) {
-                vy = 0;
+                //vy = 0;
                 hitUp = true;
                 ry -= amountY;
                 return false;

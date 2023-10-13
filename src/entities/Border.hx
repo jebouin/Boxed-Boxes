@@ -59,7 +59,7 @@ class Border {
         group = new TileGroup(tile);
         Game.inst.world.add(group, Game.LAYER_BORDER);
         groupBack = new TileGroup(tileBack);
-        groupBack.alpha = Game.inst.getLevelGroup() == 1 ? .4 : .15;
+        groupBack.alpha = .15;
         groupBack.blendMode = Add;
         Game.inst.world.add(groupBack, Game.LAYER_BORDER_BACK);
         mask = new Graphics(group);

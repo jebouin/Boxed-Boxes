@@ -16,7 +16,7 @@ enum Facing {
 }
 
 class Hero extends Entity {
-    public static inline var MOVE_VEL = 90.;
+    public static inline var MOVE_VEL = 75.;
     public static inline var FALL_VEL = 180;
     public static inline var FALL_FAST_VEL = 300;
     public static inline var FALL_WALL_VEL = 90;

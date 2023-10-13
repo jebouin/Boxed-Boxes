@@ -134,6 +134,8 @@ class LevelComplete extends Scene {
     }
     function onRestartPressed() {
         delete();
+        Audio.stopMusic(Audio.MUSIC_FADE_IN_TIME);
+        Audio.playMusic(Title.GROUP_MUSIC_NAMES[groupId], null, Audio.MUSIC_FADE_IN_TIME);
         new Game(true, globalLevelId);
     }
     function onTitleOver() {

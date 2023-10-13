@@ -107,6 +107,9 @@ class Game extends Scene {
     }
 
     override public function update(dt:Float) {
+        #if !debug
+        dt *= .9;
+        #end
         super.update(dt);
         stateTimer += dt;
         if(state == Play) {

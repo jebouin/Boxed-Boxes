@@ -110,7 +110,7 @@ class Parallax extends Object {
             for(i in 0...DISPLACE_POINT_COUNT_Y) {
                 for(j in 0...DISPLACE_POINT_COUNT_X) {
                     var nx = Std.int(j / (DISPLACE_POINT_COUNT_X - 1) * Assets.noiseWidth + timer * displaceScrollX * displaceMultX / 10) % Assets.noiseWidth;
-                    var ny = Std.int(4 * (i / (DISPLACE_POINT_COUNT_Y - 1) * Assets.noiseHeight + timer * displaceScrollY * displaceMultY / 10)) % Assets.noiseHeight;
+                    var ny = Std.int(i / (DISPLACE_POINT_COUNT_Y - 1) * Assets.noiseHeight + timer * displaceScrollY * displaceMultY / 10) % Assets.noiseHeight;
                     disp[i][j].x = Assets.noiseMapX[ny][nx] * displaceMultX;
                     disp[i][j].y = Assets.noiseMapY[ny][nx] * displaceMultY;
                 }
