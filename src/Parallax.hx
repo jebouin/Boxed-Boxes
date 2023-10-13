@@ -31,14 +31,16 @@ class Parallax extends Object {
     var displace : Bool;
     var tiles : Array<Tile> = [];
     var disp : Vector<Vector<Point> >;
-    var displaceMult : Float = 0.;
     var timer : Float = 0.;
+    public var displaceMultX : Float = 0.;
+    public var displaceMultY : Float = 0.;
+    public var displaceScrollX : Float = 40.;
+    public var displaceScrollY : Float = 20.;
     public var scrollX : Float = 0.;
     public var scrollY : Float = 0.;
 
-    public function new(tile:Tile, sliceHeight:Int, layer:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool, displaceMult:Float=0.) {
+    public function new(tile:Tile, sliceHeight:Int, layer:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool) {
         this.displace = displace;
-        this.displaceMult = displaceMult;
         super();
         Game.inst.world.add(this, layer);
         this.sliceHeight = sliceHeight;
@@ -107,10 +109,10 @@ class Parallax extends Object {
         if(displace) {
             for(i in 0...DISPLACE_POINT_COUNT_Y) {
                 for(j in 0...DISPLACE_POINT_COUNT_X) {
-                    var nx = Std.int(j / (DISPLACE_POINT_COUNT_X - 1) * Assets.noiseWidth + timer * 40 * displaceMult / 10) % Assets.noiseWidth;
-                    var ny = Std.int(i / (DISPLACE_POINT_COUNT_Y - 1) * Assets.noiseHeight + timer * 20 * displaceMult / 10) % Assets.noiseHeight;
-                    disp[i][j].x = Assets.noiseMapX[ny][nx] * displaceMult;
-                    disp[i][j].y = Assets.noiseMapY[ny][nx] * displaceMult;
+                    var nx = Std.int(j / (DISPLACE_POINT_COUNT_X - 1) * Assets.noiseWidth + timer * displaceScrollX * displaceMultX / 10) % Assets.noiseWidth;
+                    var ny = Std.int(4 * (i / (DISPLACE_POINT_COUNT_Y - 1) * Assets.noiseHeight + timer * displaceScrollY * displaceMultY / 10)) % Assets.noiseHeight;
+                    disp[i][j].x = Assets.noiseMapX[ny][nx] * displaceMultX;
+                    disp[i][j].y = Assets.noiseMapY[ny][nx] * displaceMultY;
                 }
             }
         }

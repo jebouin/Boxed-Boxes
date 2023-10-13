@@ -41,3 +41,4 @@ IF TIME LEFT
 - Undo (rewind?)
 - Gem distortion
 - Move touch input to controller package
+- Parallax cross shape (prevent repeating moon)
