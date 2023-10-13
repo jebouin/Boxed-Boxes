@@ -10,11 +10,11 @@ class Background {
     public function new() {
     }
 
-    public function addParallax(zone:Int, frame:Int, speed:Float, levelWidth:Int, levelHeight:Int) {
+    public function addParallax(zone:Int, frame:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool) {
         var r = Res.load("gfx/backgrounds/back" + zone + ".png");
         var tile = r.toTile();
         var sub = tile.sub(frame * Main.WIDTH, 0, Main.WIDTH, tile.iheight);
-        var p = new Parallax(sub, 180, Game.LAYER_BACK, speed, levelWidth, levelHeight);
+        var p = new Parallax(sub, 180, Game.LAYER_BACK, speed, levelWidth, levelHeight, displace);
         parallaxes.push(p);
     }
 
@@ -27,7 +27,7 @@ class Background {
         var count = Std.int(tile.iwidth / Main.WIDTH);
         for(i in 0...count) {
             var f = Math.exp(-(3 * (count - i - 1) / count)) * .8;
-            addParallax(zone, i, f, levelWidth, levelHeight);
+            addParallax(zone, i, f, levelWidth, levelHeight, i == 2);
         }
     }
 
@@ -40,7 +40,7 @@ class Background {
     public function update(dt:Float) {
         timer += dt;
         for(p in parallaxes) {
-            p.update();
+            p.update(dt);
         }
     }
 }

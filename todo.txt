@@ -1,8 +1,5 @@
 POST-JAM
-- Mouse controls
-- Test level select
 - Mute key
-- Fullscreen key
 - Finish parallax art
 - Better tile art?
 - Better wall jump (make whole game a bit slower?)
@@ -29,6 +26,7 @@ POST-JAM
 - Update newgrounds and itch cover and promo images
 - Make video walkthrough
 - Only set selected menu option on mousemove when not using other input method
+- Test level select
 
 TO FIX
 - Hard to fit box in holes
