@@ -1,5 +1,4 @@
 POST-JAM
-- Mute key
 - Finish parallax art
 - Better tile art?
 - Better wall jump (make whole game a bit slower?)

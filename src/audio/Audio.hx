@@ -5,6 +5,7 @@ import hxd.snd.Manager;
 import hxd.snd.ChannelGroup;
 
 class Audio {
+    public static var MUSIC_VOLUME_MULT = .85;
     public static var MUSIC_FADE_IN_TIME = .7;
     public static var MUSIC_FADE_OUT_TIME = 1.;
     static var manager : Manager;
@@ -19,13 +20,13 @@ class Audio {
         manager = Manager.get();
         soundGroup = new ChannelGroup("sound");
         musicGroup = new ChannelGroup("music");
-        musicGroup.volume = .85;
+        musicGroup.volume = MUSIC_VOLUME_MULT;
     }
     public static function setMasterVolume(v:Float) {
         manager.masterVolume = v;
     }
     public static function setMusicVolume(v:Float) {
-        musicGroup.volume = v;
+        musicGroup.volume = v * MUSIC_VOLUME_MULT;
     }
     public static function setSoundEffectVolume(v:Float) {
         soundGroup.volume = v;

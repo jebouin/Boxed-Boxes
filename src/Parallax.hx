@@ -11,8 +11,8 @@ import h2d.Tile;
 import h2d.Object;
 
 class Parallax extends Object {
-    public static inline var DISPLACE_POINT_COUNT_Y = 32 + 1;
-    public static inline var DISPLACE_POINT_COUNT_X = 18 + 1;
+    public static inline var DISPLACE_POINT_COUNT_X = 1 + 1;
+    public static inline var DISPLACE_POINT_COUNT_Y = 1 + 1;
     var leftElements : Array<Graphics> = [];
     var rightElements : Array<Graphics> = [];
     var sliceHeight : Int;
@@ -44,7 +44,6 @@ class Parallax extends Object {
             var sub = tile.sub(0, i * sliceHeight, tile.iwidth, sliceHeight);
             var pixels = sub.getTexture().capturePixels(0, 0, IBounds.fromValues(sub.ix, sub.iy, sub.iwidth, sub.iheight));
             tiles.push(Tile.fromPixels(pixels));
-            trace(tiles[i]);
         }
         displayedSliceCount = Math.ceil(Main.HEIGHT / sliceHeight) + 1;
         for(i in 0...displayedSliceCount) {
@@ -93,8 +92,8 @@ class Parallax extends Object {
         if(displace) {
             for(i in 0...DISPLACE_POINT_COUNT_Y) {
                 for(j in 0...DISPLACE_POINT_COUNT_X) {
-                    disp[i][j].x = Math.sin(timer * 5 + i * .5 + j * .3) * 1.;
-                    disp[i][j].y = Math.sin(timer * 3 + i * .5 + j * .3) * 1.;
+                    /*disp[i][j].x = Math.sin(timer * 5 + i * .5 + j * .3) * 1.;
+                    disp[i][j].y = Math.sin(timer * 3 + i * .5 + j * .3) * 1.;*/
                 }
             }
         }
@@ -103,7 +102,7 @@ class Parallax extends Object {
     function renderTile(g:Graphics, t:Tile) {
         g.clear();
         if(displace) {
-            var cntX = DISPLACE_POINT_COUNT_X - 1;
+            /*var cntX = DISPLACE_POINT_COUNT_X - 1;
             var cntY = DISPLACE_POINT_COUNT_Y - 1;
             for(i in 0...cntY) {
                 for(j in 0...cntX) {
@@ -118,7 +117,13 @@ class Parallax extends Object {
                     g.addVertex(x1 + disp[i + 1][j].x, y2 + disp[i + 1][j].y, 1, 1, 1, 1, u1, v2);
                     g.endFill();
                 }
-            }
+            }*/
+            g.beginTileFill(0, 0, 1, 1, t);
+            g.addVertex(0, 0, 1, 1, 1, 1, 0, 0);
+            g.addVertex(0, 180, 1, 1, 1, 1, 0, 1);
+            g.addVertex(320, 180, 1, 1, 1, 1, 1, 1);
+            g.addVertex(320, 0, 1, 1, 1, 1, 1, 0);
+            g.endFill();
         } else {
             g.beginTileFill(0, 0, 1, 1, t);
             g.drawRect(0, 0, sliceWidth, sliceHeight);

@@ -1,5 +1,6 @@
 package ;
 
+import ui.Mute;
 import save.Save;
 import hxd.System;
 import h2d.Tile;
@@ -78,14 +79,15 @@ class Main extends hxd.App {
             #if int_ng
             Newgrounds.checkMedals();
             #end
+            Mute.init();
             startGame();
         });
     }
     function startGame() {
         started = true;
         #if debug
-        new Game(true, 7);
-        //new Title(1);
+        //new Game(true, 7);
+        new Title(1);
         //new LevelComplete(0, 3, 3);
         #else
         new Title(1);
@@ -178,6 +180,7 @@ class Main extends hxd.App {
     function tickConstantRate() {
         var dt = 1. / 60;
         SceneManager.updateConstantRate(dt);
+        Mute.update(dt);
     }
     override function update(dt:Float) {
         if(!started) return;
@@ -256,6 +259,9 @@ class Main extends hxd.App {
         #end
         if(Key.isPressed(Key.F)) {
             setFullscreen(!engine.fullScreen);
+        }
+        if(Key.isPressed(Key.M)) {
+            Mute.mute();
         }
     }
     public function hitStop(duration:Float) {
