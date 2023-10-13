@@ -44,12 +44,13 @@ class Audio {
             trace("Invalid music name", name);
             return;
         }
-        musicChannel = music.sound.play(true, fadeTime > 0 ? 0 : 1., musicGroup);
+        var volume = music.def.volume;
+        musicChannel = music.sound.play(true, fadeTime > 0 ? 0 : volume, musicGroup);
         musicChannel.priority = 1.;
         if(fadeTime > 0) {
-            musicChannel.fadeTo(1, fadeTime);
+            musicChannel.fadeTo(volume, fadeTime);
             if(musicBackChannel != null) {
-                musicChannel.position = musicBackChannel.position;
+                musicChannel.position = musicBackChannel.position % musicChannel.duration;
             }
         }
         if(next == null && music.def.playNext != null && music.def.playNext != "") {

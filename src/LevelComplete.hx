@@ -137,7 +137,7 @@ class LevelComplete extends Scene {
         new Game(true, globalLevelId);
     }
     function onTitleOver() {
-        curId = 2;
+        curId = lines.length < 3 ? 0 : 2;
         Audio.playSound("menuMove");
         updateSelected();
     }

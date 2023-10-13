@@ -1,17 +1,18 @@
 POST-JAM
-- NG save integration
+- Music (3x33 bars)
 - More SFX
-	- Varied sound with volume
 	- Footstep
 	- Box sliding
 	- Level complete
 	- Level unlock
+- Mute key
+- Fullscreen key
 - Finish parallax art
 - Better tile art?
 - Better wall jump (make whole game a bit slower?)
 	- Bottom left of level 6 annoying wall jump
 - Stick to ceiling for a few frames to make it easier to jump over box
-- Music
+- NG save integration
 - Fix move speed before more LD
 - Level 4 too hard
 	- Remove inertia
@@ -28,7 +29,6 @@ POST-JAM
 - Test all menus clickable
 - Cover and screenshots
 - Parallax offset level annotation
-- Fullscreen key
 - Add credits below level selection
 - Update newgrounds and itch cover and promo images
 - Make video walkthrough

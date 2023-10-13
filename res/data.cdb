@@ -93,6 +93,11 @@
 					"typeStr": "2",
 					"name": "continueDuringPause",
 					"kind": null
+				},
+				{
+					"typeStr": "4",
+					"name": "volume",
+					"kind": null
 				}
 			],
 			"lines": [
@@ -100,37 +105,43 @@
 					"name": "forest",
 					"playNext": "",
 					"loop": true,
-					"continueDuringPause": true
+					"continueDuringPause": true,
+					"volume": 0.8
 				},
 				{
 					"name": "forestBack",
 					"playNext": "",
 					"loop": true,
-					"continueDuringPause": true
+					"continueDuringPause": true,
+					"volume": 0.8
 				},
 				{
 					"name": "lagoon",
 					"playNext": "",
 					"loop": true,
-					"continueDuringPause": true
+					"continueDuringPause": true,
+					"volume": 1
 				},
 				{
 					"name": "lagoonBack",
 					"playNext": "",
 					"loop": true,
-					"continueDuringPause": true
+					"continueDuringPause": true,
+					"volume": 1
 				},
 				{
 					"name": "cave",
 					"playNext": "",
 					"loop": true,
-					"continueDuringPause": true
+					"continueDuringPause": true,
+					"volume": 1
 				},
 				{
 					"name": "caveBack",
 					"playNext": "",
 					"loop": true,
-					"continueDuringPause": true
+					"continueDuringPause": true,
+					"volume": 1
 				}
 			],
 			"separators": [],
