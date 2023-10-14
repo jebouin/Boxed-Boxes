@@ -1,15 +1,12 @@
 POST-JAM
 - Finish parallax art
-- Better tile art?
-- Better wall jump (make whole game a bit slower?)
-	- Bottom left of level 6 annoying wall jump
+- Better tile art
 - Stick to ceiling for a few frames to make it easier to jump over box
 - NG save integration
 - More levels to introduce border merge
 - Entity/solid corner correction
 - More levels
-	- Make stairs by pushing borders
-	- Push border with boxes inside
+	- Fix level 16 (caused by forced box wiggle down)
 	- Walk on spike with wiggle room
 - Test all menus clickable
 - Cover and screenshots

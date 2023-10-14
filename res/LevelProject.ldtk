@@ -4486,11 +4486,11 @@
 			"identifier": "Main_15",
 			"iid": "209ee1d0-6280-11ee-b338-93b36455061a",
 			"uid": 158,
-			"worldX": 3408,
-			"worldY": 672,
+			"worldX": 3392,
+			"worldY": 560,
 			"worldDepth": 0,
 			"pxWid": 320,
-			"pxHei": 216,
+			"pxHei": 328,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4560,9 +4560,9 @@
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_22.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "Info", "__type": "String", "__value": "silly and buggy", "__tile": null, "defUid": 111, "realEditorValues": [{
+				{ "__identifier": "Info", "__type": "String", "__value": "tank", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["silly and buggy"]
+					"params": ["tank"]
 				}] },
 				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
 			],
@@ -4631,11 +4631,11 @@
 			"identifier": "Main_26",
 			"iid": "65aa6d40-6280-11ee-98fd-b51c52b7805d",
 			"uid": 189,
-			"worldX": 5080,
-			"worldY": 1112,
+			"worldX": 5024,
+			"worldY": 1064,
 			"worldDepth": 0,
 			"pxWid": 496,
-			"pxHei": 256,
+			"pxHei": 296,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,

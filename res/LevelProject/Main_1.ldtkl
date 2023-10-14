@@ -76,18 +76,18 @@
 				},
 				{
 					"__identifier": "Hero",
-					"__grid": [46,13],
+					"__grid": [7,20],
 					"__pivot": [0,0],
 					"__tags": [],
 					"__tile": { "tilesetUid": 20, "x": 0, "y": 32, "w": 8, "h": 8 },
 					"__smartColor": "#BE4A2F",
-					"__worldX": 480,
-					"__worldY": 288,
+					"__worldX": 168,
+					"__worldY": 344,
 					"iid": "f63328f0-3b70-11ee-927a-2d67ec2050b6",
 					"width": 8,
 					"height": 8,
 					"defUid": 21,
-					"px": [368,104],
+					"px": [56,160],
 					"fieldInstances": []
 				},
 				{
