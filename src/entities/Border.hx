@@ -1,5 +1,6 @@
 package entities;
 
+import hxd.System;
 import h2d.filter.Mask;
 import h2d.Tile;
 import h2d.TileGroup;
@@ -29,10 +30,13 @@ class Border {
             b.update(dt);
         }
         for(b in all) {
-            b.updateWalls();
-        }
-        for(b in all) {
             b.renderMask();
+        }
+    }
+
+    public static function updateAllWalls() {
+        for(b in all) {
+            b.updateWalls();
         }
     }
 
@@ -124,21 +128,6 @@ class Border {
     public function canStepLeft(res:StepResult) {
         res.pushedBorders.set(this.id, true);
         bounds.x--;
-        updateWalls();
-        for(e in Entity.all) {
-            if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
-            if(verticalWallIntersectsEntity(e, e.isInside)) {
-                res.triedPushingHorizontal = true;
-                e.tryStepLeft(res, true, true);
-                if(!res.success) {
-                    res.fail();
-                    return;
-                }
-            } else if(rightBorderIntersectsEntity(e)) {
-                res.fail();
-                return;
-            }
-        }
         for(b in all) {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepLeft(res);
@@ -147,25 +136,22 @@ class Border {
                 return;
             }
         }
-    }
-    public function canStepRight(res:StepResult) {
-        res.pushedBorders.set(this.id, true);
-        bounds.x++;
-        updateWalls();
+        Border.updateAllWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
-            if(verticalWallIntersectsEntity(e, e.isInside)) {
+            if(verticalWallIntersectsEntity(e)) {
                 res.triedPushingHorizontal = true;
-                e.tryStepRight(res, true, true);
+                e.tryStepLeft(res, true, true);
                 if(!res.success) {
                     res.fail();
                     return;
                 }
-            } else if(leftBorderIntersectsEntity(e)) {
-                res.fail();
-                return;
             }
         }
+    }
+    public function canStepRight(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.x++;
         for(b in all) {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepRight(res);
@@ -174,24 +160,22 @@ class Border {
                 return;
             }
         }
-    }
-    public function canStepUp(res:StepResult) {
-        res.pushedBorders.set(this.id, true);
-        bounds.y--;
-        updateWalls();
+        Border.updateAllWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
-            if(horizontalWallIntersectsEntity(e, e.isInside)) {
-                e.tryStepUp(res, true, true);
+            if(verticalWallIntersectsEntity(e)) {
+                res.triedPushingHorizontal = true;
+                e.tryStepRight(res, true, true);
                 if(!res.success) {
                     res.fail();
                     return;
                 }
-            } else if(bottomBorderIntersectsEntity(e)) {
-                res.fail();
-                return;
             }
         }
+    }
+    public function canStepUp(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.y--;
         for(b in all) {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepUp(res);
@@ -200,30 +184,38 @@ class Border {
                 return;
             }
         }
-    }
-    public function canStepDown(res:StepResult) {
-        res.pushedBorders.set(this.id, true);
-        bounds.y++;
-        updateWalls();
+        Border.updateAllWalls();
         for(e in Entity.all) {
             if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
-            if(horizontalWallIntersectsEntity(e, e.isInside)) {
-                e.tryStepDown(res, true, true);
+            if(horizontalWallIntersectsEntity(e)) {
+                e.tryStepUp(res, true, true);
                 if(!res.success) {
                     res.fail();
                     return;
                 }
-            } else if(topBorderIntersectsEntity(e)) {
-                res.fail();
-                return;
             }
         }
+    }
+    public function canStepDown(res:StepResult) {
+        res.pushedBorders.set(this.id, true);
+        bounds.y++;
         for(b in all) {
             if(b == this || !collides(b) || res.pushedBorders.exists(b.id)) continue;
             b.canStepDown(res);
             if(!res.success) {
                 res.fail();
                 return;
+            }
+        }
+        Border.updateAllWalls();
+        for(e in Entity.all) {
+            if(e.canPushBorders || res.pushedEntities.exists(e.id)) continue;
+            if(horizontalWallIntersectsEntity(e)) {
+                e.tryStepDown(res, true, true);
+                if(!res.success) {
+                    res.fail();
+                    return;
+                }
             }
         }
     }
@@ -240,43 +232,27 @@ class Border {
             || bounds.yMin >= other.bounds.yMax
             || bounds.yMax <= other.bounds.yMin);
     }
-    inline public function horizontalWallIntersectsEntity(e:Entity, inside:Bool) {
-        return topWallIntersectsEntity(e, inside) || bottomWallIntersectsEntity(e, inside);
+    inline public function horizontalWallIntersectsEntity(e:Entity) {
+        return topWallIntersectsEntity(e) || bottomWallIntersectsEntity(e);
     }
-    inline public function verticalWallIntersectsEntity(e:Entity, inside:Bool) {
-        return leftWallIntersectsEntity(e, inside) || rightWallIntersectsEntity(e, inside);
+    inline public function verticalWallIntersectsEntity(e:Entity) {
+        return leftWallIntersectsEntity(e) || rightWallIntersectsEntity(e);
     }
-    inline public function leftWallIntersectsEntity(e:Entity, inside:Bool) {
-        return e.x + e.hitbox.xMin < bounds.xMin && e.x + e.hitbox.xMax > bounds.xMin && wallIntersectsSegment(wallLeft, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y, inside);
+    inline public function leftWallIntersectsEntity(e:Entity) {
+        return e.x + e.hitbox.xMin < bounds.xMin && e.x + e.hitbox.xMax > bounds.xMin && wallIntersectsSegment(wallLeft, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y);
     }
-    inline public function rightWallIntersectsEntity(e:Entity, inside:Bool) {
-        return e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMax && wallIntersectsSegment(wallRight, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y, inside);
+    inline public function rightWallIntersectsEntity(e:Entity) {
+        return e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMax && wallIntersectsSegment(wallRight, e.y + e.hitbox.yMin - bounds.y, e.y + e.hitbox.yMax - bounds.y);
     }
-    inline public function topWallIntersectsEntity(e:Entity, inside:Bool) {
-        return e.y + e.hitbox.yMin < bounds.yMin && e.y + e.hitbox.yMax > bounds.yMin && wallIntersectsSegment(wallUp, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x, inside);
+    inline public function topWallIntersectsEntity(e:Entity) {
+        return e.y + e.hitbox.yMin < bounds.yMin && e.y + e.hitbox.yMax > bounds.yMin && wallIntersectsSegment(wallUp, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x);
     }
-    inline public function bottomWallIntersectsEntity(e:Entity, inside:Bool) {
-        return e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMax && wallIntersectsSegment(wallDown, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x, inside);
+    inline public function bottomWallIntersectsEntity(e:Entity) {
+        return e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMax && wallIntersectsSegment(wallDown, e.x + e.hitbox.xMin - bounds.x, e.x + e.hitbox.xMax - bounds.x);
     }
-    inline public function leftBorderIntersectsEntity(e:Entity) {
-        return e.x + e.hitbox.xMin < bounds.xMin && e.x + e.hitbox.xMax > bounds.xMin && e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMin;
-    }
-    inline public function rightBorderIntersectsEntity(e:Entity) {
-        return e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMax && e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMin;
-    }
-    inline public function topBorderIntersectsEntity(e:Entity) {
-        return e.y + e.hitbox.yMin < bounds.yMin && e.y + e.hitbox.yMax > bounds.yMin && e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMin;
-    }
-    inline public function bottomBorderIntersectsEntity(e:Entity) {
-        return e.y + e.hitbox.yMin < bounds.yMax && e.y + e.hitbox.yMax > bounds.yMax && e.x + e.hitbox.xMin < bounds.xMax && e.x + e.hitbox.xMax > bounds.xMin;
-    }
-    public function wallIntersectsSegment(w:Wall, l:Int, r:Int, inside:Bool) {
-        if(inside) {
-            // Corner correction
-            l += 2; r -= 2;
-        }
+    public function wallIntersectsSegment(w:Wall, l:Int, r:Int) {
         for(seg in w) {
-            if(seg.pos + seg.length > l && seg.pos < r) return true;
+            if(l < seg.pos + seg.length && r > seg.pos) return true;
         }
         return false;
     }
@@ -360,7 +336,9 @@ class Border {
         return res;
     }
 
-    public function debug() {
-        trace("Border " + id + " at (" + bounds.xMin + ", " + bounds.yMin + ") to (" + bounds.xMax + ", " + bounds.yMax + ")");
+    public function toString() {
+        var str = "Border " + id + " at (" + bounds.xMin + ", " + bounds.yMin + ") to (" + bounds.xMax + ", " + bounds.yMax + ") ";
+        str += "left: " + wallLeft + ", right: " + wallRight + ", up: " + wallUp + ", down: " + wallDown;
+        return str;
     }
 }

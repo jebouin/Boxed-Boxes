@@ -55,7 +55,6 @@ class StepResult {
             var border = Border.idToBorder.get(id);
             border.bounds.x -= dx;
             border.bounds.y -= dy;
-            border.updateWalls();
         }
     }
 

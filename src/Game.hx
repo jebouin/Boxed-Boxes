@@ -300,4 +300,30 @@ class Game extends Scene {
             hero.y = Std.int(g.anim.y);
         }
     }
+
+    public function debugState(hero:Bool=true, boxes:Bool=false, borders:Bool=true) {
+        trace("START GAME STATE");
+        if(hero) {
+            for(e in Entity.all) {
+                if(e.canPushBorders) {
+                    trace(e);
+                }
+            }
+        }
+        if(boxes) {
+            trace("BOXES");
+            for(e in Entity.all) {
+                if(!e.canPushBorders) {
+                    trace(e);
+                }
+            }
+        }
+        if(borders) {
+            trace("BORDERS");
+            for(b in Border.all) {
+                trace(b);
+            }
+        }
+        trace("END GAME STATE");
+    }
 }

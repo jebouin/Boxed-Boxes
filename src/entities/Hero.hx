@@ -297,4 +297,8 @@ class Hero extends Entity {
         debugGraphics.y = y;
         #end
     }
+
+    override public function toString() {
+        return "Hero at (" + (x + hitbox.xMin) + ", " + (y + hitbox.yMin) + ") to (" + (x + hitbox.xMax) + ", " + (y + hitbox.yMax) + ")";
+    }
 }

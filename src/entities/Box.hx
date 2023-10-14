@@ -48,4 +48,8 @@ class Box extends Entity {
     override function onBorderConstraintFixed() {
         die(0, 0);
     }
+
+    override public function toString() {
+        return "Box " + id + " at (" + (x + hitbox.xMin) + ", " + (y + hitbox.yMin) + ") to (" + (x + hitbox.xMax) + ", " + (y + hitbox.yMax) + ")";
+    }
 }

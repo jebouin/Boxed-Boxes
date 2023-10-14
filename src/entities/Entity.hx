@@ -59,31 +59,35 @@ class Entity {
                 if(e.tryMoveLeft()) {
                     moved = true;
                 }
+                Border.updateAllWalls();
             });
             sortRightLeft();
             iterateAndCheckAll(function(e) {
                 if(e.tryMoveRight()) {
                     moved = true;
                 }
+                Border.updateAllWalls();
             });
             sortTopDown();
             iterateAndCheckAll(function(e) {
                 if(e.tryMoveUp()) {
                     moved = true;
                 }
+                Border.updateAllWalls();
             });
             sortBottomUp();
             iterateAndCheckAll(function(e) {
                 var isBox = !e.canPushEntities;
                 if(isBox && e.ry >= 0 && e.ry < 1 && e.hitDownSinceWiggle) {
-                    e.ry = 1;
-                    e.hitDownSinceWiggle = false;
+                    /*e.ry = 1;
+                    e.hitDownSinceWiggle = false;*/
                 }
                 if(e.tryMoveDown()) {
                     moved = true;
                 } else if(isBox) {
                     e.hitDownSinceWiggle = true;
                 }
+                Border.updateAllWalls();
             });
             iterations++;
             if(!moved) {
@@ -263,7 +267,7 @@ class Entity {
         }
         for(b in Border.all) {
             if(borderId != -1 && borderId != b.id) continue;
-            if(res.pushedBorders.exists(b.id) || !b.verticalWallIntersectsEntity(this, isInside)) continue;
+            if(res.pushedBorders.exists(b.id) || !b.verticalWallIntersectsEntity(this)) continue;
             if(canPushBorders) {
                 b.canStepLeft(res);
                 if(!res.success) {
@@ -299,7 +303,7 @@ class Entity {
         }
         for(b in Border.all) {
             if(borderId != -1 && borderId != b.id) continue;
-            if(res.pushedBorders.exists(b.id) || !b.verticalWallIntersectsEntity(this, isInside)) continue;
+            if(res.pushedBorders.exists(b.id) || !b.verticalWallIntersectsEntity(this)) continue;
             if(canPushBorders) {
                 b.canStepRight(res);
                 if(!res.success) {
@@ -334,7 +338,7 @@ class Entity {
         }
         for(b in Border.all) {
             if(borderId != -1 && borderId != b.id) continue;
-            if(res.pushedBorders.exists(b.id) || !b.horizontalWallIntersectsEntity(this, isInside)) continue;
+            if(res.pushedBorders.exists(b.id) || !b.horizontalWallIntersectsEntity(this)) continue;
             if(canPushBorders) {
                 b.canStepUp(res);
                 if(!res.success) {
@@ -369,7 +373,7 @@ class Entity {
         }
         for(b in Border.all) {
             if(borderId != -1 && borderId != b.id) continue;
-            if(res.pushedBorders.exists(b.id) || !b.horizontalWallIntersectsEntity(this, isInside)) continue;
+            if(res.pushedBorders.exists(b.id) || !b.horizontalWallIntersectsEntity(this)) continue;
             if(canPushBorders) {
                 b.canStepDown(res);
                 if(!res.success) {
@@ -447,5 +451,9 @@ class Entity {
                 break;
             }
         }
+    }
+
+    public function toString() {
+        return "Entity " + id + " at (" + (x + hitbox.xMin) + ", " + (y + hitbox.yMin) + ") to (" + (x + hitbox.xMax) + ", " + (y + hitbox.yMax) + ")";
     }
 }

@@ -14,8 +14,8 @@ import h2d.Object;
 class SlicedParallax extends Parallax {
     public static inline var TILE_WIDTH = 512;
     public static inline var TILE_HEIGHT = 256;
-    public static inline var DISPLACE_POINT_COUNT_X = 64 + 1;
-    public static inline var DISPLACE_POINT_COUNT_Y = 36 + 1;
+    public static inline var DISPLACE_POINT_COUNT_X = 32 + 1;
+    public static inline var DISPLACE_POINT_COUNT_Y = 18 + 1;
     var leftElements : Array<Graphics> = [];
     var rightElements : Array<Graphics> = [];
     var atlasSliceCount : Int;

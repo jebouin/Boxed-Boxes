@@ -1,21 +1,19 @@
 POST-JAM
-- Finish parallax art
 - Better tile art
-- Stick to ceiling for a few frames to make it easier to jump over box
+- Optimize parallax displacement
+- Fix hole wiggle
 - NG save integration
-- More levels to introduce border merge
-- Entity/solid corner correction
 - More levels
+	- Fix level 15 (can just use wall jump)
 	- Fix level 16 (caused by forced box wiggle down)
 	- Walk on spike with wiggle room
 - Test all menus clickable
-- Cover and screenshots
-- Add credits below level selection
 - Update newgrounds and itch cover and promo images
-- Make video walkthrough
 - Only set selected menu option on mousemove when not using other input method
 - Test level select
-- Check parallax perf
+- Cover and screenshots
+- Add credits below level selection
+- Make video walkthrough
 
 TO FIX
 - Hard to fit box in holes
@@ -32,3 +30,4 @@ IF TIME LEFT
 - Move touch input to controller package
 - Parallax cross shape (prevent repeating moon)
 - Hard mode (grab gem then go back, more spikes)
+- Entity/solid corner correction
