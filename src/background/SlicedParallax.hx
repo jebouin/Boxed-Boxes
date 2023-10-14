@@ -1,4 +1,4 @@
-package ;
+package background;
 
 import hxd.Res;
 import h2d.col.Point;
@@ -11,23 +11,18 @@ import h2d.SpriteBatch;
 import h2d.Tile;
 import h2d.Object;
 
-class Parallax extends Object {
+class SlicedParallax extends Parallax {
     public static inline var TILE_WIDTH = 512;
     public static inline var TILE_HEIGHT = 256;
-    public static inline var DISPLACE_POINT_COUNT_X = 32 + 1;
-    public static inline var DISPLACE_POINT_COUNT_Y = 18 + 1;
+    public static inline var DISPLACE_POINT_COUNT_X = 64 + 1;
+    public static inline var DISPLACE_POINT_COUNT_Y = 36 + 1;
     var leftElements : Array<Graphics> = [];
     var rightElements : Array<Graphics> = [];
-    var sliceHeight : Int;
-    var sliceWidth : Int;
     var atlasSliceCount : Int;
     var displayedSliceCount : Int;
     var sliceIndexMid : Int;
-    public var speed : Float;
     var centerOffY : Float;
     var midSlicePos : Float;
-    var levelWidth : Int;
-    var levelHeight : Int;
     var displace : Bool;
     var tiles : Array<Tile> = [];
     var disp : Vector<Vector<Point> >;
@@ -40,12 +35,10 @@ class Parallax extends Object {
     public var scrollY : Float = 0.;
 
     public function new(tile:Tile, sliceHeight:Int, layer:Int, speed:Float, levelWidth:Int, levelHeight:Int, displace:Bool) {
+        super(layer, speed, levelWidth, levelHeight);
         this.displace = displace;
-        super();
-        Game.inst.world.add(this, layer);
-        this.sliceHeight = sliceHeight;
-        this.sliceWidth = tile.iwidth;
-        this.speed = speed;
+        parallaxWidth = tile.iwidth;
+        parallaxHeight = sliceHeight;
         this.levelWidth = levelWidth;
         this.levelHeight = levelHeight;
         atlasSliceCount = Std.int(tile.iheight / sliceHeight);
@@ -85,25 +78,25 @@ class Parallax extends Object {
         }
     }
 
-    public function update(dt:Float) {
-        if(Game.inst == null) return;
+    override public function update(dt:Float) {
+        if(!super.update(dt)) return false;
         var cameraClampedTargetX = -Game.inst.world.x + Main.WIDTH2;
         var cameraClampedTargetY = -Game.inst.world.y + Main.HEIGHT2;
         var xMin = cameraClampedTargetX - Main.WIDTH2;
         var yMin = cameraClampedTargetY - Main.HEIGHT2;
         var xOff = (cameraClampedTargetX - levelWidth * .5 + timer * scrollX) * (1. - speed);
-        xMin = Math.floor((xMin - xOff) / sliceWidth) * sliceWidth + xOff;
+        xMin = Math.floor((xMin - xOff) / parallaxWidth) * parallaxWidth + xOff;
         var yOff = midSlicePos + (cameraClampedTargetY - levelHeight * .5 + timer * scrollY) * (1. - speed);
-        var sliceIndexBase = Math.floor((yMin - yOff) / sliceHeight);
-        yMin = sliceIndexBase * sliceHeight + yOff;
+        var sliceIndexBase = Math.floor((yMin - yOff) / parallaxHeight);
+        yMin = sliceIndexBase * parallaxHeight + yOff;
         for(i in 0...displayedSliceCount) {
             var sliceIndex = sliceIndexBase + i;
             var atlasIndex = Util.iclamp((atlasSliceCount >> 1) + sliceIndex, 0, atlasSliceCount - 1);
-            renderTile(leftElements[i], tiles[atlasIndex]);
-            renderTile(rightElements[i], tiles[atlasIndex]);
+            renderTile(leftElements[i], tiles[atlasIndex], displace && atlasIndex == 1);
+            renderTile(rightElements[i], tiles[atlasIndex], displace && atlasIndex == 1);
             leftElements[i].x = xMin;
-            rightElements[i].x = xMin + sliceWidth;
-            leftElements[i].y = rightElements[i].y = yMin + i * sliceHeight;
+            rightElements[i].x = xMin + parallaxWidth;
+            leftElements[i].y = rightElements[i].y = yMin + i * parallaxHeight;
         }
         timer += dt;
         if(displace) {
@@ -116,18 +109,19 @@ class Parallax extends Object {
                 }
             }
         }
+        return true;
     }
 
-    function renderTile(g:Graphics, t:Tile) {
+    function renderTile(g:Graphics, t:Tile, displace:Bool) {
         g.clear();
         if(displace) {
-            var uMax = sliceWidth / TILE_WIDTH, vMax = sliceHeight / TILE_HEIGHT;
+            var uMax = parallaxWidth / TILE_WIDTH, vMax = parallaxHeight / TILE_HEIGHT;
             var cntX = DISPLACE_POINT_COUNT_X - 1;
             var cntY = DISPLACE_POINT_COUNT_Y - 1;
             for(i in 0...cntY) {
                 for(j in 0...cntX) {
-                    var x1 = j * sliceWidth / cntX, y1 = i * sliceHeight / cntY;
-                    var x2 = (j + 1) * sliceWidth / cntX, y2 = (i + 1) * sliceHeight / cntY;
+                    var x1 = j * parallaxWidth / cntX, y1 = i * parallaxHeight / cntY;
+                    var x2 = (j + 1) * parallaxWidth / cntX, y2 = (i + 1) * parallaxHeight / cntY;
                     var u1 = j / cntX * uMax, v1 = i / cntY * vMax;
                     var u2 = (j + 1) / cntX * uMax, v2 = (i + 1) / cntY * vMax;
                     g.beginTileFill(0, 0, 1, 1, t);
@@ -140,7 +134,7 @@ class Parallax extends Object {
             }
         } else {
             g.beginTileFill(0, 0, 1, 1, t);
-            g.drawRect(0, 0, sliceWidth, sliceHeight);
+            g.drawRect(0, 0, parallaxWidth, parallaxHeight);
             g.endFill();
         }
     }

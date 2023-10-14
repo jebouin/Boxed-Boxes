@@ -31,7 +31,7 @@
 			"id": "V_String",
 			"params": ["box tight"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
 	],
 	"layerInstances": [
 		{

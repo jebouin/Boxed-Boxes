@@ -31,7 +31,7 @@
 			"id": "V_String",
 			"params": ["box ledge jump"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -92, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-92] }] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -112, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-112] }] }
 	],
 	"layerInstances": [
 		{

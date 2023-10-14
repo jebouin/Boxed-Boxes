@@ -31,7 +31,7 @@
 			"id": "V_String",
 			"params": ["test parallax"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -100, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-100] }] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -120, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-120] }] }
 	],
 	"layerInstances": [
 		{

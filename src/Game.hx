@@ -51,7 +51,7 @@ class Game extends Scene {
     public var level : Level;
     public var hero : Hero;
     public var camera : Camera;
-    var background : Background;
+    var background : background.Background;
     var levelId : Int = 1;
     public var state(default, set) : GameState;
     var stateTimer : Float = 0.;
@@ -71,7 +71,7 @@ class Game extends Scene {
         inst = this;
         camera = new Camera();
         level = new Level();
-        background = new Background();
+        background = new background.Background();
         winGraphics = new Graphics();
         world.add(winGraphics, LAYER_WIN);
         winGraphics.visible = false;
