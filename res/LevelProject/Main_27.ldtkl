@@ -27,9 +27,9 @@
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "Info", "__type": "String", "__value": "test mechanics 3", "__tile": null, "defUid": 111, "realEditorValues": [{
+		{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
 			"id": "V_String",
-			"params": ["test mechanics 3"]
+			"params": ["todo"]
 		}] },
 		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
 	],
