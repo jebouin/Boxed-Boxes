@@ -74,8 +74,15 @@ class Entity {
             });
             sortBottomUp();
             iterateAndCheckAll(function(e) {
+                var isBox = !e.canPushEntities;
+                if(isBox && e.ry >= 0 && e.ry < 1 && e.hitDownSinceWiggle) {
+                    e.ry = 1;
+                    e.hitDownSinceWiggle = false;
+                }
                 if(e.tryMoveDown()) {
                     moved = true;
+                } else if(isBox) {
+                    e.hitDownSinceWiggle = true;
                 }
             });
             iterations++;
@@ -117,6 +124,8 @@ class Entity {
     var borderId : Int = -1;
     public var isInside(default, null) : Bool = false;
     public var triedPushingHorizontal : Bool = false;
+    // Hack to make boxes fall in tight spaces
+    public var hitDownSinceWiggle : Bool = false;
 
     public function new(?hitbox:IBounds=null) {
         id = all.length;

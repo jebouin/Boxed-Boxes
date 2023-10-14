@@ -59,22 +59,6 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "Box",
-					"__grid": [51,13],
-					"__pivot": [0,0],
-					"__tags": [],
-					"__tile": { "tilesetUid": 20, "x": 80, "y": 8, "w": 24, "h": 24 },
-					"__smartColor": "#D77643",
-					"__worldX": 520,
-					"__worldY": 288,
-					"iid": "e3550f70-3b70-11ee-927a-911bf0405fcb",
-					"width": 16,
-					"height": 16,
-					"defUid": 26,
-					"px": [408,104],
-					"fieldInstances": []
-				},
-				{
 					"__identifier": "Gem",
 					"__grid": [68,13],
 					"__pivot": [0.5,0.5],
@@ -92,18 +76,18 @@
 				},
 				{
 					"__identifier": "Hero",
-					"__grid": [7,20],
+					"__grid": [46,13],
 					"__pivot": [0,0],
 					"__tags": [],
 					"__tile": { "tilesetUid": 20, "x": 0, "y": 32, "w": 8, "h": 8 },
 					"__smartColor": "#BE4A2F",
-					"__worldX": 168,
-					"__worldY": 344,
+					"__worldX": 480,
+					"__worldY": 288,
 					"iid": "f63328f0-3b70-11ee-927a-2d67ec2050b6",
 					"width": 8,
 					"height": 8,
 					"defUid": 21,
-					"px": [56,160],
+					"px": [368,104],
 					"fieldInstances": []
 				},
 				{
@@ -120,6 +104,22 @@
 					"height": 16,
 					"defUid": 26,
 					"px": [392,104],
+					"fieldInstances": []
+				},
+				{
+					"__identifier": "Box",
+					"__grid": [51,13],
+					"__pivot": [0,0],
+					"__tags": [],
+					"__tile": { "tilesetUid": 20, "x": 80, "y": 8, "w": 24, "h": 24 },
+					"__smartColor": "#D77643",
+					"__worldX": 520,
+					"__worldY": 288,
+					"iid": "4fe41300-6280-11ee-a1b1-676d8559bd94",
+					"width": 16,
+					"height": 16,
+					"defUid": 26,
+					"px": [408,104],
 					"fieldInstances": []
 				}
 			]

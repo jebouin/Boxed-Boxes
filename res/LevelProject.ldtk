@@ -4270,9 +4270,9 @@
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_4.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+				{ "__identifier": "Info", "__type": "String", "__value": "first walk over spikes", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["todo"]
+					"params": ["first walk over spikes"]
 				}] },
 				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
 			],
@@ -4460,7 +4460,7 @@
 			"worldX": 2512,
 			"worldY": 680,
 			"worldDepth": 0,
-			"pxWid": 320,
+			"pxWid": 336,
 			"pxHei": 216,
 			"__bgColor": "#696A79",
 			"bgColor": null,
@@ -4776,7 +4776,7 @@
 			"worldX": 2472,
 			"worldY": 248,
 			"worldDepth": 0,
-			"pxWid": 320,
+			"pxWid": 336,
 			"pxHei": 184,
 			"__bgColor": "#696A79",
 			"bgColor": null,

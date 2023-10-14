@@ -27,9 +27,9 @@
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+		{ "__identifier": "Info", "__type": "String", "__value": "first walk over spikes", "__tile": null, "defUid": 111, "realEditorValues": [{
 			"id": "V_String",
-			"params": ["todo"]
+			"params": ["first walk over spikes"]
 		}] },
 		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
 	],
