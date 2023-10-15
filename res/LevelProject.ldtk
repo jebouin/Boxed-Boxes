@@ -5244,9 +5244,9 @@
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_17.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+				{ "__identifier": "Info", "__type": "String", "__value": "tricky merges", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["todo"]
+					"params": ["tricky merges"]
 				}] },
 				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
 			],
@@ -5257,11 +5257,11 @@
 			"identifier": "Main_27",
 			"iid": "0232dfa0-6280-11ee-8593-373729bb0820",
 			"uid": 187,
-			"worldX": 5712,
-			"worldY": 1096,
+			"worldX": 5744,
+			"worldY": 1056,
 			"worldDepth": 0,
-			"pxWid": 496,
-			"pxHei": 256,
+			"pxWid": 320,
+			"pxHei": 264,
 			"__bgColor": "#696A79",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -5273,9 +5273,9 @@
 			"__bgPos": null,
 			"externalRelPath": "LevelProject/Main_27.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "Info", "__type": "String", "__value": "todo", "__tile": null, "defUid": 111, "realEditorValues": [{
+				{ "__identifier": "Info", "__type": "String", "__value": "tricky one way platform with merge", "__tile": null, "defUid": 111, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["todo"]
+					"params": ["tricky one way platform with merge"]
 				}] },
 				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
 			],
