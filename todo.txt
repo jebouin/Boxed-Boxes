@@ -1,10 +1,7 @@
 POST-JAM
-- Better tile art
 - Optimize parallax displacement
 - Fix hole wiggle (check level 16)
 - NG save integration
-- More levels
-	- Fix level 15 (can just use wall jump)
 - Test all menus clickable
 - Update newgrounds and itch cover and promo images
 - Only set selected menu option on mousemove when not using other input method
