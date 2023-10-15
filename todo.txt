@@ -1,6 +1,6 @@
 POST-JAM
+- Fix background position
 - NG save integration
-- Optimize parallax displacement
 - Fix hole wiggle (check level 16)
 - Test all menus clickable
 - Update newgrounds and itch cover and promo images

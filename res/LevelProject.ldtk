@@ -4543,6 +4543,13 @@
 						162,
 						163,
 						164,
+						166,
+						167,
+						193,
+						194,
+						195,
+						198,
+						199,
 						256,
 						257,
 						258,
@@ -4742,7 +4749,7 @@
 					"id": "V_String",
 					"params": ["platformer"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -30, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-30] }] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4997,7 +5004,7 @@
 					"id": "V_String",
 					"params": ["test parallax"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -130, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-130] }] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5026,7 +5033,7 @@
 					"id": "V_String",
 					"params": ["test parallax"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -120, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-120] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -140, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-140] }] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5171,7 +5178,7 @@
 					"id": "V_String",
 					"params": ["interesting merge"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -110, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-110] }] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5403,7 +5410,7 @@
 					"id": "V_String",
 					"params": ["tricky merges"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 140, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [140] }] }
 			],
 			"layerInstances": null,
 			"__neighbours": []

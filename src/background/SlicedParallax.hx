@@ -11,11 +11,12 @@ import h2d.SpriteBatch;
 import h2d.Tile;
 import h2d.Object;
 
+// Assumes only 3 slices
 class SlicedParallax extends Parallax {
     public static inline var TILE_WIDTH = 512;
     public static inline var TILE_HEIGHT = 256;
-    public static inline var DISPLACE_POINT_COUNT_X = 32 + 1;
-    public static inline var DISPLACE_POINT_COUNT_Y = 18 + 1;
+    public static inline var DISPLACE_POINT_COUNT_X = 16 + 1;
+    public static inline var DISPLACE_POINT_COUNT_Y = 9 + 1;
     var leftElements : Array<Graphics> = [];
     var rightElements : Array<Graphics> = [];
     var atlasSliceCount : Int;
@@ -24,6 +25,8 @@ class SlicedParallax extends Parallax {
     var centerOffY : Float;
     var midSlicePos : Float;
     var displace : Bool;
+    public var displaceTop : Bool = true;
+    public var displaceBottom : Bool = true;
     var tiles : Array<Tile> = [];
     var disp : Vector<Vector<Point> >;
     var timer : Float = 0.;
@@ -46,11 +49,7 @@ class SlicedParallax extends Parallax {
             var sub = tile.sub(0, i * sliceHeight, tile.iwidth, sliceHeight);
             var pixels = sub.getTexture().capturePixels(0, 0, IBounds.fromValues(sub.ix, sub.iy, sub.iwidth, sub.iheight));
             var square = Pixels.alloc(512, 256, ARGB);
-            for(y in 0...square.height) {
-                for(x in 0...square.width) {
-                    square.setPixel(x, y, pixels.getPixel(x, y));
-                }
-            }
+            square.blit(0, 0, pixels, 0, 0, sub.iwidth, sub.iheight);
             tiles.push(Tile.fromPixels(square));
             square.dispose();
             pixels.dispose();
@@ -92,11 +91,15 @@ class SlicedParallax extends Parallax {
         for(i in 0...displayedSliceCount) {
             var sliceIndex = sliceIndexBase + i;
             var atlasIndex = Util.iclamp((atlasSliceCount >> 1) + sliceIndex, 0, atlasSliceCount - 1);
-            renderTile(leftElements[i], tiles[atlasIndex], displace && atlasIndex == 1);
-            renderTile(rightElements[i], tiles[atlasIndex], displace && atlasIndex == 1);
-            leftElements[i].x = xMin;
-            rightElements[i].x = xMin + parallaxWidth;
-            leftElements[i].y = rightElements[i].y = yMin + i * parallaxHeight;
+            var displace = this.displace;
+            if(!displaceTop && atlasIndex == 0) displace = false;
+            if(!displaceBottom && atlasIndex == atlasSliceCount - 1) displace = false;
+            var displaceBelow = (displaceBottom && atlasIndex == atlasSliceCount - 2) || (displace && atlasIndex == atlasSliceCount - 3);
+            renderTile(leftElements[i], tiles[atlasIndex], displace, displaceBelow);
+            renderTile(rightElements[i], tiles[atlasIndex], displace, displaceBelow);
+            leftElements[i].x = Math.round(xMin);
+            rightElements[i].x = Math.round(xMin + parallaxWidth);
+            leftElements[i].y = rightElements[i].y = Math.round(yMin + i * parallaxHeight);
         }
         timer += dt;
         if(displace) {
@@ -112,7 +115,7 @@ class SlicedParallax extends Parallax {
         return true;
     }
 
-    function renderTile(g:Graphics, t:Tile, displace:Bool) {
+    function renderTile(g:Graphics, t:Tile, displace:Bool, displaceBelow:Bool) {
         g.clear();
         if(displace) {
             var uMax = parallaxWidth / TILE_WIDTH, vMax = parallaxHeight / TILE_HEIGHT;
@@ -127,8 +130,8 @@ class SlicedParallax extends Parallax {
                     g.beginTileFill(0, 0, 1, 1, t);
                     g.addVertex(x1 + disp[i][j].x, y1 + disp[i][j].y, 1, 1, 1, 1, u1, v1);
                     g.addVertex(x2 + disp[i][j + 1].x, y1 + disp[i][j + 1].y, 1, 1, 1, 1, u2, v1);
-                    g.addVertex(x2 + disp[i + 1][j + 1].x, y2 + disp[i + 1][j + 1].y, 1, 1, 1, 1, u2, v2);
-                    g.addVertex(x1 + disp[i + 1][j].x, y2 + disp[i + 1][j].y, 1, 1, 1, 1, u1, v2);
+                    g.addVertex(x2 + disp[i + 1][j + 1].x, y2 + (displaceBelow || i < cntY - 1 ? disp[i + 1][j + 1].y : 0), 1, 1, 1, 1, u2, v2);
+                    g.addVertex(x1 + disp[i + 1][j].x, y2 + (displaceBelow || i < cntY - 1 ? disp[i + 1][j].y : 0), 1, 1, 1, 1, u1, v2);
                     g.endFill();
                 }
             }

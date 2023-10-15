@@ -34,6 +34,7 @@ class Hero extends Entity {
     public static inline var WALL_JUMP_ACC_X = .9;
     public static inline var WALL_JUMP_FRICTION_X = .997;
     public static inline var WALL_JUMP_COYOTE_TIME = .1;
+    public static inline var WALL_JUMP_FACE_TIME = .1;
     var anim : Anim;
     #if debug_collisions
     var debugGraphics : Graphics;
@@ -50,6 +51,8 @@ class Hero extends Entity {
     var wallRightTimer : Float;
     var jumpBufferTimer : Float;
     var wallJumpTimer : Float;
+    var faceLeftTimer : Float;
+    var faceRightTimer : Float;
     var facing : Facing;
     var prevFacing : Facing;
     var prevTriedPushingHorizontal : Bool;
@@ -77,6 +80,7 @@ class Hero extends Entity {
         groundTimer = wallLeftTimer = wallRightTimer = 0.;
         jumpBufferTimer = JUMP_BUFFER_TIME + 1.;
         wallJumpTimer = WALL_JUMP_TIME + 1.;
+        faceLeftTimer = faceRightTimer = WALL_JUMP_FACE_TIME + 1.;
         prevFacing = None;
         updateGraphics();
     }
@@ -93,16 +97,20 @@ class Hero extends Entity {
         // TODO: Check collision each frame
         var controller = Main.inst.controller, touchInput = Game.inst.touchInput, mouseInput = Game.inst.mouseInput;
         var ca = controller.getAnalogAngleXY(Action.moveX, Action.moveY), cd = controller.getAnalogDistXY(Action.moveX, Action.moveY);
+        faceLeftTimer += dt;
+        faceRightTimer += dt;
         facing = None;
         if(cd > .5) {
             if(Util.fabs(ca + Math.PI * .5) <= Math.PI * .25) {
                 facing = Up;
             } else if(Util.fabs(ca) <= Math.PI * .25) {
                 facing = Right;
+                faceRightTimer = 0.;
             } else if(Util.fabs(ca - Math.PI * .5) <= Math.PI * .25) {
                 facing = Down;
             } else {
                 facing = Left;
+                faceLeftTimer = 0.;
             }
         }
         if(touchInput.isLeftDown != touchInput.isRightDown) {
@@ -167,11 +175,11 @@ class Hero extends Entity {
         if(!jumped && !isOnGround) {
             if(jumpPressed || (jumpDown && jumpBufferTimer <= JUMP_BUFFER_TIME)) {
                 if(wallLeftTimer < wallRightTimer) {
-                    if(hasWallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME)) {
+                    if(faceLeftTimer <= WALL_JUMP_FACE_TIME && (hasWallLeft || (vy > 0 && wallLeftTimer < WALL_JUMP_COYOTE_TIME))) {
                         wallJump(1);
                     }
                 } else {
-                    if(hasWallRight || (vy > 0 && wallRightTimer < WALL_JUMP_COYOTE_TIME)) {
+                    if(faceRightTimer <= WALL_JUMP_FACE_TIME && (hasWallRight || (vy > 0 && wallRightTimer < WALL_JUMP_COYOTE_TIME))) {
                         wallJump(-1);
                     }
                 }

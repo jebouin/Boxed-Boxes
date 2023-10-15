@@ -42,14 +42,17 @@ class Background {
             p.scrollX = -6;
             addSlicedParallax(zone, 1, .4, levelWidth, levelHeight, false);
             p = addSlicedParallax(zone, 2, .4, levelWidth, levelHeight, true);
-            p.displaceMultX = p.displaceMultY = 4;
+            p.displaceMultX = p.displaceMultY = 5;
+            p.displaceTop = p.displaceBottom = false;
             p = addSlicedParallax(zone, 3, .6, levelWidth, levelHeight, true);
             p.displaceMultX = p.displaceMultY = 10;
+            p.displaceTop = p.displaceBottom = false;
             addSlicedParallax(zone, 4, .8, levelWidth, levelHeight, false);
         } else if(zone == 1) {
             addSlicedParallax(zone, 0, 0, levelWidth, levelHeight, false);
             var p = addSlicedParallax(zone, 1, .1, levelWidth, levelHeight, true);
             p.displaceMultX = 10;
+            p.displaceTop = false;
             addSlicedParallax(zone, 2, .1, levelWidth, levelHeight, false);
             addSlicedParallax(zone, 3, .1, levelWidth, levelHeight, false);
             addSlicedParallax(zone, 4, .8, levelWidth, levelHeight, false);

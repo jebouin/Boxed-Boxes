@@ -31,7 +31,7 @@
 			"id": "V_String",
 			"params": ["platformer"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -30, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-30] }] }
 	],
 	"layerInstances": [
 		{

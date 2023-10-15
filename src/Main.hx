@@ -47,6 +47,7 @@ class Main extends hxd.App {
     var hitStopTimer : Float = 0.;
     public var onHitStopDone : Void->Void = null;
     public var selectWithMouse : Bool = false;
+    public var counter : Int = 0;
 
     override function init() {
         initController();
@@ -89,7 +90,7 @@ class Main extends hxd.App {
     function startGame() {
         started = true;
         #if debug
-        new Game(true, 15);
+        new Game(true, 17);
         //new Title(1);
         //new LevelComplete(0, 3, 3);
         #else

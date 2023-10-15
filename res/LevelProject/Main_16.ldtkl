@@ -31,7 +31,7 @@
 			"id": "V_String",
 			"params": ["interesting merge"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -110, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-110] }] }
 	],
 	"layerInstances": [
 		{
