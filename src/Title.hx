@@ -62,6 +62,7 @@ class LevelCell extends Flow {
         };
         interactive.onOver = function(e) {
             if(state == Locked) return;
+            if(!Main.inst.selectWithMouse) return;
             onOver();
         }
         interactive.onOut = function(e) {

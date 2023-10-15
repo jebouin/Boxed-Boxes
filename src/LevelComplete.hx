@@ -28,6 +28,7 @@ class MenuLine extends Flow {
             onPress();
         };
         interactive.onOver = function(e) {
+            if(!Main.inst.selectWithMouse) return;
             onOver();
         }
         interactive.onOut = function(e) {

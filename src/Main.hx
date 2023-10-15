@@ -1,5 +1,7 @@
 package ;
 
+import haxe.EnumTools;
+import haxe.EnumTools.EnumValueTools;
 import ui.Mute;
 import save.Save;
 import hxd.System;
@@ -44,6 +46,7 @@ class Main extends hxd.App {
     public var doubleTick : Bool = false;
     var hitStopTimer : Float = 0.;
     public var onHitStopDone : Void->Void = null;
+    public var selectWithMouse : Bool = false;
 
     override function init() {
         initController();
@@ -138,6 +141,8 @@ class Main extends hxd.App {
             hasFocus = true;
         } else if(event.kind == EFocusLost) {
             hasFocus = false;
+        } else if(event.kind == EMove || event.kind == EPush || event.kind == ERelease) {
+            selectWithMouse = true;
         }
     }
     public function setFullscreen(v:Bool) {
@@ -184,6 +189,7 @@ class Main extends hxd.App {
     }
     override function update(dt:Float) {
         if(!started) return;
+        updateUsingMouse();
         controller.update(dt);
         if(hasFocus) {
             timeToSimulateConstantRate += dt;
@@ -281,6 +287,20 @@ class Main extends hxd.App {
         SceneManager.renderHUD(e);
         e.popTarget();
         s2d.render(e);
+    }
+
+    function updateUsingMouse() {
+        for(i in 0...20) {
+            try {
+                var action = cast(i, Action);
+                if(controller.isDown(action)) {
+                    selectWithMouse = false;
+                    return;
+                }
+            } catch(e) {
+                break;
+            }
+        }
     }
 
     static function main() {
