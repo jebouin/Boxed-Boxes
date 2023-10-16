@@ -399,6 +399,7 @@ class Title extends Scene {
 
     override public function updateConstantRate(dt:Float) {
         fx.updateConstantRate(dt);
+        Save.gameData.data.update(dt);
     }
 
     function chooseLevel(curGroup:Int, curI:Int, curJ:Int) {

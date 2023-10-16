@@ -7,13 +7,23 @@ import integration.Newgrounds;
 #end
 
 class GameData implements Serializable {
+    public static inline var SAVE_COOLDOWN = 1.;
     @:s public var levelsCompleted(default, null) : IntMap<Bool> = new IntMap<Bool>();
     @:s public var levelsCompletedShown(default, null) : IntMap<Bool> = new IntMap<Bool>();
     @:s public var musicEnabled(default, null) : Bool;
     @:s public var soundEnabled(default, null) : Bool;
+    var timeSinceLevelCompletedShown : Float = 0;
 
     public function new() {
         init();
+    }
+
+    public function update(dt:Float) {
+        var prev = timeSinceLevelCompletedShown;
+        timeSinceLevelCompletedShown += dt;
+        if(prev <= SAVE_COOLDOWN && timeSinceLevelCompletedShown > SAVE_COOLDOWN) {
+            Save.saveGame();
+        }
     }
 
     public function init() {
@@ -39,7 +49,7 @@ class GameData implements Serializable {
     }
     public function showCompletedLevel(id:Int) {
         levelsCompletedShown.set(id, true);
-        Save.saveGame();
+        timeSinceLevelCompletedShown = 0;
     }
 
     public function setMuteState(musicEnabled:Bool, soundEnable:Bool) {

@@ -1,10 +1,14 @@
 package save;
 
+import haxe.crypto.Base64;
 import haxe.io.Bytes;
 import hxbit.Serializable;
 import hxbit.Serializer;
 #if sys
 import sys.io.File;
+#end
+#if int_ng
+import integration.Newgrounds;
 #end
 import Game;
 
@@ -59,58 +63,70 @@ class Save {
         try {
             js.Browser.window.localStorage.setItem(gameFileName, bytesToString(bytes));
         } catch(e) {
-            trace("Error saving game: " + e);
+            trace("Error saving game to local storage: " + e);
+        }
+        #end
+        #if int_ng
+        if(Newgrounds.loggedIn) {
+            try {
+                Newgrounds.save(bytesToString(bytes));
+            } catch(e) {
+                trace("Error saving game to Newgrounds: " + e);
+            }
         }
         #end
     }
-
+    
     public static function loadGame(callback:Bool->Void) {
+        function onBytesReceived(bytes) {
+            if(bytes == null) {
+                gameData = new GameSaveData();
+                callback(false);
+            } else {
+                try {
+                    var s = new Serializer();
+                    s.beginLoad(bytes);
+                    gameData = s.getDynamic();
+                    s.endLoad();
+                    //gameData.init();
+                } catch(e) {
+                    gameData = new GameSaveData();
+                }
+                callback(true);
+            }
+        }
         var bytes = null;
-        var success = false;
         #if sys
         try {
             bytes = File.getBytes(gameFileName + ".sav");
-            success = true;
-        } catch(e) {}
+        } catch(e) {
+        }
+        onBytesReceived(bytes);
+        #elseif int_ng
+        if(Newgrounds.loggedIn) {
+            Newgrounds.load(function(str) {
+                var bytes = stringToBytes(str);
+                onBytesReceived(bytes);
+            }, function() {
+                onBytesReceived(null);
+            });
+        }
         #elseif js
         try {
             bytes = stringToBytes(js.Browser.window.localStorage.getItem(gameFileName));
-            success = true;
         } catch(e) {
         }
+        onBytesReceived(bytes);
         #end
-        if(!success) {
-            gameData = new GameSaveData();
-            callback(false);
-            return;
-        }
-        if(bytes == null) {
-            gameData = new GameSaveData();
-        } else {
-            try {
-                var s = new Serializer();
-                s.beginLoad(bytes);
-                gameData = s.getDynamic();
-                s.endLoad();
-                //gameData.init();
-            } catch(e) {
-                gameData = new GameSaveData();
-            }
-        }
-        callback(true);
     }
     static function bytesToString(bytes:haxe.io.Bytes) {
-        var str = "";
-        for(i in 0...bytes.length) {
-            str += String.fromCharCode(bytes.get(i));
-        }
-        return str;
+        return Base64.encode(bytes);
     }
     static function stringToBytes(str:String) {
-        var bytes = Bytes.alloc(str.length);
-        for(i in 0...str.length) {
-            bytes.set(i, str.charCodeAt(i));
-        }
+        var bytes = null;
+        try {
+            bytes = Base64.decode(str);
+        } catch(e) {}
         return bytes;
     }
 }

@@ -1,5 +1,4 @@
 POST-JAM
-- Fix background position
 - NG save integration
 - Fix hole wiggle (check level 16)
 - Test all menus clickable
