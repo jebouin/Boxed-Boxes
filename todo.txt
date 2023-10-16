@@ -1,17 +1,12 @@
 POST-JAM
-- NG save integration
-- Fix hole wiggle (check level 16)
-- Test all menus clickable
-- Update newgrounds and itch cover and promo images
-- Test level select
-- Cover and screenshots
 - Add credits below level selection
+- Test level select
 - Make video walkthrough
+- Update newgrounds and itch cover and promo images
 
 TO FIX
-- Hard to fit box in holes
-- Level 24 ending weird/unclear behavior?
 - Level unlock not showing selected if not completed (to reproduce partially complete a world)
+- Bug with game.updateConstantRate (null fx?)
 
 IF TIME LEFT
 - Multitouch inputs

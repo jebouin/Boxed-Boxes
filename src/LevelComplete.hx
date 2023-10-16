@@ -24,6 +24,7 @@ class MenuLine extends Flow {
         minWidth = 70;
         horizontalAlign = Middle;
         enableInteractive = true;
+        interactive.cursor = Button;
         interactive.onClick = function(e) {
             onPress();
         };

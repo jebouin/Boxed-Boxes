@@ -78,9 +78,9 @@ class Entity {
             sortBottomUp();
             iterateAndCheckAll(function(e) {
                 var isBox = !e.canPushEntities;
-                if(isBox && e.ry >= 0 && e.ry < 1 && e.hitDownSinceWiggle) {
-                    /*e.ry = 1;
-                    e.hitDownSinceWiggle = false;*/
+                if(isBox && e.ry >= 0 && e.ry < 1 && e.hitDownSinceWiggle && Game.inst.level.hasTightHoles) {
+                    e.ry = 1;
+                    e.hitDownSinceWiggle = false;
                 }
                 if(e.tryMoveDown()) {
                     moved = true;

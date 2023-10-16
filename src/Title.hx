@@ -1,3 +1,5 @@
+import sdl.Cursor;
+import hxd.Cursor.CustomCursor;
 import h2d.Interactive;
 import h2d.col.Point;
 import fx.Fx;
@@ -69,6 +71,7 @@ class LevelCell extends Flow {
             if(state == Locked) return;
             onOut();
         }
+        interactive.cursor = Button;
         interactive.name = "levelCell" + id;
         var data = Assets.getAnimData("entities", "cellBorder");
         selectedBorder = new Anim(data.tiles, data.fps, true, this);

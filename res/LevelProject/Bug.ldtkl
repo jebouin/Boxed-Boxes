@@ -31,7 +31,8 @@
 			"id": "V_String",
 			"params": ["some boxes disappear"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+		{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{

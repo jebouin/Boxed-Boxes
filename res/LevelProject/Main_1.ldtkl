@@ -31,7 +31,11 @@
 			"id": "V_String",
 			"params": ["platformer"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -30, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-30] }] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -30, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-30] }] },
+		{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+			"id": "V_Bool",
+			"params": [ true ]
+		}] }
 	],
 	"layerInstances": [
 		{

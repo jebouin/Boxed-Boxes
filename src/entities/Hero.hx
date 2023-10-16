@@ -105,12 +105,10 @@ class Hero extends Entity {
                 facing = Up;
             } else if(Util.fabs(ca) <= Math.PI * .25) {
                 facing = Right;
-                faceRightTimer = 0.;
             } else if(Util.fabs(ca - Math.PI * .5) <= Math.PI * .25) {
                 facing = Down;
             } else {
                 facing = Left;
-                faceLeftTimer = 0.;
             }
         }
         if(touchInput.isLeftDown != touchInput.isRightDown) {
@@ -118,8 +116,13 @@ class Hero extends Entity {
         } else if(mouseInput.isLeftDown != mouseInput.isRightDown) {
             facing = mouseInput.isLeftDown ? Left : Right;
         }
-        if(facing == Right) anim.scaleX = 1;
-        else if(facing == Left) anim.scaleX = -1;
+        if(facing == Right) {
+            anim.scaleX = 1;
+            faceRightTimer = 0;
+        } else if(facing == Left) {
+            anim.scaleX = -1;
+            faceLeftTimer = 0;
+        }
         var fastFall = facing == Down;
         isSlidingAnim = !fastFall && ((facing == Left && hasWallLeft) || (facing == Right && hasWallRight));
         isSlidingPhysics = isSlidingAnim && vy > 0;

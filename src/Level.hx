@@ -46,6 +46,7 @@ class Level {
     public var heroSpawnX(default, null) : Int = 0;
     public var heroSpawnY(default, null) : Int = 0;
     public var backgroundOffsetY(default, null) : Float = 0.;
+    public var hasTightHoles(default, null) : Bool = false;
     var level : LevelProject_Level = null;
     var render : LevelRender = null;
     var levelCollisions : Vector<Vector<Enum_Collision> >;
@@ -102,6 +103,7 @@ class Level {
         heightPixels = heightTiles * TS;
         render = new LevelRender(level);
         backgroundOffsetY = level.f_BackgroundOffsetY;
+        hasTightHoles = level.f_HasTightHoles;
         loadCollisions();
         loadEntities();
         Game.inst.onLevelLoaded();

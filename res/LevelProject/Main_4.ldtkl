@@ -31,7 +31,8 @@
 			"id": "V_String",
 			"params": ["first walk over spikes"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] },
+		{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{

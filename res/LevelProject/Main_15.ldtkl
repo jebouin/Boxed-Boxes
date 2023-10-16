@@ -31,7 +31,11 @@
 			"id": "V_String",
 			"params": ["push box between borders"]
 		}] },
-		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+		{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+		{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+			"id": "V_Bool",
+			"params": [ true ]
+		}] }
 	],
 	"layerInstances": [
 		{

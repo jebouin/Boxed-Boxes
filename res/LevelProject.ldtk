@@ -11,7 +11,7 @@
 	"iid": "7799c960-3b70-11ee-b552-83fdf9fa10c0",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 220,
+	"nextUid": 221,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -4722,6 +4722,41 @@
 			"allowedRefsEntityUid": null,
 			"allowedRefTags": [],
 			"tilesetUid": null
+		},
+		{
+			"identifier": "HasTightHoles",
+			"doc": "Hacky field since wiggling boxes in tight holes can be buggy with many boxes",
+			"__type": "Bool",
+			"uid": 220,
+			"type": "F_Bool",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayScale": 1,
+			"editorDisplayPos": "Above",
+			"editorLinkStyle": "StraightArrow",
+			"editorDisplayColor": null,
+			"editorAlwaysShow": false,
+			"editorShowInWorld": true,
+			"editorCutLongValues": true,
+			"editorTextSuffix": null,
+			"editorTextPrefix": null,
+			"useForSmartColor": false,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": null,
+			"textLanguageMode": null,
+			"symmetricalRef": false,
+			"autoChainRef": true,
+			"allowOutOfLevelRef": true,
+			"allowedRefs": "OnlySame",
+			"allowedRefsEntityUid": null,
+			"allowedRefTags": [],
+			"tilesetUid": null
 		}
 	] },
 	"levels": [
@@ -4749,7 +4784,11 @@
 					"id": "V_String",
 					"params": ["platformer"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -30, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-30] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -30, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-30] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+					"id": "V_Bool",
+					"params": [ true ]
+				}] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4778,7 +4817,8 @@
 					"id": "V_String",
 					"params": ["first box"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4807,7 +4847,8 @@
 					"id": "V_String",
 					"params": ["int box"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4833,7 +4874,8 @@
 			"externalRelPath": "LevelProject/Test.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4862,7 +4904,8 @@
 					"id": "V_String",
 					"params": ["easy push boxes out + in"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4888,7 +4931,8 @@
 			"externalRelPath": "LevelProject/Main_A.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4917,7 +4961,8 @@
 					"id": "V_String",
 					"params": ["suspend and shoes"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4946,7 +4991,8 @@
 					"id": "V_String",
 					"params": ["border wall jump"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4975,7 +5021,8 @@
 					"id": "V_String",
 					"params": ["box ledge jump"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -112, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-112] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -112, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-112] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5004,7 +5051,8 @@
 					"id": "V_String",
 					"params": ["test parallax"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -130, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-130] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -130, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-130] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5033,7 +5081,8 @@
 					"id": "V_String",
 					"params": ["test parallax"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -140, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-140] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -140, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-140] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5062,7 +5111,8 @@
 					"id": "V_String",
 					"params": ["some boxes disappear"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5091,7 +5141,8 @@
 					"id": "V_String",
 					"params": ["first walk over spikes"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5120,7 +5171,8 @@
 					"id": "V_String",
 					"params": ["precise push border"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5149,7 +5201,11 @@
 					"id": "V_String",
 					"params": ["box tight"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+					"id": "V_Bool",
+					"params": [ true ]
+				}] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5178,7 +5234,8 @@
 					"id": "V_String",
 					"params": ["interesting merge"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -110, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-110] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -110, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-110] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5207,7 +5264,8 @@
 					"id": "V_String",
 					"params": ["first merge"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5236,7 +5294,8 @@
 					"id": "V_String",
 					"params": ["easy merge + spikes"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5265,7 +5324,8 @@
 					"id": "V_String",
 					"params": ["many boxes out but easy"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": -20, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [-20] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5294,7 +5354,8 @@
 					"id": "V_String",
 					"params": ["first push border"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5323,7 +5384,11 @@
 					"id": "V_String",
 					"params": ["push box between borders"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+					"id": "V_Bool",
+					"params": [ true ]
+				}] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5352,7 +5417,8 @@
 					"id": "V_String",
 					"params": ["stitch borders"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5381,7 +5447,8 @@
 					"id": "V_String",
 					"params": ["tank"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5410,7 +5477,11 @@
 					"id": "V_String",
 					"params": ["tricky merges"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 140, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [140] }] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 140, "__tile": null, "defUid": 191, "realEditorValues": [{ "id": "V_Float", "params": [140] }] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+					"id": "V_Bool",
+					"params": [ true ]
+				}] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5439,7 +5510,8 @@
 					"id": "V_String",
 					"params": ["tricky one way platform with merge"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5468,7 +5540,8 @@
 					"id": "V_String",
 					"params": ["ceiling tank"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5497,7 +5570,8 @@
 					"id": "V_String",
 					"params": ["make stair from fallen parts"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5523,7 +5597,8 @@
 			"externalRelPath": "LevelProject/Main_B.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5552,7 +5627,8 @@
 					"id": "V_String",
 					"params": ["first wall jump"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5581,7 +5657,11 @@
 					"id": "V_String",
 					"params": ["int border wall jump"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": true, "__tile": null, "defUid": 220, "realEditorValues": [{
+					"id": "V_Bool",
+					"params": [ true ]
+				}] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5610,7 +5690,8 @@
 					"id": "V_String",
 					"params": ["interesting box out"]
 				}] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5636,7 +5717,8 @@
 			"externalRelPath": "LevelProject/Platform_Test_C.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "801c61b0-6280-11ee-b338-bd548a4f61df", "dir": "n" }]
@@ -5662,7 +5744,8 @@
 			"externalRelPath": "LevelProject/Platform_Test_B.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelIid": "ca6d71a0-6280-11ee-b338-eb1e5f53ef69", "dir": "s" }, { "levelIid": "794c69d0-6280-11ee-b338-99140bf7634a", "dir": "n" } ]
@@ -5688,7 +5771,8 @@
 			"externalRelPath": "LevelProject/Platform_Test_A.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "Info", "__type": "String", "__value": null, "__tile": null, "defUid": 111, "realEditorValues": [] },
-				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] }
+				{ "__identifier": "BackgroundOffsetY", "__type": "Float", "__value": 0, "__tile": null, "defUid": 191, "realEditorValues": [] },
+				{ "__identifier": "HasTightHoles", "__type": "Bool", "__value": false, "__tile": null, "defUid": 220, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "801c61b0-6280-11ee-b338-bd548a4f61df", "dir": "s" }]
