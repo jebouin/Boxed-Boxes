@@ -68,6 +68,7 @@ class Game extends Scene {
     var completedAllLevels : Bool;
     var timerText : Text;
     var playerMoved : Bool = false;
+    var justCompletedGame : Bool = false;
 
     public function new(initial:Bool, globalLevelId:Int) {
         super();
@@ -100,6 +101,7 @@ class Game extends Scene {
         world.add(timerText, LAYER_TIMER);
         timerText.text = formatTimer(playTimer);
         timerText.visible = completedAllLevels;
+        justCompletedGame = !completedAllLevels;
     }
 
     override public function delete() {
@@ -135,6 +137,7 @@ class Game extends Scene {
             if(Main.inst.controller.isPressed(Action.pause)) {
                 delete();
                 new Title(levelId);
+                return;
             }
         } else if(state == TransitionOut) {
             updateTransitionOut(dt);
@@ -142,7 +145,7 @@ class Game extends Scene {
                 var group = getLevelGroup();
                 var maskX = winGraphics.x + world.x;
                 var maskY = winGraphics.y + world.y;
-                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId, maskX, maskY, playTimer);
+                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId, maskX, maskY, playTimer, justCompletedGame);
                 Audio.playSound("levelComplete");
                 delete();
                 return;
@@ -192,6 +195,9 @@ class Game extends Scene {
     public function levelComplete() {
         fx.gem();
         Save.gameData.data.completeLevel(levelId, playTimer);
+        if(!Save.gameData.data.areAllLevelsCompleted()) {
+            justCompletedGame = false;
+        }
         updateRamp();
         state = TransitionOut;
         Audio.stopMusic(Audio.MUSIC_FADE_IN_TIME);

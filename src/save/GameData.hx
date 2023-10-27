@@ -1,5 +1,6 @@
 package save;
 
+import integration.Newgrounds;
 import haxe.ds.IntMap;
 import hxbit.Serializable;
 #if int_ng
@@ -47,6 +48,9 @@ class GameData implements Serializable {
         var curTimer = levelBestTimes.get(id);
         if(curTimer == null || curTimer == -1 || playTimer < curTimer) {
             levelBestTimes.set(id, playTimer);
+            #if int_ng
+            trySendScore();
+            #end
         }
         Save.saveGame();
         #if int_ng
@@ -80,4 +84,20 @@ class GameData implements Serializable {
         }
         return sum;
     }
+
+    #if int_ng
+    function trySendScore() {
+        var sum = 0, count = 0;
+        for(k in levelBestTimes.keys()) {
+            var time = levelBestTimes.get(k);
+            if(time != null && time != -1) {
+                sum += time;
+                count++;
+            }
+        }
+        if(count < Title.LEVEL_COUNT) return false;
+        Newgrounds.sendScore(13303, Std.int(sum / 60 * 1000));
+        return true;
+    }
+    #end
 }

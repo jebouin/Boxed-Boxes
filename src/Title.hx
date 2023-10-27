@@ -56,16 +56,16 @@ class LevelCell extends Flow {
         props.offsetY = -1;
         enableInteractive = true;
         interactive.onClick = function(e) {
-            if(state == Locked) return;
+            if(this.state == Locked) return;
             onClick();
         };
         interactive.onOver = function(e) {
-            if(state == Locked) return;
+            if(this.state == Locked) return;
             if(!Main.inst.selectWithMouse) return;
             onOver();
         }
         interactive.onOut = function(e) {
-            if(state == Locked) return;
+            if(this.state == Locked) return;
             onOut();
         }
         this.state = state;

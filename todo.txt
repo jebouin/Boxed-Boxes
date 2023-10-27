@@ -1,10 +1,10 @@
 POST-JAM
 - Make video walkthrough
+- First completion not saving timers? Only NG?
 - Update newgrounds and itch cover and promo images
 - Set released status to released
 
 TO FIX
-- Bug with game.updateConstantRate (null fx?)
 
 IF TIME LEFT
 - Prettier level select
@@ -18,3 +18,11 @@ IF TIME LEFT
 - Parallax cross shape (prevent repeating moon)
 - Hard mode (grab gem then go back, more spikes)
 - Entity/solid corner correction
+
+POST-JAM CHANGELOG
+- Added 9 levels
+- Added music
+- Improved graphics
+- Fixed most collision issues
+- Added mouse controls
+- Added speedrun timers (unlocked after clearing every level)

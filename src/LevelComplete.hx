@@ -71,7 +71,7 @@ class LevelComplete extends Scene {
     var maskY : Float;
     var speedrunFlow : KeyValueFlow;
 
-    public function new(groupId:Int, levelId:Int, globalLevelId:Int, maskX:Float, maskY:Float, playTimer:Int) {
+    public function new(groupId:Int, levelId:Int, globalLevelId:Int, maskX:Float, maskY:Float, playTimer:Int, justCompletedGame:Bool) {
         super();
         if(inst != null) {
             throw "LevelComplete scene already exists";
@@ -134,7 +134,7 @@ class LevelComplete extends Scene {
                 timeValueText.textColor = 0x63c74d;
             }
         }
-        speedrunFlow.visible = Save.gameData.data.areAllLevelsCompleted();
+        speedrunFlow.visible = Save.gameData.data.areAllLevelsCompleted() && !justCompletedGame;
     }
 
     function onContinueOver() {

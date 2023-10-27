@@ -93,6 +93,9 @@ class Save {
                     if(gameData.header.version == "1.0.0" && Main.GAME_VERSION != "1.0.0") {
                         gameData.init();
                     }
+                    #if debug
+                    gameData.data.levelsCompleted.set(27, false);
+                    #end
                 } catch(e) {
                     gameData = new GameSaveData();
                 }
