@@ -110,6 +110,7 @@ class Hero extends Entity {
             } else {
                 facing = Left;
             }
+            Game.inst.onPlayerMoved();
         }
         if(touchInput.isLeftDown != touchInput.isRightDown) {
             facing = touchInput.isLeftDown ? Left : Right;

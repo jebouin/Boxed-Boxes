@@ -207,6 +207,11 @@ class Title extends Scene {
     var title : Text;
     var gameText : Text;
     var authorText : Text;
+    var speedrunFlow : Flow;
+    var timeSumText : Text;
+    var timeSumValueText : Text;
+    var levelTimeText : Text;
+    var levelTimeValueText : Text;
 
     public function new(curLevelId:Int) {
         super();
@@ -215,16 +220,17 @@ class Title extends Scene {
         }
         inst = this;
         fx = new Fx(hud, hud, hud, LAYER_FX_FRONT, LAYER_FX_MID, LAYER_FX_BACK);
+        var allLevelsCompleted = Save.gameData.data.areAllLevelsCompleted();
         container = new Flow();
         hud.add(container, LAYER_HUD);
         container.minWidth = Main.WIDTH;
         container.minHeight = Main.HEIGHT;
         container.layout = Vertical;
         container.horizontalAlign = Middle;
-        container.paddingTop = 16;
+        container.paddingTop = allLevelsCompleted ? 8 : 16;
         container.backgroundTile = Tile.fromColor(0x181425, 1, 1);
         var title = new Text(Assets.fontLarge, container);
-        title.text = Save.gameData.data.areAllLevelsCompleted() ? "ALL LEVELS COMPLETED!" : "SELECT A LEVEL";
+        title.text = allLevelsCompleted ? "ALL LEVELS CLEARED!" : "SELECT A LEVEL";
         title.textColor = 0xfee761;
         gameText = new Text(Assets.font, hud);
         gameText.textColor = 0x3a4466;
@@ -236,11 +242,35 @@ class Title extends Scene {
         authorText.text = "by jebouin";
         authorText.x = Main.WIDTH - authorText.textWidth;
         authorText.y = Main.HEIGHT - authorText.textHeight + 1;
+        createSpeedrunFlow();
         createMenu();
         curI = Std.int((curLevelId - 1) % (GROUP_HEIGHT * GROUP_WIDTH) / GROUP_WIDTH);
         curJ = (curLevelId - 1) % GROUP_WIDTH;
         curGroup = Std.int((curLevelId - 1) / (GROUP_HEIGHT * GROUP_WIDTH));
         updateSelected();
+    }
+
+    function createSpeedrunFlow() {
+        function getText(parent:Flow, align:FlowAlign) {
+            var text = new Text(Assets.font, parent);
+            text.textColor = 0x8b9bb4;
+            var props = parent.getProperties(text);
+            props.horizontalAlign = align;
+            return text;
+        }
+        speedrunFlow = new Flow(hud);
+        speedrunFlow.layout = Vertical;
+        var levelTimeFlow = new Flow(speedrunFlow);
+        levelTimeText = getText(levelTimeFlow, Left);
+        levelTimeValueText = getText(levelTimeFlow, Right);
+        var timeSumFlow = new Flow(speedrunFlow);
+        timeSumFlow.minWidth = levelTimeFlow.minWidth = 120;
+        timeSumText = getText(timeSumFlow, Left);
+        timeSumText.text = "Sum of best:";
+        timeSumValueText = getText(timeSumFlow, Right);
+        timeSumValueText.text = "" + Game.formatTimer(Save.gameData.data.getLevelTimeSum());
+        speedrunFlow.x = Main.WIDTH2 - speedrunFlow.outerWidth * .5;
+        speedrunFlow.y = Main.HEIGHT - 35;
     }
 
     function createMenu() {
@@ -486,11 +516,12 @@ class Title extends Scene {
             }
         }
         updateMusic();
+        updateLevelTimeText();
     }
 
     public function forceCompleteLevel() {
         var levelId = 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ;
-        Save.gameData.data.completeLevel(levelId);
+        Save.gameData.data.completeLevel(levelId, Util.randi(5000, 20000));
         createMenu();
         updateSelected();
     }
@@ -509,5 +540,14 @@ class Title extends Scene {
             Audio.stopMusic(MUSIC_FADE_TIME);
             Audio.playMusic(musicName + "Back", MUSIC_FADE_TIME);
         }
+    }
+
+    function updateLevelTimeText() {
+        speedrunFlow.visible = Save.gameData.data.areAllLevelsCompleted();
+        var levelId = 1 + curGroup * GROUP_HEIGHT * GROUP_WIDTH + curI * GROUP_WIDTH + curJ;
+        var timer = Save.gameData.data.levelBestTimes.get(levelId);
+        var timeText = timer == null || timer == -1 ? "N/A" : Game.formatTimer(timer);
+        levelTimeText.text = "Level " + levelId + " time:";
+        levelTimeValueText.text = timeText;
     }
 }

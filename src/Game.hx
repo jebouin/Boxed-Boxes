@@ -1,5 +1,6 @@
 package ;
 
+import h2d.Text;
 import Main.External;
 import ui.TouchInput;
 import ui.MouseInput;
@@ -45,6 +46,7 @@ class Game extends Scene {
     public static var LAYER_GEM = _layer++;
     public static var LAYER_FX_FRONT = _layer++;
     public static var LAYER_FLASH = _layer++;
+    public static var LAYER_TIMER = _layer++;
     public static var LAYER_DEBUG = _layer++;
     public static var LAYER_WIN = _layer++;
     public static var inst : Game;
@@ -62,6 +64,10 @@ class Game extends Scene {
     var prevCameraPos : Point;
     public var touchInput : TouchInput;
     public var mouseInput : MouseInput;
+    var playTimer : Int = 0;
+    var completedAllLevels : Bool;
+    var timerText : Text;
+    var playerMoved : Bool = false;
 
     public function new(initial:Bool, globalLevelId:Int) {
         super();
@@ -69,6 +75,7 @@ class Game extends Scene {
             throw "Game scene already exists";
         }
         inst = this;
+        completedAllLevels = Save.gameData.data.areAllLevelsCompleted();
         camera = new Camera();
         level = new Level();
         background = new background.Background();
@@ -89,6 +96,10 @@ class Game extends Scene {
             mouseInput.enabled = false;
         }
         #end
+        timerText = new Text(Assets.font);
+        world.add(timerText, LAYER_TIMER);
+        timerText.text = formatTimer(playTimer);
+        timerText.visible = completedAllLevels;
     }
 
     override public function delete() {
@@ -113,6 +124,7 @@ class Game extends Scene {
         super.update(dt);
         stateTimer += dt;
         if(state == Play) {
+            updatePlayTimer();
             Entity.updateAll(dt);
             Border.updateAll(dt);
             Gem.updateAll(dt);
@@ -130,7 +142,7 @@ class Game extends Scene {
                 var group = getLevelGroup();
                 var maskX = winGraphics.x + world.x;
                 var maskY = winGraphics.y + world.y;
-                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId, maskX, maskY);
+                new LevelComplete(group, levelId - (group * Title.GROUP_WIDTH * Title.GROUP_HEIGHT), levelId, maskX, maskY, playTimer);
                 Audio.playSound("levelComplete");
                 delete();
                 return;
@@ -140,6 +152,7 @@ class Game extends Scene {
                 state = Play;
             }
         } else if(state == Dead) {
+            updatePlayTimer();
             var t = stateTimer / DEAD_TIME;
             deathFx.update(dt, t);
             camera.targetX = level.heroSpawnX + 4;
@@ -172,11 +185,13 @@ class Game extends Scene {
         fx.updateConstantRate(dt);
         camera.updateConstantRate(dt);
         background.update(dt);
+        timerText.x = -world.x + 3;
+        timerText.y = -world.y + 1;
     }
 
     public function levelComplete() {
         fx.gem();
-        Save.gameData.data.completeLevel(levelId);
+        Save.gameData.data.completeLevel(levelId, playTimer);
         updateRamp();
         state = TransitionOut;
         Audio.stopMusic(Audio.MUSIC_FADE_IN_TIME);
@@ -231,6 +246,9 @@ class Game extends Scene {
         state = Play;
         loadLevelById(levelId);
         camera.update(0);
+        playTimer = 0;
+        playerMoved = false;
+        updatePlayTimer();
     }
 
     public function onDeath(dx:Float, dy:Float) {
@@ -301,6 +319,18 @@ class Game extends Scene {
         }
     }
 
+    public function onPlayerMoved() {
+        if(playerMoved) return;
+        playerMoved = true;
+    }
+
+    public function updatePlayTimer() {
+        if(playerMoved) {
+            playTimer++;
+        }
+        timerText.text = formatTimer(playTimer);
+    }
+
     public function debugState(hero:Bool=true, boxes:Bool=false, borders:Bool=true) {
         trace("START GAME STATE");
         if(hero) {
@@ -325,5 +355,12 @@ class Game extends Scene {
             }
         }
         trace("END GAME STATE");
+    }
+
+    public static function formatTimer(frames:Int) {
+        var minutes = Std.int(frames / 60 / 60);
+        var seconds = Std.int(frames / 60) % 60;
+        var ms = (frames % 60) / 60 * 1000.;
+        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds + "." + Std.int(ms / 10);
     }
 }

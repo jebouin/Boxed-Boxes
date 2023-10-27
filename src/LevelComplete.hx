@@ -68,8 +68,11 @@ class LevelComplete extends Scene {
     var timer : Float = 0.;
     var maskX : Float;
     var maskY : Float;
+    var speedrunFlow : Flow;
+    var timeText : Text;
+    var bestTimerText : Text;
 
-    public function new(groupId:Int, levelId:Int, globalLevelId:Int, maskX:Float, maskY:Float) {
+    public function new(groupId:Int, levelId:Int, globalLevelId:Int, maskX:Float, maskY:Float, playTimer:Int) {
         super();
         if(inst != null) {
             throw "LevelComplete scene already exists";
@@ -94,7 +97,7 @@ class LevelComplete extends Scene {
         title.text = Title.GROUP_NAMES[groupId];
         title.textColor = Title.GROUP_COLORS[groupId];
         var complete = new Text(Assets.font, container);
-        complete.text = "LEVEL " + globalLevelId + " COMPLETE!";
+        complete.text = "LEVEL " + globalLevelId + " CLEARED!";
         var props = container.getProperties(complete);
         props.paddingTop = 10;
         var menu = new Flow(container);
@@ -116,6 +119,24 @@ class LevelComplete extends Scene {
         }
         updateSelected();
         hud.visible = false;
+        speedrunFlow = new Flow(container);
+        speedrunFlow.layout = Vertical;
+        speedrunFlow.paddingTop = 15;
+        var timeText = new Text(Assets.font, speedrunFlow);
+        timeText.text = "Time: " + Game.formatTimer(playTimer);
+        var bestTimeText = new Text(Assets.font, speedrunFlow);
+        var bestTimer = Save.gameData.data.levelBestTimes.get(levelId);
+        if(bestTimer == null || bestTimer == -1) {
+            bestTimer = 60000000;
+            bestTimeText.text = "Best time: " + "99:99:999";
+        } else {
+            bestTimeText.text = "Best time: " + Game.formatTimer(bestTimer);
+        }
+        if(bestTimer < playTimer) {
+            curId = 1;
+            updateSelected();
+        }
+        speedrunFlow.visible = Save.gameData.data.areAllLevelsCompleted();
     }
 
     function onContinueOver() {
