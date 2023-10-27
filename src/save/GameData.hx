@@ -57,4 +57,12 @@ class GameData implements Serializable {
         this.soundEnabled = soundEnable;
         Save.saveGame();
     }
+
+    public function areAllLevelsCompleted() {
+        var count = 0;
+        for(k in levelsCompleted.keys()) {
+            if(levelsCompleted.get(k)) count++;
+        }
+        return count == Title.LEVEL_COUNT;
+    }
 }

@@ -29,7 +29,6 @@ class Background {
     }
 
     public function loadLevel(globalLevelId:Int, levelWidth:Int, levelHeight:Int) {
-        trace("loadLevel", globalLevelId);
         for(p in parallaxes) {
             p.remove();
         }
@@ -62,7 +61,6 @@ class Background {
             addTiledParallax(zone, 2, .5, levelWidth, levelHeight);
             addTiledParallax(zone, 3, .8, levelWidth, levelHeight);
         }
-        trace("loadLevel done", globalLevelId);
     }
 
     public function delete() {

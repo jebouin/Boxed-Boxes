@@ -71,6 +71,7 @@ class Main extends hxd.App {
         SceneManager.init();
         #if debug
         fpsCounter = new FPSCounter(Assets.font);
+        fpsCounter.hide();
         #end
         #if int_ng
         Newgrounds.init(initSave);
@@ -90,8 +91,8 @@ class Main extends hxd.App {
     function startGame() {
         started = true;
         #if debug
-        new Game(true, 17);
-        //new Title(1);
+        //new Game(true, 17);
+        new Title(1);
         //new LevelComplete(0, 3, 3);
         #else
         new Title(1);

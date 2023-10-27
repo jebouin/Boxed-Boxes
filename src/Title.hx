@@ -1,6 +1,3 @@
-import sdl.Cursor;
-import hxd.Cursor.CustomCursor;
-import h2d.Interactive;
 import h2d.col.Point;
 import fx.Fx;
 import h2d.ScaleGrid;
@@ -38,13 +35,12 @@ class LevelCell extends Flow {
     var lockedTiles : Array<Tile>;
     var timer : Float = 0.;
 
-    public function new(id:Int, parent:Flow, group:Int, i:Int, j:Int, initState:LevelCellState, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void, onCompleted:Void->Void) {
+    public function new(id:Int, parent:Flow, group:Int, i:Int, j:Int, state:LevelCellState, onClick:Void->Void, onOver:Void->Void, onOut:Void->Void, onCompleted:Void->Void) {
         super(parent);
         this.id = id;
         this.group = group;
         this.cellI = i;
         this.cellJ = j;
-        this.state = initState;
         this.onCompleted = onCompleted;
         lockedTiles = Assets.getAnimData("entities", "levelCellLocked").tiles;
 	    backgroundTile = Assets.getTile("entities", "levelCell");
@@ -71,7 +67,7 @@ class LevelCell extends Flow {
             if(state == Locked) return;
             onOut();
         }
-        interactive.cursor = Button;
+        this.state = state;
         interactive.name = "levelCell" + id;
         var data = Assets.getAnimData("entities", "cellBorder");
         selectedBorder = new Anim(data.tiles, data.fps, true, this);
@@ -167,6 +163,7 @@ class LevelCell extends Flow {
 
     public function set_state(v:LevelCellState) {
         state = v;
+        interactive.cursor = state == Locked ? Default : Button;
         return v;
     }
 }
@@ -207,6 +204,9 @@ class Title extends Scene {
     var toShowUnlocked : Array<LevelCell> = [];
     var timer : Float = 0.;
     var curMusicName : String = null;
+    var title : Text;
+    var gameText : Text;
+    var authorText : Text;
 
     public function new(curLevelId:Int) {
         super();
@@ -224,8 +224,18 @@ class Title extends Scene {
         container.paddingTop = 16;
         container.backgroundTile = Tile.fromColor(0x181425, 1, 1);
         var title = new Text(Assets.fontLarge, container);
-        title.text = "SELECT A LEVEL";
+        title.text = Save.gameData.data.areAllLevelsCompleted() ? "ALL LEVELS COMPLETED!" : "SELECT A LEVEL";
         title.textColor = 0xfee761;
+        gameText = new Text(Assets.font, hud);
+        gameText.textColor = 0x3a4466;
+        gameText.text = "Boxed Boxes v" + Main.GAME_VERSION;
+        gameText.x = 1;
+        gameText.y = Main.HEIGHT - gameText.textHeight + 1;
+        authorText = new Text(Assets.font, hud);
+        authorText.textColor = 0x3a4466;
+        authorText.text = "by jebouin";
+        authorText.x = Main.WIDTH - authorText.textWidth;
+        authorText.y = Main.HEIGHT - authorText.textHeight + 1;
         createMenu();
         curI = Std.int((curLevelId - 1) % (GROUP_HEIGHT * GROUP_WIDTH) / GROUP_WIDTH);
         curJ = (curLevelId - 1) % GROUP_WIDTH;

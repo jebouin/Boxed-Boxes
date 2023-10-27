@@ -1,14 +1,14 @@
 POST-JAM
-- Add credits below level selection
-- Test level select
+- Speedrun timer after completion
 - Make video walkthrough
 - Update newgrounds and itch cover and promo images
+- Set released status to released
 
 TO FIX
-- Level unlock not showing selected if not completed (to reproduce partially complete a world)
 - Bug with game.updateConstantRate (null fx?)
 
 IF TIME LEFT
+- Prettier level select
 - Multitouch inputs
 - Only move camera up when on platform
 - Settings menu

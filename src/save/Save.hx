@@ -39,6 +39,7 @@ class GameSaveData implements Serializable {
 
     public function init() {
         data.init();
+        header = new SaveHeader();
     }
 }
 
@@ -88,7 +89,10 @@ class Save {
                     s.beginLoad(bytes);
                     gameData = s.getDynamic();
                     s.endLoad();
-                    //gameData.init();
+                    // Don't keep game jam save
+                    if(gameData.header.version == "1.0.0" && Main.GAME_VERSION != "1.0.0") {
+                        gameData.init();
+                    }
                 } catch(e) {
                     gameData = new GameSaveData();
                 }
