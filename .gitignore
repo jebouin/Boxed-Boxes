@@ -25,7 +25,6 @@ res/music/unused
 res/bitwigProjects/*/auto-backups/
 res/LevelProject/backups/
 saves/*
-src/integration
 src/integration/Secret.hx
 tools/profiler.hl
 tools/hlprofile.dump

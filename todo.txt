@@ -1,12 +1,12 @@
 POST-JAM
-- Make video walkthrough
-- First completion not saving timers? Only NG?
-- Update newgrounds and itch cover and promo images
-- Set released status to released
+- Update Itch cover and promo images
+- Set released status to released on itch
+- Add NG link to walkthrough
 
 TO FIX
 
 IF TIME LEFT
+- Hold key to reset all progress
 - Prettier level select
 - Multitouch inputs
 - Only move camera up when on platform
