@@ -1,3 +1,4 @@
+import ui.KeyValueFlow;
 import h2d.filter.Mask;
 import h2d.Graphics;
 import save.Save;
@@ -68,9 +69,7 @@ class LevelComplete extends Scene {
     var timer : Float = 0.;
     var maskX : Float;
     var maskY : Float;
-    var speedrunFlow : Flow;
-    var timeText : Text;
-    var bestTimerText : Text;
+    var speedrunFlow : KeyValueFlow;
 
     public function new(groupId:Int, levelId:Int, globalLevelId:Int, maskX:Float, maskY:Float, playTimer:Int) {
         super();
@@ -119,22 +118,21 @@ class LevelComplete extends Scene {
         }
         updateSelected();
         hud.visible = false;
-        speedrunFlow = new Flow(container);
-        speedrunFlow.layout = Vertical;
-        speedrunFlow.paddingTop = 15;
-        var timeText = new Text(Assets.font, speedrunFlow);
-        timeText.text = "Time: " + Game.formatTimer(playTimer);
-        var bestTimeText = new Text(Assets.font, speedrunFlow);
-        var bestTimer = Save.gameData.data.levelBestTimes.get(levelId);
-        if(bestTimer == null || bestTimer == -1) {
-            bestTimer = 60000000;
-            bestTimeText.text = "Best time: " + "99:99:999";
-        } else {
-            bestTimeText.text = "Best time: " + Game.formatTimer(bestTimer);
-        }
-        if(bestTimer < playTimer) {
-            curId = 1;
-            updateSelected();
+        speedrunFlow = new KeyValueFlow(container, 120);
+        speedrunFlow.paddingTop = 10;
+        var timeValueText = speedrunFlow.addLine("Time:", Game.formatTimer(playTimer)).value;
+        var bestTimeValueText = speedrunFlow.addLine("Best time:").value;
+        bestTimeValueText.text = "99:99:999";
+        var bestTimer = Save.gameData.data.levelBestTimes.get(globalLevelId);
+        if(bestTimer != null && bestTimer != -1) {
+            bestTimeValueText.text = Game.formatTimer(bestTimer);
+            if(playTimer > bestTimer) {
+                curId = 1;
+                updateSelected();
+                timeValueText.textColor = 0xbe4a2f;
+            } else {
+                timeValueText.textColor = 0x63c74d;
+            }
         }
         speedrunFlow.visible = Save.gameData.data.areAllLevelsCompleted();
     }

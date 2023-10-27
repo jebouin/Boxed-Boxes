@@ -1,5 +1,4 @@
 POST-JAM
-- Show level cleared time in green/red/white
 - Make video walkthrough
 - Update newgrounds and itch cover and promo images
 - Set released status to released

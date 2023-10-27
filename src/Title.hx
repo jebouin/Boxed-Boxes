@@ -1,3 +1,4 @@
+import ui.KeyValueFlow;
 import h2d.col.Point;
 import fx.Fx;
 import h2d.ScaleGrid;
@@ -207,7 +208,7 @@ class Title extends Scene {
     var title : Text;
     var gameText : Text;
     var authorText : Text;
-    var speedrunFlow : Flow;
+    var speedrunFlow : KeyValueFlow;
     var timeSumText : Text;
     var timeSumValueText : Text;
     var levelTimeText : Text;
@@ -251,26 +252,15 @@ class Title extends Scene {
     }
 
     function createSpeedrunFlow() {
-        function getText(parent:Flow, align:FlowAlign) {
-            var text = new Text(Assets.font, parent);
-            text.textColor = 0x8b9bb4;
-            var props = parent.getProperties(text);
-            props.horizontalAlign = align;
-            return text;
-        }
-        speedrunFlow = new Flow(hud);
-        speedrunFlow.layout = Vertical;
-        var levelTimeFlow = new Flow(speedrunFlow);
-        levelTimeText = getText(levelTimeFlow, Left);
-        levelTimeValueText = getText(levelTimeFlow, Right);
-        var timeSumFlow = new Flow(speedrunFlow);
-        timeSumFlow.minWidth = levelTimeFlow.minWidth = 120;
-        timeSumText = getText(timeSumFlow, Left);
-        timeSumText.text = "Sum of best:";
-        timeSumValueText = getText(timeSumFlow, Right);
-        timeSumValueText.text = "" + Game.formatTimer(Save.gameData.data.getLevelTimeSum());
+        speedrunFlow = new KeyValueFlow(hud, 120);
         speedrunFlow.x = Main.WIDTH2 - speedrunFlow.outerWidth * .5;
         speedrunFlow.y = Main.HEIGHT - 35;
+        var levelTimeLine = speedrunFlow.addLine();
+        levelTimeText = levelTimeLine.key;
+        levelTimeValueText = levelTimeLine.value;
+        var timeSumLine = speedrunFlow.addLine("Sum of best:", Game.formatTimer(Save.gameData.data.getLevelTimeSum()));
+        timeSumText = timeSumLine.key;
+        timeSumValueText = timeSumLine.value;
     }
 
     function createMenu() {
