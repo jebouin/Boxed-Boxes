@@ -1,8 +1,3 @@
-POST-JAM
-- Update Itch cover and promo images
-- Set released status to released on itch
-- Add NG link to walkthrough
-
 TO FIX
 
 IF TIME LEFT
