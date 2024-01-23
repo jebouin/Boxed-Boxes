@@ -1,5 +1,6 @@
 package ;
 
+import h2d.Scene.ScaleMode;
 import h3d.Engine;
 
 // Scene with custom viewport to fix letterboxed pixel-perfect events

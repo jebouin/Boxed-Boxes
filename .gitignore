@@ -8,15 +8,8 @@
 *.sav
 *.pak
 *.hxml
-bin/*.zip
-bin/gamejolt
-bin/hl
-bin/itch
-bin/js/*
-!bin/js/avatar.png
-!bin/js/index.php
-!bin/js/style.css
-bin/newgrounds
+bin/*
+!bin/js
 docs/.~lock*
 promo/*
 res/.tmp

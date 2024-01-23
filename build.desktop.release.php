@@ -1,5 +1,5 @@
 <?php include("constants.php"); ?>
 build.desktop._base.hxml
 
--hl bin/dev/<?php echo $gameId ?>.hl
--debug
+--no-traces
+-hl bin/release/<?php echo $gameId ?>.hl

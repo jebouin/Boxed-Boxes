@@ -14,6 +14,14 @@
 			"priority": -9
 		},
 		{
+			"text": "Run",
+			"color": "orange",
+			"command": "hl bin/dev/<?php echo $gameId?>.hl",
+			"alignment": "right",
+			"skipTerminateQuickPick": false,
+			"priority": -10
+		},
+		{
 			"text": "PAK",
 			"color": "white",
 			"commandType":"exec",
@@ -23,38 +31,20 @@
 			"priority": -10
 		},
 		{
-			"text": "DX",
-			"color": "orange",
-			"commandType":"exec",
-			"command": "./prebuild.sh && haxe build.desktop.directx.hxml",
-			"alignment": "right",
-			"skipTerminateQuickPick": false,
-			"priority": -11
-		},
-		{
-			"text": "OpenGL",
-			"color": "orange",
-			"commandType":"exec",
-			"command": "./prebuild.sh && haxe build.desktop.opengl.hxml",
-			"alignment": "right",
-			"skipTerminateQuickPick": false,
-			"priority": -12
-		},
-		{
-			"text": "Run HL",
-			"color": "orange",
-			"command": "hl bin/game.hl",
-			"alignment": "right",
-			"skipTerminateQuickPick": false,
-			"priority": -13
-		},
-        {
             "text": "Windows",
             "color": "yellow",
-            "command": "mv -n bin/windows/*.exe \"bin/windows/<?php echo $gameName?>\".exe && ffmpeg -y -i res/gfx/icons/icon.png res/gfx/icons/icon.ico && icotool -c -o res/gfx/icons/icon.ico res/gfx/icons/icon.png && cp \"bin/hl/<?php echo $gameId?>.hl\" bin/windows/hlboot.dat && cp bin/pak/resDesktop.pak bin/windows/res.pak && cd bin/ && rm -f windows/*.sav && mv windows \"<?php echo $gameName?>\" && zip \"<?php echo $gameName?>.zip\" -r \"<?php echo $gameName?>/\" && mv \"<?php echo $gameName?>\" windows",
+            "command": "./releaseWindows.sh",
             "alignment": "right",
             "skipTerminateQuickPick": false,
-            "priority": -14
+            "priority": -12
+        },
+        {
+            "text": "Linux",
+            "color": "yellow",
+            "command": "./releaseLinux.sh",
+            "alignment": "right",
+            "skipTerminateQuickPick": false,
+            "priority": -13
         },
 		{
 			"text": "JS",

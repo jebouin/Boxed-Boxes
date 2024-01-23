@@ -24,7 +24,7 @@
 		},
 		{
 			"type": "shell",
-			"command": "hl bin/hl/*.hl",
+			"command": "hl bin/dev/*.hl",
 			"label": "Build and Run HL",
 			"dependsOn": "haxe: build.dev.hxml",
 			"problemMatcher": [],
